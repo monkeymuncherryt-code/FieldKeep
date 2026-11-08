@@ -1,13 +1,13 @@
 {
-  "name": "Fieldkeep: Zombie Defense",
+  "name": "Fieldkeep V10: Kingdoms & Raids",
   "short_name": "Fieldkeep",
-  "description": "31 maps, turret upgrades, scrolls and zombie defense.",
+  "description": "Build villages, command elemental turrets, adventure through eight regions, and battle world bosses.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "any",
-  "background_color": "#e7ebda",
-  "theme_color": "#35583b",
+  "orientation": "landscape",
+  "background_color": "#142d23",
+  "theme_color": "#142d23",
   "icons": [
     {
       "src": "icon.svg",

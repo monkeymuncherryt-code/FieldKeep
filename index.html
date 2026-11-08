@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="Fieldkeep" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="apple-touch-icon" href="icon.svg" />
-<title>Fieldkeep V9 — Frontiers Together</title>
+<title>Fieldkeep V10 — Kingdoms & Raids</title>
 <style>
 :root{color-scheme:light;--bg:#e7ebda;--paper:#f9f8ee;--panel:#fffdf4;--ink:#2e3c2d;--forest:#35583b;--dark:#203d2a;--line:#d7ddc5;--muted:#77816d;--gold:#a66c24;--red:#a94335;--teal:#3e796c}
 *{box-sizing:border-box}
@@ -214,11 +214,114 @@ body{background:radial-gradient(ellipse at 15% 3%,#d9ebc7 0,transparent 42%),lin
 .score-dot{width:12px;height:12px;border-radius:50%;background:var(--player-color);box-shadow:0 0 0 3px #ffffffb8;flex:none}.score-player{min-width:0;flex:1}.score-player strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#33513a;font:800 12px system-ui}.score-player small{display:block;font:700 10px system-ui;color:#71816f}
 .score-total{font:900 16px system-ui;color:#8d6427;white-space:nowrap;font-variant-numeric:tabular-nums}.score-total small{font:700 9px system-ui;color:#78836c;display:block;text-align:right}
 @media(max-width:760px){.header{padding:10px 13px}.scoreboard{padding:9px;margin-bottom:7px}.score-heading h2{font-size:13px}.score-hint{font-size:9px}.score-rows{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}.score-ranger{flex:0 0 176px;scroll-snap-align:start;padding:7px}.score-ranger strong{font-size:11px}.score-total{font-size:13px}}
+
+/* FIELDKEEP V10 — premium hand-painted woodland UI, landscape mobile first */
+:root{--v10-forest:#142d23;--v10-green:#27513a;--v10-gold:#e8bd76;--v10-cream:#fff7df}
+body{background:linear-gradient(160deg,#0e241c 0%,#264836 30%,#dde7d2 100%)}
+body:before{opacity:.08}
+.shell{max-width:1520px}
+.header{background:linear-gradient(107deg,#172c22 0%,#274735 65%,#43553b);border:1px solid #7c8c68;box-shadow:0 14px 30px #091e1660}
+.header .title{letter-spacing:-.06em;text-shadow:0 2px 12px #0006}
+.header .title span{color:#f4d18f}
+.version{border-color:#ad945f!important;color:#f2d28b!important}
+.v10-toolbar{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px;position:relative;z-index:10}
+.v10-tab{flex:1 1 108px;border:1px solid #97aa89;border-bottom:2px solid #627d59;border-radius:12px;padding:10px 7px;color:#e8f4dd;font:800 12px system-ui;background:linear-gradient(135deg,#315a40,#1e3f30);cursor:pointer;box-shadow:inset 0 1px #ffffff26,0 4px 12px #122b1d35;min-height:44px}
+.v10-tab:active{transform:translateY(2px)}.v10-tab[aria-pressed=true]{color:#f8df9d;background:#173a2c;border-color:#dfbe7a}
+.v10-brief{margin:-2px 0 12px;background:#1a372abf;border:1px solid #729077;border-radius:12px;color:#f6edcf;display:flex;justify-content:space-between;align-items:center;gap:9px;padding:8px 15px;font:800 11px system-ui;letter-spacing:.04em}
+.v10-brief span:nth-child(2){color:#f3d290}
+.v10-rotate{display:none}
+.v10-modal[hidden]{display:none!important}.v10-modal{position:fixed;inset:0;z-index:200;display:flex;justify-content:flex-end;align-items:stretch}
+.v10-dimmer{position:absolute;inset:0;background:#06130c99;backdrop-filter:blur(3px)}
+.v10-deck{z-index:1;position:relative;width:min(440px,100%);background:linear-gradient(160deg,#1b392b,#2e503a 60%,#192f26);border-left:2px solid #c5a16b;color:#f3eedc;box-shadow:-18px 0 35px #0615108c;display:flex;flex-direction:column}
+.v10-deck-head{flex:none;padding:15px 17px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #8ea07878}
+.v10-deck-head small{display:block;font:800 10px system-ui;letter-spacing:.16em;color:#dfc085}.v10-deck-head h2{font-size:21px;margin:3px 0;color:#fff6d9;letter-spacing:-.04em}
+.v10-x{border:1px solid #b9c4a58c;background:#183329;color:#ffedcb;font-size:16px;min-width:42px;min-height:42px;border-radius:12px;cursor:pointer}
+.v10-content{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:16px 15px calc(18px + env(safe-area-inset-bottom,0px));scrollbar-color:#88a084 #254532}
+.v10-lede{font-size:12px;line-height:1.5;color:#cbdcc3;margin:0 0 14px}
+.v10-stat-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:9px 0 14px}
+.v10-stat{border:1px solid #8c9c7a77;border-radius:11px;background:#ffffff15;padding:10px 6px;text-align:center}.v10-stat strong{display:block;font-size:17px;color:#f5d79a}.v10-stat small{font-size:10px;color:#ccd6b7}
+.v10-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.v10-card{border:1px solid #779477;background:linear-gradient(155deg,#355b41,#244433);border-radius:13px;padding:12px;min-width:0;box-shadow:inset 0 1px #fff2}
+.v10-card strong{display:block;color:#fff4d9;font-size:13px;margin:4px 0}.v10-card small{display:block;font-size:11px;color:#c8d5b7;line-height:1.45}
+.v10-emoji{font-size:26px;line-height:1.2}
+.v10-action{display:block;width:100%;background:linear-gradient(160deg,#e1bb7b,#c7934f);color:#203523;border:1px solid #f2d49c;border-bottom:3px solid #a16d34;border-radius:9px;font:900 11px system-ui;padding:10px 8px;margin-top:10px;min-height:40px;cursor:pointer}
+.v10-action:disabled{opacity:.45;filter:grayscale(.5);cursor:not-allowed}
+.v10-action.secondary{background:#d9e7cc;color:#2a4d32;border-color:#d9e7cc;border-bottom-color:#94b083}
+.v10-chosen{outline:2px solid #efce89;outline-offset:1px}
+.v10-sep{margin:16px 0 10px;color:#e8cb8a;font-size:12px;font-weight:900;letter-spacing:.09em;text-transform:uppercase}
+.v10-input{border:1px solid #91ad8c;border-radius:9px;padding:11px;background:#f8f7e9;color:#223d2c;font:700 15px system-ui;max-width:100%;width:100%;margin:5px 0 9px}
+.v10-pill{display:inline-flex;border-radius:99px;padding:5px 8px;margin:3px 4px 3px 0;background:#d7ddae24;border:1px solid #9ba78a66;color:#e6ebce;font:750 10px system-ui}
+.v10-progress{height:9px;background:#142b23;border-radius:99px;border:1px solid #607c62;overflow:hidden}.v10-progress>i{display:block;height:100%;background:linear-gradient(90deg,#79b17b,#e7c67a)}
+.v10-legacy .panel{margin:0 0 12px;color:#34553c;background:#fdfcf1}.v10-legacy .panel .v7-info{color:#4b5c49}
+.v10-legacy .panel summary{color:#2d5337}.v10-legacy .panel button{min-height:40px}
+.v10-content .lobby,.v10-content .v7-panels,.v10-content .panel.selection{display:block!important;position:static!important;grid-column:auto!important;margin-bottom:10px!important;min-height:0!important}
+.v10-content .panel.selection #details{display:block!important}
+.v10-content .lobby-inputs{display:flex;flex-wrap:wrap}
+.v10-content .lobby input{max-width:160px}
+
+.v10-bossbar{position:absolute;z-index:2;left:19%;right:19%;bottom:12px;color:#fff4cf;background:#142920dd;border:1px solid #ddb876;border-radius:11px;padding:6px 9px;pointer-events:none;line-height:1.25;box-shadow:0 5px 14px #111a16a8;display:none}
+.v10-bossbar strong{display:block;font:900 11px system-ui;margin-bottom:4px;text-align:center}.v10-bossbar .v10-progress{height:8px}
+.v10-bossbar.visible{display:block}
+.arena{border:4px solid #9da776;box-shadow:0 0 0 2px #263e2a,0 14px 30px #08170d75}
+@media(max-width:760px){.v10-toolbar{gap:4px;margin:0 0 7px}.v10-tab{flex:1 1 19%;padding:7px 2px;font-size:10px;min-height:43px}.v10-tab span{display:block;font-size:9px}.v10-brief{padding:7px 8px;font-size:9px;gap:5px}.v10-rotate{display:block;text-align:center;background:#244b34;color:#fff1c5;border:1px solid #a7ad77;border-radius:10px;margin:3px 0 8px;padding:8px;font:750 11px system-ui}}
+/* Console-scale landscape HUD, designed for 667×375 to 932×430 phones. */
+@media (orientation:landscape) and (max-width:1050px) and (max-height:560px){
+ html,body{height:100%;overflow:hidden;overscroll-behavior:none;background:#0e241c}
+ body:before{display:none}
+ .shell{height:100dvh;max-width:none;padding:4px max(6px,env(safe-area-inset-right,0px)) 4px max(6px,env(safe-area-inset-left,0px));overflow:hidden}
+ .header{height:37px;margin:0;padding:3px 9px;border-radius:8px;display:flex;align-items:center}
+ .header .title{font-size:21px;line-height:1}.header .eyebrow,.header .subtitle{display:none}.header .version{font-size:8px;padding:4px 8px}
+ .v10-toolbar{position:absolute;top:41px;right:7px;width:170px;display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin:0;z-index:15}
+ .v10-tab{min-width:0;min-height:40px;font-size:15px;padding:3px 1px;line-height:1.2;border-radius:7px}.v10-tab span{display:block;font-size:8px;font-weight:750}
+ .v10-full{display:none}
+ .v10-brief{position:absolute;top:42px;left:6px;max-width:calc(100% - 185px);margin:0;padding:4px 8px;min-height:25px;z-index:6;border-radius:7px;font-size:10px;gap:12px;white-space:nowrap}
+ .v10-brief span:nth-child(2){display:none}.v10-rotate{display:none!important}
+ .lobby,.map-panel,.stats,.scoreboard,#eventBanner,#weatherStrip,.v7-panels,.sidebar,.footer{display:none!important}
+ .layout{display:block!important;position:absolute;left:6px;right:6px;top:69px;bottom:44px;height:auto;min-width:0;margin:0}
+ .game-column{height:100%;position:relative;width:calc(100% - 183px)!important;min-width:0;overflow:hidden}
+ .arena{width:min(100%,calc((100dvh - 118px)*1.6));aspect-ratio:8/5;height:auto;max-height:100%;border-width:2px;border-radius:9px;overflow:hidden;position:absolute;left:50%;transform:translateX(-50%);top:0}
+ .arena canvas,.arena.mobile-zoom canvas{width:100%!important;height:auto!important;max-height:none;aspect-ratio:8/5;touch-action:manipulation}
+ .arena-top{top:5px;left:5px;right:5px}.arena-top .tag{font-size:8px;padding:3px 6px}
+ .v10-bossbar{bottom:5px;left:15%;right:15%;padding:3px 5px}.v10-bossbar strong{font-size:9px}
+ #mobileBuildDock{display:block!important;position:fixed;right:6px;top:166px;width:170px;max-height:calc(100dvh - 204px);margin:0;overflow:hidden;background:#1e422f;border:1px solid #7c936e;border-radius:8px;padding:5px}
+ .mobile-dock-top{display:flex;justify-content:space-between;color:#f5e4b5;margin:0 0 4px}.mobile-dock-top strong{font-size:10px!important;color:#f4e6b7}.mobile-dock-top small{display:none}
+ .mobile-shop{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;overflow:auto;max-height:calc(100dvh - 240px);padding:0;scroll-snap-type:none}
+ .mobile-tower{flex:none;min-height:48px!important;height:48px;padding:3px;gap:1px;background:#f0f3dc;border-radius:7px;border-width:1px}
+ .mobile-tower span:first-child{font-size:15px}.mobile-tower b{font-size:8px;max-width:70px}.mobile-tower small{font-size:8px}
+ .mobile-game-tools,.mobile-nav{display:none!important}
+ .controls{position:fixed!important;left:6px;right:183px;width:auto!important;bottom:5px!important;z-index:14;display:flex!important;flex-wrap:nowrap!important;padding:3px!important;margin:0!important;gap:4px!important;box-shadow:none;border-radius:7px;background:#183426;border-color:#608665}
+ .controls #nextWave,.controls #pause,.controls #speed,.controls #autoStart{grid-column:auto!important;flex:1 1 0;min-width:0;min-height:31px;font-size:9px!important;padding:4px 1px!important}
+ .controls #reset,.controls .control-spacer,.controls #autoCountdown{display:none!important}
+ #mobilePlacement{position:fixed;bottom:40px;right:181px;left:auto;z-index:20;max-width:340px;padding:6px;border-radius:8px;margin:0;box-shadow:0 4px 20px #071b16b6}
+ #mobilePlacement .btn{min-height:34px;padding:4px 7px}
+ #mobilePlacement.visible{display:flex!important;align-items:center;justify-content:space-between;gap:6px;background:#eaf1da;border:1px solid #a9c7a2;color:#24472f}
+ #mobilePlacement .place-info{font-size:11px;line-height:1.3;min-width:0;flex:1}
+ .v10-deck{width:min(400px,79vw)}.v10-deck-head{padding:8px 12px}.v10-deck-head h2{font-size:18px}.v10-content{padding:10px 13px}.v10-card{padding:9px}.v10-action{min-height:34px;margin-top:6px;padding:7px;font-size:10px}
+ }
+@media (orientation:landscape) and (max-width:700px) and (max-height:400px){
+ .v10-toolbar{width:148px}.v10-tab{min-height:34px;font-size:13px}.v10-brief{max-width:calc(100% - 155px)}
+ #mobileBuildDock{width:148px;top:154px;max-height:calc(100dvh - 189px)}.mobile-shop{max-height:calc(100dvh - 215px)}
+ .game-column{width:calc(100% - 160px)!important}.controls{right:160px!important}.layout{top:68px}
+ }
+
 </style>
 </head>
 <body>
 <div class="shell">
- <header class="header"><div><div class="eyebrow">THE ZOMBIE FRONTIER</div><h1 class="title">FIELD<span>KEEP</span></h1><p class="subtitle">Defend the frontier with worldwide events, evolving defenses, and online co-op!</p></div><div class="version">V9 · FRONTIERS TOGETHER</div></header>
+ <header class="header"><div><div class="eyebrow">THE ZOMBIE FRONTIER</div><h1 class="title">FIELD<span>KEEP</span></h1><p class="subtitle">Build a kingdom. Command the elements. Survive legendary raids.</p></div><div class="version">V10 · KINGDOMS & RAIDS</div></header>
+<nav class="v10-toolbar" id="v10Toolbar" aria-label="Kingdom game menu">
+ <button class="v10-tab" data-v10-tab="kingdom">🏰 <span>Kingdom</span></button>
+ <button class="v10-tab" data-v10-tab="element">🌋 <span>Elements</span></button>
+ <button class="v10-tab" data-v10-tab="adventure">🗺️ <span>Adventure</span></button>
+ <button class="v10-tab" data-v10-tab="raid">👑 <span>Raids</span></button>
+ <button class="v10-tab" data-v10-tab="profile">👤 <span>Profile</span></button>
+ <button class="v10-tab" data-v10-tab="armory">📜 <span>Armory</span></button>
+ <button class="v10-tab" data-v10-tab="party">👥 <span>Party</span></button>
+ <button id="v10Full" class="v10-tab v10-full">⛶ <span>Screen</span></button>
+ </nav>
+ <div class="v10-brief" id="v10Brief" aria-live="off"><span id="v10Mode">🌳 ENDLESS FRONTIER</span><span id="v10Supplies">🪵 0 · 🪨 0</span><span id="v10RaidMini">20 ❤️</span></div>
+ <div id="v10Rotate" class="v10-rotate">📱 Rotate your phone sideways for the best Fieldkeep experience.</div>
+ <div class="v10-modal" id="v10Modal" hidden><div class="v10-dimmer" id="v10Dimmer"></div><section class="v10-deck" role="dialog" aria-modal="true" aria-labelledby="v10DeckTitle"><header class="v10-deck-head"><div><small>FIELDKEEP / KINGDOM COMMAND</small><h2 id="v10DeckTitle">Kingdom</h2></div><button class="v10-x" id="v10Close" aria-label="Close menu">✕</button></header><div class="v10-content" id="v10Content"></div></section></div>
  <section class="lobby panel" id="partyArea" aria-label="Multiplayer room lobby">
  <div class="lobby-head"><div><h2 class="panel-heading">🌍 Online Parties · 6-digit codes</h2><p class="panel-sub" id="serverHint">Online party codes work from GitHub Pages. Host must keep the tab open.</p></div><span class="lobby-label" id="lobbyState">SOLO MODE</span></div>
  <div class="lobby-inputs" id="lobbyInputs">
@@ -239,7 +342,7 @@ body{background:radial-gradient(ellipse at 15% 3%,#d9ebc7 0,transparent 42%),lin
   <div id="weatherStrip"><span id="weatherLabel">☀️ Sunshine · Loading forecast…</span><span id="biomeLabel">🌳 Biome bonus</span><span class="v7-boss" id="bossNotice">🏰 FORTIFIED FRONTIER</span></div>
 <main class="layout"><section class="game-column" id="gameArea">
  <div id="mobileBuildDock" aria-label="Quick turret selection"><div class="mobile-dock-top"><strong>🪵 Quick Build</strong><small id="mobileChoice">Pick a tower, then tap a free tile</small></div><div class="mobile-shop" id="mobileShop"></div></div>
- <div class="arena" id="arena"><canvas width="960" height="600" id="board" aria-label="Tower defense game board"></canvas><div class="arena-top"><div class="tag"><span class="signal" id="signal"></span><span id="status">BUILD PHASE</span></div><div class="tag" id="counter">READY FOR WAVE 1</div></div><div class="toast" id="toast"></div><div class="overlay" id="overlay"><div class="endcard"><div class="eyebrow">THE GATE HAS FALLEN</div><h2>THE FORT WAS LOST</h2><p>Your field defenses fought hard. Rebuild and protect the valley again.</p><div class="big" id="endWave">WAVE 1</div><p id="endKills">0 enemies defeated</p><button class="btn primary" id="restart">↻ Try Again</button></div></div></div>
+ <div class="arena" id="arena"><canvas width="960" height="600" id="board" aria-label="Tower defense game board"></canvas><div class="v10-bossbar" id="v10BossBar"><strong id="v10BossName">👑 WORLD BOSS</strong><div class="v10-progress"><i id="v10BossHealth" style="width:100%"></i></div></div><div class="arena-top"><div class="tag"><span class="signal" id="signal"></span><span id="status">BUILD PHASE</span></div><div class="tag" id="counter">READY FOR WAVE 1</div></div><div class="toast" id="toast"></div><div class="overlay" id="overlay"><div class="endcard"><div class="eyebrow">THE GATE HAS FALLEN</div><h2>THE FORT WAS LOST</h2><p>Your field defenses fought hard. Rebuild and protect the valley again.</p><div class="big" id="endWave">WAVE 1</div><p id="endKills">0 enemies defeated</p><button class="btn primary" id="restart">↻ Try Again</button></div></div></div>
  <div class="mobile-game-tools"><small>👆 Tap a grass tile to preview your turret</small><button class="btn" id="zoomToggle" type="button" aria-pressed="false">🔎 Zoom map</button></div>
  <div id="mobilePlacement" role="status" aria-live="polite"><span class="place-info" id="placementText">Choose a tile</span><button id="placeCancel" class="btn" type="button">Cancel</button><button id="placeConfirm" class="btn primary" type="button">✓ Build</button></div>
  <div class="progress"><div id="progress"></div></div>
@@ -493,7 +596,7 @@ return{PERIOD,DURATION,EVENTS,RARITY,current,eventForSlot,mods,clock};});
 <script>
 (() => { 'use strict';
 const canvas=document.getElementById('board'), ctx=canvas.getContext('2d',{alpha:false});
-const isPhone=()=>innerWidth<=760 && matchMedia('(pointer:coarse)').matches;
+const isPhone=()=>matchMedia('(pointer:coarse)').matches && Math.min(innerWidth,innerHeight)<=760;
 let pendingPlacement=null;
 const CELL=40, COLS=24, ROWS=15, PI=Math.PI;
 const $=id=>document.getElementById(id);
@@ -508,6 +611,55 @@ let towers,enemies,shots,particles,texts,scrollDrops,scrollInventory,credits,hea
 function getBest(){try{return Number(localStorage.getItem('fieldkeep_v4_best_day_'+mapDay)||0)}catch(e){return 0}}
 function saveBest(){try{localStorage.setItem('fieldkeep_v4_best_day_'+mapDay,String(bestWave))}catch(e){}}
 let uid=1;
+// V10 profile data is kept locally on this device; multiplayer wallets remain authoritative with the host.
+const V10_ELEMENTS={fire:{name:'Fire',icon:'🔥',color:'#ef9459',desc:'Burning damage'},ice:{name:'Ice',icon:'❄️',color:'#a6dced',desc:'Slow enemies'},lightning:{name:'Lightning',icon:'⚡',color:'#f2d77b',desc:'Chain jolts'},nature:{name:'Nature',icon:'🌿',color:'#9ccb72',desc:'Thorn poison'},earth:{name:'Earth',icon:'🪨',color:'#d8bd92',desc:'Armor breaker'}};
+const V10_BUILDINGS={farm:{name:'Sunfield Farm',icon:'🌾',coins:90,wood:0,stone:0,desc:'+25 coins per wave to owner'},mine:{name:'Stone Mine',icon:'⛏️',coins:115,wood:12,stone:0,desc:'+12 stone per wave'},lumber:{name:'Lumber Camp',icon:'🪵',coins:100,wood:0,stone:8,desc:'+14 wood per wave'},workshop:{name:'Smithy',icon:'⚒️',coins:180,wood:22,stone:20,desc:'+12% turret damage'},mage:{name:'Mage Hut',icon:'🔮',coins:205,wood:25,stone:24,desc:'+20% elemental damage'},shrine:{name:'Healing Shrine',icon:'💚',coins:175,wood:16,stone:15,desc:'Heal gate every 3 waves'},barracks:{name:'Barracks',icon:'🏹',coins:145,wood:22,stone:12,desc:'Earn extra adventure supplies'},wall:{name:'Stone Wall',icon:'🧱',coins:85,wood:8,stone:20,desc:'+1 gate shield immediately'}};
+const V10_REGIONS=[{id:'plains',name:'Green Plains',icon:'🌼',map:1,goal:5,desc:'Learn the valley. Survive five waves.'},{id:'forest',name:'Whispering Forest',icon:'🌳',map:6,goal:8,desc:'Defend the ancient trees.'},{id:'ridge',name:'Frozen Ridge',icon:'❄️',map:18,goal:10,desc:'Slower roads, tougher enemies.'},{id:'desert',name:'Ashen Desert',icon:'🏜️',map:8,goal:12,desc:'A desert trial with scarce cover.'},{id:'coast',name:'Storm Coast',icon:'⛈️',map:3,goal:14,desc:'Hold the riverside through storms.'},{id:'marsh',name:'Swamp of Rot',icon:'🐸',map:13,goal:16,desc:'Poisonous marshland hordes.'},{id:'highland',name:'Crystal Highlands',icon:'💠',map:27,goal:18,desc:'Protect the mountain stronghold.'},{id:'frontier',name:'Dark Frontier',icon:'🌙',map:31,goal:20,desc:'The final endurance challenge.'}];
+const V10_RAIDS={titan:{name:'Grave Titan',icon:'🪨',color:'#ae9a81',hp:3600,speed:34,desc:'Stone titan · heavy armor and falling debris'},storm:{name:'Storm Rot King',icon:'⚡',color:'#c9c181',hp:3050,speed:49,desc:'Speed surges and summons runners'},plague:{name:'Plague Queen',icon:'🌿',color:'#9ac578',hp:3800,speed:36,desc:'Regenerates and summons the infected'},frost:{name:'Frostjaw Behemoth',icon:'❄️',color:'#b7d9df',hp:4400,speed:31,desc:'Freezes the frontline with every phase'},root:{name:'Rootbreaker Colossus',icon:'🌳',color:'#93ac76',hp:5000,speed:29,desc:'Slow, resilient, and exceptionally powerful'}};
+function newV10Meta(){return {name:'Ranger',avatar:'🛡️',banner:'Evergreen',xp:0,totalKills:0,raidWins:0,raidTokens:0,completed:[],bestWave:0,bossKills:0,missions:0};}
+let v10Meta={...newV10Meta(),...loadJSON('fieldkeep_v10_profile',{})};if(!Array.isArray(v10Meta.completed))v10Meta.completed=[];
+function saveV10(){try{localStorage.setItem('fieldkeep_v10_profile',JSON.stringify(v10Meta))}catch{}}
+let villageBuildings=[],villageMaterials={wood:45,stone:35},villageSelected=null,selectedVillage=null;
+let v10Mode='endless',v10Region=null,pendingRaid=null,raidActive=null,v10Tab='',v10MenuOriginal=null;
+let v10DeckVersion='',v10ProfileKillsSeen=0;
+const v10VillageCost=(type)=>V10_BUILDINGS[type]||null;
+function v10Owner(){return p2pRole==='host'?myId:'solo'}
+function v10CanBuild(c,r){return Number.isInteger(c)&&Number.isInteger(r)&&c>=0&&r>=0&&c<COLS&&r<ROWS&&!invalidTile(c,r)&&!towers.some(t=>t.c===c&&t.r===r)&&!villageBuildings.some(b=>b.c===c&&b.r===r);}
+function v10CanBuyBuilding(type,wallet=credits){const b=v10VillageCost(type);return !!b&&wallet>=b.coins&&villageMaterials.wood>=b.wood&&villageMaterials.stone>=b.stone;}
+function v10UpgradePrice(b){const lv=Math.max(1,b.level||1);return{coins:Math.round(60*Math.pow(lv,1.5)),wood:10*lv,stone:8*lv};}
+function v10UpgradeBuilding(id){const b=villageBuildings.find(x=>x.id===Number(id));if(!b)return;if(b.ownerId!=='solo'&&b.ownerId!==myId){toast('Only the builder can upgrade this structure');return;}if(b.level>=3){toast('Building is fully upgraded');return;}const price=v10UpgradePrice(b);if(credits<price.coins||villageMaterials.wood<price.wood||villageMaterials.stone<price.stone){toast('More village supplies needed');return;}if(p2pRole==='guest'){sendAction('villageUpgrade',{id:b.id});return;}credits-=price.coins;villageMaterials.wood-=price.wood;villageMaterials.stone-=price.stone;b.level++;toast('🏡 '+V10_BUILDINGS[b.type].name+' level '+b.level);updateUI();}
+function v10CreateBuilding(type,c,r,ownerId){const b=V10_BUILDINGS[type];villageMaterials.wood-=b.wood;villageMaterials.stone-=b.stone;villageBuildings.push({id:uid++,type,c,r,x:c*CELL+20,y:r*CELL+20,ownerId,level:1});if(type==='wall')gateShield=Math.min(20,gateShield+1);burst(c*CELL+20,r*CELL+20,'#dfc47c',11);}
+function buildVillage(c,r){const type=villageSelected;if(!type||gameOver)return;if(!v10CanBuild(c,r)){toast('Place buildings on clear grass only');return;}if(p2pRole==='guest'){sendAction('villageBuild',{type,c,r});return;}if(!v10CanBuyBuilding(type)){toast('Not enough village supplies or coins');return;}credits-=V10_BUILDINGS[type].coins;v10CreateBuilding(type,c,r,v10Owner());updateUI();toast('🏡 Built '+V10_BUILDINGS[type].name);}
+function infuseElement(key){const t=selectedTower;if(!t||!towers.includes(t)||!V10_ELEMENTS[key]){toast('Select a built turret first');return;}if(t.ownerId&&p2pRole&&t.ownerId!==myId){toast('That turret belongs to a teammate');return;}if(t.element===key){toast('Already infused');return;}if(!(Rule.stats(t)?.rate>0)){toast('Infusion requires an attacking turret');return;}const cost=95+(t.element?55:0);if(credits<cost){toast('Need '+cost+' coins to infuse');return;}if(p2pRole==='guest'){sendAction('elementInfuse',{id:t.id,key});return;}credits-=cost;t.element=key;burst(t.x,t.y,V10_ELEMENTS[key].color,18);toast(V10_ELEMENTS[key].icon+' '+V10_ELEMENTS[key].name+' infusion equipped!');updateUI();}
+function v10ApplyElement(e,key,ownerId,baseDamage){if(!enemies.includes(e)||!V10_ELEMENTS[key])return;const last=e.lastElement||'',was=e.lastElementAt||-999;let combo='';if(last!==key&&clock-was<3.8){const pair=[last,key].sort().join('+');combo=({'fire+nature':'WILDFIRE','ice+lightning':'SHOCK FREEZE','earth+fire':'LAVA BURST','earth+nature':'THORN WALL','fire+lightning':'PLASMA STRIKE'})[pair]||'';}
+ if(key==='fire'||key==='nature'){e.poisonT=Math.max(e.poisonT||0,key==='fire'?2.3:3.3);e.poisonDps=Math.max(e.poisonDps||0,baseDamage*(key==='fire'?.24:.18));e.poisonOwnerId=ownerId;}
+ if(key==='ice'){e.slowT=Math.max(e.slowT||0,2.3);e.slowFactor=Math.min(e.slowFactor||1,.54)}
+ if(key==='lightning'){for(const next of enemies.filter(x=>x!==e&&Math.hypot(x.x-e.x,x.y-e.y)<88).slice(0,2))addDamage(next,baseDamage*.24,ownerId);}
+ if(key==='earth')addDamage(e,baseDamage*.15,ownerId);
+ if(combo){const x=e.x,y=e.y;const wide=combo==='WILDFIRE'||combo==='LAVA BURST';for(const target of [...enemies])if(Math.hypot(target.x-x,target.y-y)<(wide?80:60))addDamage(target,baseDamage*(wide?.75:.55),ownerId);if(combo==='SHOCK FREEZE'||combo==='THORN WALL'){for(const target of enemies)if(Math.hypot(target.x-x,target.y-y)<75){target.slowT=2.5;target.slowFactor=.34;}}burst(x,y,V10_ELEMENTS[key].color,16);texts.push({x,y:y-38,txt:combo,color:'#fff1b5',life:1.25});}
+ e.lastElement=key;e.lastElementAt=clock;
+}
+function v10GetActiveRaid(){return enemies.find(e=>e.type==='raidBoss');}
+function v10QueueRaid(key){if(!V10_RAIDS[key]||gameOver)return;if(p2pRole==='guest'){sendAction('raidStart',{key});return;}if(active){toast('Finish this wave before queuing a raid');return;}pendingRaid=key;v10Mode='raid';v10Region=null;toast('👑 '+V10_RAIDS[key].name+' queued for the next wave!');updateUI();}
+function v10LaunchAdventure(key){const r=V10_REGIONS.find(x=>x.id===key);if(!r)return;const index=V10_REGIONS.findIndex(x=>x.id===key);if(index>0&&!v10Meta.completed.includes(V10_REGIONS[index-1].id)){toast('Complete the previous region to unlock this mission');return;}
+ if(p2pRole==='guest'){sendAction('adventureStart',{key});return;}if(active){toast('Finish your wave before changing missions');return;}
+ if((wave>0||towers.length||villageBuildings.length)&&!confirm('Begin this adventure? Your current run will restart.'))return;
+ if(mapDay!==r.map)applyMapDay(r.map,true);else reset();v10Mode='adventure';v10Region=r.id;v10Meta.missions++;saveV10();toast(r.icon+' '+r.name+' mission started — survive '+r.goal+' waves!');updateUI();}
+function v10OnKill(e){if(p2pRole==='guest')return;v10Meta.totalKills++;if(e.type==='boss'||e.type==='raidBoss')v10Meta.bossKills++;v10Meta.xp+=e.type==='raidBoss'?200:e.type==='boss'?40:3;
+ if(e.type==='raidBoss'){v10Meta.raidWins++;v10Meta.raidTokens+=3;chests+=2;const loot={kind:'might',rarity:wave>=30?'divine':'mythic'};if(scrollInventory.length<60)scrollInventory.push(loot);for(const m of (p2pRole==='host'?players:[]))awardCoins(m.id,400);if(p2pRole!=='host')credits+=400;toast('👑 RAID VICTORY! +3 tokens, 2 chests, powerful scroll!');raidActive=null;}
+ saveV10();}
+function v10AfterWave(){villageMaterials.wood=Math.min(9999,villageMaterials.wood+5);villageMaterials.stone=Math.min(9999,villageMaterials.stone+3);
+ for(const b of villageBuildings){if(b.type==='lumber')villageMaterials.wood=Math.min(9999,villageMaterials.wood+14*b.level);if(b.type==='mine')villageMaterials.stone=Math.min(9999,villageMaterials.stone+12*b.level);if(b.type==='farm')awardCoins(b.ownerId,25*b.level);if(b.type==='shrine'&&wave%3===0)health=Math.min(20,health+1);if(b.type==='barracks'){villageMaterials.wood+=2;villageMaterials.stone+=2;}}
+ v10Meta.bestWave=Math.max(v10Meta.bestWave,wave);
+ if(v10Mode==='adventure'&&v10Region){const r=V10_REGIONS.find(x=>x.id===v10Region);if(r&&wave>=r.goal&&!v10Meta.completed.includes(r.id)){v10Meta.completed.push(r.id);v10Meta.raidTokens+=2;chests++;toast('🗺️ REGION COMPLETE: '+r.name+'! +2 raid tokens and a chest');}}
+ saveV10();}
+function v10ResetRun(){villageBuildings=[];villageMaterials={wood:45,stone:35};villageSelected=null;selectedVillage=null;pendingRaid=null;raidActive=null;v10Mode='endless';v10Region=null;}
+function drawVillage(){const g=ctx;for(const b of villageBuildings){const d=V10_BUILDINGS[b.type];if(!d)continue;const x=b.x,y=b.y;g.save();g.fillStyle='#142c2090';g.beginPath();g.ellipse(x+3,y+13,18,8,0,0,2*PI);g.fill();drawRounded(x-15,y-10,30,29,5,b.type==='wall'?'#aaa28a':'#d6bd83');g.fillStyle=b.type==='wall'?'#9c9885':'#644936';g.beginPath();g.moveTo(x-19,y-8);g.lineTo(x,y-23);g.lineTo(x+19,y-8);g.closePath();g.fill();g.textAlign='center';g.font='18px system-ui';g.fillText(d.icon,x,y+10);g.restore();}}
+function v10UpdateUI(){const brief=$('v10Mode');if(!brief)return;const reg=V10_REGIONS.find(r=>r.id===v10Region);brief.textContent=v10Mode==='adventure'&&reg?reg.icon+' '+reg.name.toUpperCase()+' · '+wave+'/'+reg.goal:v10Mode==='raid'?'👑 RAID MODE · '+(V10_RAIDS[pendingRaid||raidActive]?.name||'BOSS INCOMING'):'🌳 ENDLESS FRONTIER';$('v10Supplies').textContent='🪵 '+villageMaterials.wood+' · 🪨 '+villageMaterials.stone;$('v10RaidMini').textContent='❤️ '+health+' · 🏆 '+(p2pRole==='guest'?(ranger(myId)?.points||0):soloPoints);
+ const boss=v10GetActiveRaid(),bar=$('v10BossBar');bar.classList.toggle('visible',!!boss);if(boss){$('v10BossName').textContent='👑 '+(V10_RAIDS[boss.raidKey]?.name||'WORLD BOSS')+' · PHASE '+((boss.phase||0)+1);$('v10BossHealth').style.width=Math.max(0,boss.hp/boss.maxHp*100)+'%';}
+ if(v10Tab && !$('v10Modal').hidden){const sig=[v10Tab,credits,villageMaterials.wood,villageMaterials.stone,villageBuildings.length,wave,health,selectedTower?.id,selectedTower?.element,v10Region,raidActive,pendingRaid,v10Meta.totalKills,v10Meta.raidWins,v10Meta.completed.length,players.length].join('|');if(sig!==v10DeckVersion){v10DeckVersion=sig;v10RenderTab(v10Tab);}}
+}
+
 const DEFAULT_BLUEPRINT={damage:30,fireRate:1.25,range:150,speed:500,effect:'none',power:1};
 let blueprints=[];try{const saved=JSON.parse(localStorage.getItem('fieldkeep_custom_blueprints_v5')||'[]');if(Array.isArray(saved))blueprints=saved.slice(0,4).map(x=>Rule.normalizeBlueprint(x));}catch{}
 function getSelectionDef(id){if(id&&id.startsWith('custom:'))return Rule.customDefinition(blueprints[Number(id.split(':')[1])]);return TOWERS[id]||null;}
@@ -536,12 +688,14 @@ function battleStats(t){const s={...tStats(t)};const world=World.mods();s.damage
  if(relicOn('fang'))s.damage*=1.12;if(relicOn('compass'))s.range*=1.14;
  if(relicOn('hourglass')&&s.rate)s.rate=Math.max(.05,s.rate/1.12);
  if(relicOn('thorn')&&s.poison)s.poison*=1.20;
+ for(const b of villageBuildings)if(b.type==='workshop')s.damage*=1+.12*b.level;
+ if(t.element&&V10_ELEMENTS[t.element]&&s.rate){s.damage*=1.13;for(const b of villageBuildings)if(b.type==='mage')s.damage*=1+.20*b.level;}
  return s;
 }
 function getWaveReward(){let n=40+wave*3;for(const t of towers)n+=battleStats(t).income;if(relicOn('coin'))n=Math.round(n*1.2);n=Math.round(n*(World.mods().coins||1));return n;}
 function baseUpgradeCost(){return Math.round(125*Math.pow(baseLevel+1,1.65));}
 function repairCost(){return Math.round(60+wave*3);}
-function gateHit(e){if(gateShield>0){gateShield--;toast('🛡️ Gate shields absorbed the attack!');return;}if(relicOn('heartwood')&&!heartwoodUsed){heartwoodUsed=true;toast('💚 Heartwood Charm protected your gate!');return;}health=Math.max(0,health-Math.max(1,(e.type==='boss'?4:1)-Math.floor(baseLevel/2)));}
+function gateHit(e){if(gateShield>0){gateShield--;toast('🛡️ Gate shields absorbed the attack!');return;}if(relicOn('heartwood')&&!heartwoodUsed){heartwoodUsed=true;toast('💚 Heartwood Charm protected your gate!');return;}health=Math.max(0,health-Math.max(1,(e.type==='raidBoss'?6:e.type==='boss'?4:1)-Math.floor(baseLevel/2)));}
 let heartwoodUsed=false;
 function chestReward(openedBy=null){const roll=Math.random();if(roll<.3){const amount=160+wave*8;awardCoins(openedBy,amount);return `💰 +${amount} coins`;}if(roll<.63){const rarity=roll<.46?'legendary':wave>=30?'mythic':'epic';const keys=Object.keys(Rule.SCROLLS);const scroll={rarity,kind:keys[Math.floor(Math.random()*keys.length)]};if(scrollInventory.length<60){scrollInventory.push(scroll);return '📜 '+lootLabel(scroll)}awardCoins(openedBy,140);return '💰 +140 coins (scroll bag full)';}if(roll<.87){const keys=Object.keys(Rule.RELICS);const id=keys[Math.floor(Math.random()*keys.length)];if(!relicsOwned.includes(id)){relicsOwned.push(id);return `🏺 ${Rule.RELICS[id].name} discovered`;}awardCoins(openedBy,240);return '💰 Duplicate relic exchanged for 240 coins';}gateShield=Math.min(20,gateShield+3);return '🛡️ +3 gate shields';}
 function openChest(){if(multiplayer){sendAction('openChest');return;}if(!chests)return;chests--;lastChestReward=chestReward();toast('Treasure chest: '+lastChestReward);updateUI()}
@@ -557,7 +711,7 @@ function combineTurrets(otherId){const a=selectedTower,b=towers.find(t=>t.id===o
  a.level=Math.max(a.level,b.level);a.spent+=cost+b.spent;a.scrolls=[...(a.scrolls||[]),...(b.scrolls||[])].slice(0,Rule.scrollSlots(a));towers=towers.filter(t=>t!==b);burst(a.x,a.y,'#be9fd6',30);toast('✣ Hybrid turret forged!');updateUI();}
 let multiplayer=false, roomToken=null, myId=null, hostId=null, roomCode=null, players=[], eventSource=null, onlineSince=0, lastNetSig='', networkInfo=null;
 const PLAYER_COLORS=['#3f8962','#5783c5','#c38c47','#9669bd','#c76767'];
-const POINT_VALUES={glider:10,dart:15,crawler:12,warden:25,boss:100};
+const POINT_VALUES={glider:10,dart:15,crawler:12,warden:25,boss:100,raidBoss:500};
 let seenEnemyIds=new Set(),lastScoresSig='',soloPoints=0;
 function ranger(id){return players.find(p=>p.id===id)||null;}
 function playerColor(id){const i=players.findIndex(p=>p.id===id);return PLAYER_COLORS[Math.max(0,i)%PLAYER_COLORS.length];}
@@ -589,9 +743,9 @@ function renderLeaderboard(){
 let autoStart=localStorage.getItem('fieldkeep_v8_autostart')==='true',autoCountdown=0;
 let p2pRole=null,p2pPeer=null,p2pConn=null,p2pGuests=new Map(),p2pPending=false,lastBroadcast=0;
 
-function reset(){pendingPlacement=null;autoCountdown=autoStart?4:0;towers=[];enemies=[];shots=[];particles=[];texts=[];scrollDrops=[];scrollInventory=[];credits=320+(!multiplayer?Math.round(profile.skills.economy*20):0);if(p2pRole==='host'){for(const ranger of players){ranger.coins=320;ranger.kills=0;ranger.points=0;}syncHostWallet();}lastScoresSig='';soloPoints=0;seenEnemyIds.clear();health=20;chests=0;merchantRound=0;merchantUsed=[];baseLevel=0;gateShield=!multiplayer?profile.skills.hearts:0;relicsOwned=[];equippedRelics=[];heartwoodUsed=false;bossLog=[];lastChestReward='';wave=0;kills=0;active=false;paused=false;speed=1;gameOver=false;selectedType='pulse';selectedTower=null;hover=null;spawnQueue=[];spawnTime=0;spawnedCount=0;totalSpawned=0;clock=0;lastTimestamp=performance.now();bestWave=getBest();$('overlay').classList.remove('show');$('pause').textContent='Ⅱ Pause';$('speed').textContent='⚡ 1× Speed';$('speed').classList.add('speed-on');makeShop();updateUI();toast('V9: Bigger maps, private coins, and ranger rankings!')}
+function reset(){v10ResetRun();pendingPlacement=null;autoCountdown=autoStart?4:0;towers=[];enemies=[];shots=[];particles=[];texts=[];scrollDrops=[];scrollInventory=[];credits=320+(!multiplayer?Math.round(profile.skills.economy*20):0);if(p2pRole==='host'){for(const ranger of players){ranger.coins=320;ranger.kills=0;ranger.points=0;}syncHostWallet();}lastScoresSig='';soloPoints=0;seenEnemyIds.clear();health=20;chests=0;merchantRound=0;merchantUsed=[];baseLevel=0;gateShield=!multiplayer?profile.skills.hearts:0;relicsOwned=[];equippedRelics=[];heartwoodUsed=false;bossLog=[];lastChestReward='';wave=0;kills=0;active=false;paused=false;speed=1;gameOver=false;selectedType='pulse';selectedTower=null;hover=null;spawnQueue=[];spawnTime=0;spawnedCount=0;totalSpawned=0;clock=0;lastTimestamp=performance.now();bestWave=getBest();$('overlay').classList.remove('show');$('pause').textContent='Ⅱ Pause';$('speed').textContent='⚡ 1× Speed';$('speed').classList.add('speed-on');makeShop();updateUI();toast('V10: Kingdoms & Raids — build your frontier!')}
 function toast(message){const el=$('toast');el.textContent=message;el.classList.add('active');clearTimeout(toasterTimer);toasterTimer=setTimeout(()=>el.classList.remove('active'),2600)}
-function makeShop(){const e=$('shop');e.replaceChildren();for(let i=0;i<TYPES.length;i++){const id=TYPES[i],d=TOWERS[id];const b=document.createElement('button');b.className='tower-btn';b.dataset.id=id;b.innerHTML=`<span class="tower-icon" style="--tower:${d.color}">${d.icon}</span><span><div class="tower-name">${d.name} <small>${i<9?'['+(i+1)+']':i===9?'[0]':''}</small></div><div class="tower-desc">${d.desc}</div></span><span class="tower-price">${d.cost} 🟡</span>`;b.addEventListener('click',()=>{selectedType=id;selectedTower=null;updateUI()});e.appendChild(b)}
+function makeShop(){const e=$('shop');e.replaceChildren();for(let i=0;i<TYPES.length;i++){const id=TYPES[i],d=TOWERS[id];const b=document.createElement('button');b.className='tower-btn';b.dataset.id=id;b.innerHTML=`<span class="tower-icon" style="--tower:${d.color}">${d.icon}</span><span><div class="tower-name">${d.name} <small>${i<9?'['+(i+1)+']':i===9?'[0]':''}</small></div><div class="tower-desc">${d.desc}</div></span><span class="tower-price">${d.cost} 🟡</span>`;b.addEventListener('click',()=>{villageSelected=null;selectedType=id;selectedTower=null;updateUI()});e.appendChild(b)}
  for(let i=0;i<blueprints.length;i++){const def=getSelectionDef('custom:'+i);if(!def)continue;const b=document.createElement('button');b.className='tower-btn';b.dataset.id='custom:'+i;b.innerHTML=`<span class="tower-icon">⚙</span><span><div class="tower-name">Custom #${i+1}</div><div class="tower-desc">${blueprints[i].effect} · ${blueprints[i].damage} damage</div></span><span class="tower-price">${def.cost} 🟡</span>`;b.addEventListener('click',()=>{selectedType=b.dataset.id;selectedTower=null;updateUI()});e.appendChild(b)}
  renderSavedBlueprints();syncMobileShop();}
 
@@ -638,8 +792,8 @@ const e=$('details');if(selectedTower&&towers.includes(selectedTower)){
  $('sell').addEventListener('click',()=>{if(otherOwner)return;if(multiplayer){sendAction('sell',{id:t.id});return;}credits+=sellValue(t);towers=towers.filter(x=>x!==t);burst(t.x,t.y,'#b9c4ff',12);selectedTower=null;updateUI()});
  for(const btn of e.querySelectorAll('[data-evo]'))btn.addEventListener('click',()=>evolveTurret(btn.dataset.evo));
 }else{e.className='empty';e.textContent=selectedType?`Placing ${selectedType.startsWith('custom:')?'Custom #'+(Number(selectedType.split(':')[1])+1):getSelectionDef(selectedType).name} (${getSelectionDef(selectedType).cost} coins). Click a free tile to build, or click an existing turret to upgrade.`:'Click a built turret to inspect, evolve, or apply a scroll.'}
-updateLootUI();updateSystemsUI();updateAutoUI();syncMobileShopState();syncMobileSelection();updatePlacementUI();}
-function startWave(){if(multiplayer){sendAction('startWave');return}if(active||gameOver||paused)return;autoCountdown=0;merchantRound=0;merchantUsed=[];heartwoodUsed=false;wave++;bestWave=Math.max(bestWave,wave);saveBest();spawnQueue=[];let n=8+Math.floor(wave*2.6);for(let i=0;i<n;i++){let type;if(wave>=7&&i%4===0)type='crawler';else if(wave>=4&&i%9===0)type='warden';else if(wave>=3&&i%5===0)type='dart';else type='glider';spawnQueue.push(type)}if(wave%5===0)spawnQueue.push('boss');totalSpawned=spawnQueue.length;spawnedCount=0;spawnTime=0;spawnInterval=Math.max(.27,.71-wave*.013);active=true;updateUI();toast(wave===7?'Crawling zombies are arriving!':wave%5===0?`⚠ Wave ${wave}: ${Rule.BOSSES[['grave','rusher','bloom'][Math.floor(wave/5-1)%3]].name} approaching!`:`Zombie wave ${wave} incoming!`)}
+updateLootUI();updateSystemsUI();updateAutoUI();syncMobileShopState();syncMobileSelection();updatePlacementUI();v10UpdateUI();}
+function startWave(){if(multiplayer){sendAction('startWave');return}if(active||gameOver||paused)return;autoCountdown=0;merchantRound=0;merchantUsed=[];heartwoodUsed=false;wave++;bestWave=Math.max(bestWave,wave);saveBest();spawnQueue=[];let n=8+Math.floor(wave*2.6);for(let i=0;i<n;i++){let type;if(wave>=7&&i%4===0)type='crawler';else if(wave>=4&&i%9===0)type='warden';else if(wave>=3&&i%5===0)type='dart';else type='glider';spawnQueue.push(type)}if(wave%5===0)spawnQueue.push('boss');if(pendingRaid){spawnQueue.push('raidBoss');raidActive=pendingRaid;pendingRaid=null;}totalSpawned=spawnQueue.length;spawnedCount=0;spawnTime=0;spawnInterval=Math.max(.27,.71-wave*.013);active=true;updateUI();toast(wave===7?'Crawling zombies are arriving!':wave%5===0?`⚠ Wave ${wave}: ${Rule.BOSSES[['grave','rusher','bloom'][Math.floor(wave/5-1)%3]].name} approaching!`:`Zombie wave ${wave} incoming!`)}
 function spawn(type){let hp,vel,reward,color,r,air=false;
  const scale=Math.pow(1.13,wave-1);
  switch(type){
@@ -647,23 +801,24 @@ function spawn(type){let hp,vel,reward,color,r,air=false;
   case'warden':hp=125*scale;vel=52+wave*.25;reward=17;color='#759b68';r=20;break;
   case'crawler':hp=70*scale;vel=72+wave*.4;reward=12;color='#9baa72';r=15;break;
   case'boss':hp=500*scale;vel=40+wave*.2;reward=110;color='#7eaf70';r=28;break;
+   case'raidBoss':{const def=V10_RAIDS[raidActive]||V10_RAIDS.titan;hp=def.hp*Math.pow(1.065,Math.min(40,wave));vel=def.speed;reward=350;color=def.color;r=35;break;}
   default:hp=46*scale;vel=80+wave*.45;reward=9;color='#9fc083';r=14;
  }
  const p=positionAt(0);
- const bossKind=type==='boss'?['grave','rusher','bloom'][Math.floor(wave/5-1)%3]:null;if(bossKind==='rusher')vel*=1.6;if(bossKind==='bloom')hp*=1.18;if(bossKind)color=Rule.BOSSES[bossKind].color;
- const spawned={id:uid++,type,bossKind,x:p.x,y:p.y,d:0,maxHp:hp,hp,speed:vel,air,reward,color,r,slowT:0,slowFactor:1,poisonT:0,poisonDps:0};enemies.push(spawned);discoverZombie(spawned);
+ const bossKind=type==='boss'?['grave','rusher','bloom'][Math.floor(wave/5-1)%3]:null;if(bossKind==='rusher')vel*=1.6;if(bossKind==='bloom')hp*=1.18;if(bossKind&&type!=='raidBoss')color=Rule.BOSSES[bossKind].color;
+ const spawned={id:uid++,type,bossKind:type==='raidBoss'?'grave':bossKind,raidKey:type==='raidBoss'?raidActive:null,phase:0,x:p.x,y:p.y,d:0,maxHp:hp,hp,speed:vel,air,reward,color,r,slowT:0,slowFactor:1,poisonT:0,poisonDps:0};enemies.push(spawned);discoverZombie(spawned);
 }
 
-function build(c,r){if(!selectedType||gameOver)return;if(c<0||r<0||c>=COLS||r>=ROWS)return;const blocked=invalidTile(c,r);if(blocked){toast(blocked);return}if(towers.some(t=>t.c===c&&t.r===r)){toast('A turret is already there');return}const d=getSelectionDef(selectedType);if(!d){toast('Save your custom design first');return}
+function build(c,r){if(villageSelected){buildVillage(c,r);return;}if(!selectedType||gameOver)return;if(c<0||r<0||c>=COLS||r>=ROWS)return;const blocked=invalidTile(c,r);if(blocked){toast(blocked);return}if(towers.some(t=>t.c===c&&t.r===r)||villageBuildings.some(b=>b.c===c&&b.r===r)){toast('This tile is occupied');return}const d=getSelectionDef(selectedType);if(!d){toast('Save your custom design first');return}
  const isCustom=selectedType.startsWith('custom:');const blueprint=isCustom?{...blueprints[Number(selectedType.split(':')[1])]}:null;const type=isCustom?'custom':selectedType;
  if(multiplayer){sendAction('build',{c,r,type,blueprint});return}if(credits<d.cost){toast(`Not enough coins for ${d.name}.`);return}credits-=d.cost;let t={id:uid++,c,r,x:c*CELL+CELL/2,y:r*CELL+CELL/2,type,blueprint,ownerId:p2pRole==='host'?myId:'solo',level:1,spent:0,scrolls:[],evolution:null,cool:Math.random()*.25,angle:-PI/2};towers.push(t);burst(t.x,t.y,d.color,11);updateUI()}
 
 function burst(x,y,color,count=8){if(isPhone())count=Math.min(count,9);for(let i=0;i<count;i++){let a=Math.random()*2*PI,v=38+Math.random()*150;particles.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,color,life:.28+Math.random()*.37,max:.65,r:1+Math.random()*3})}}
-function addDamage(e,d,attackerId=null){if(!enemies.includes(e))return;let mult=e.type==='warden'?.74:1;if(e.type!=='boss'&&enemies.some(b=>b.type==='boss'&&b.bossKind==='grave'&&Math.hypot(b.x-e.x,b.y-e.y)<130))mult*=.72;e.hp-=d*mult;if(e.hp<=0){enemies=enemies.filter(a=>a!==e);const owner=attackerId||e.poisonOwnerId||((p2pRole==='host')?myId:'solo');awardCoins(owner,e.reward);kills++;if(p2pRole==='host'){const member=ranger(owner)||ranger(myId);if(member){member.kills=(member.kills||0)+1;member.points=(member.points||0)+(POINT_VALUES[e.type]||10);}}else soloPoints+=(POINT_VALUES[e.type]||10);renderLeaderboard();discoverZombie(e,true);earnXP(e.type==='boss'?35:2);if(e.type==='boss'&&wave%25===0){const keys=Object.keys(Rule.RELICS).filter(x=>!relicsOwned.includes(x));if(keys.length)relicsOwned.push(keys[Math.floor(Math.random()*keys.length)]);}addDrop(e);burst(e.x,e.y,e.color,e.type==='boss'?27:12);texts.push({x:e.x,y:e.y,txt:`+${e.reward}`,color:'#fff2b8',life:.95})}else burst(e.x,e.y,e.color,2)}
+function addDamage(e,d,attackerId=null){if(!enemies.includes(e))return;let mult=e.type==='warden'?.74:1;if(e.type!=='boss'&&enemies.some(b=>b.type==='boss'&&b.bossKind==='grave'&&Math.hypot(b.x-e.x,b.y-e.y)<130))mult*=.72;e.hp-=d*mult;if(e.hp<=0){enemies=enemies.filter(a=>a!==e);const owner=attackerId||e.poisonOwnerId||((p2pRole==='host')?myId:'solo');awardCoins(owner,e.reward);kills++;if(p2pRole==='host'){const member=ranger(owner)||ranger(myId);if(member){member.kills=(member.kills||0)+1;member.points=(member.points||0)+(POINT_VALUES[e.type]||10);}}else soloPoints+=(POINT_VALUES[e.type]||10);renderLeaderboard();discoverZombie(e,true);earnXP(e.type==='boss'?35:2);v10OnKill(e);if(e.type==='boss'&&wave%25===0){const keys=Object.keys(Rule.RELICS).filter(x=>!relicsOwned.includes(x));if(keys.length)relicsOwned.push(keys[Math.floor(Math.random()*keys.length)]);}addDrop(e);burst(e.x,e.y,e.color,e.type==='boss'?27:12);texts.push({x:e.x,y:e.y,txt:`+${e.reward}`,color:'#fff2b8',life:.95})}else burst(e.x,e.y,e.color,2)}
 function targeting(t){const s=battleStats(t);if(!s.rate)return null;let best=null;for(const e of enemies){if(Math.hypot(t.x-e.x,t.y-e.y)>s.range)continue;if(!best||e.d>best.d)best=e}return best}
 function powerBoost(t){let value=1;for(const x of towers)if(x!==t&&(x.type==='beacon'||x.type==='lantern')&&Math.hypot(x.x-t.x,x.y-t.y)<=battleStats(x).range)value=Math.max(value,1+battleStats(x).buff);return value;}
 function earnedCoins(){return getWaveReward();}
-function impactShot(s,target){const hitX=target.x,hitY=target.y;
+function impactShot(s,target){const hitX=target.x,hitY=target.y;if(s.element)v10ApplyElement(target,s.element,s.ownerId,s.damage);
  if(s.splash){burst(hitX,hitY,s.color,8);for(const e of [...enemies])if(Math.hypot(e.x-hitX,e.y-hitY)<=s.splash){if(s.poison){e.poisonT=3.2;e.poisonDps=Math.max(e.poisonDps||0,s.poison);e.poisonOwnerId=s.ownerId}if(s.slow){e.slowT=1.6;e.slowFactor=s.slow}addDamage(e,s.damage,s.ownerId)}return;}
  const chainTargets=s.chain?[...enemies].filter(e=>e!==target&&Math.hypot(e.x-hitX,e.y-hitY)<=95).sort((a,b)=>a.d-b.d).slice(0,s.chain):[];
  if(s.slow){target.slowT=1.6;target.slowFactor=s.slow;}
@@ -674,10 +829,10 @@ function impactShot(s,target){const hitX=target.x,hitY=target.y;
 function update(dt){clock+=dt;if(!active&&!gameOver&&!paused&&autoStart){if(autoCountdown<=0)autoCountdown=5;autoCountdown-=dt;if(autoCountdown<=0)startWave();}for(let i=scrollDrops.length-1;i>=0;i--){const drop=scrollDrops[i];drop.life-=dt;if(drop.life<=0){if(scrollInventory.length<60)scrollInventory.push({kind:drop.kind,rarity:drop.rarity});scrollDrops.splice(i,1);updateUI();}}for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.96;p.vy*=.96;p.life-=dt;if(p.life<=0)particles.splice(i,1)}for(let i=texts.length-1;i>=0;i--){let t=texts[i];t.y-=22*dt;t.life-=dt;if(t.life<=0)texts.splice(i,1)}
  if(active){spawnTime-=dt;while(spawnQueue.length&&spawnTime<=0){spawn(spawnQueue.shift());spawnedCount++;spawnTime+=spawnInterval;}}
  for(let i=enemies.length-1;i>=0;i--){let e=enemies[i];e.slowT=Math.max(0,e.slowT-dt);if(e.poisonT>0){e.poisonT=Math.max(0,e.poisonT-dt);addDamage(e,(e.poisonDps||0)*dt,e.poisonOwnerId);if(e.poisonT===0)e.poisonDps=0;if(!enemies.includes(e))continue;}
-  let factor=e.slowT>0?e.slowFactor:1;if(e.type==='boss'&&e.bossKind==='bloom')e.hp=Math.min(e.maxHp,e.hp+e.maxHp*.002*dt);const w=Rule.WEATHER[weatherKey()];let motion=(w.speed||1)*(World.mods().enemySpeed||1)*(biome()==='moor'?.95:biome()==='marsh'?.92:biome()==='snow'?.88:1);e.d+=e.speed*factor*motion*dt;let p=positionAt(e.d);e.x=p.x;e.y=p.y;if(e.d>=pathLength){enemies.splice(enemies.indexOf(e),1);const beforeHealth=health;gateHit(e);burst(925,p.y,'#a65333',13);texts.push({x:850,y:p.y,txt:health===beforeHealth?'🛡️':`-${beforeHealth-health} ♥`,color:'#ffded1',life:1.0});if(health===0)lose();updateUI()}}
+  let factor=e.slowT>0?e.slowFactor:1;if(e.type==='boss'&&e.bossKind==='bloom')e.hp=Math.min(e.maxHp,e.hp+e.maxHp*.002*dt);const w=Rule.WEATHER[weatherKey()];let motion=(w.speed||1)*(World.mods().enemySpeed||1)*(biome()==='moor'?.95:biome()==='marsh'?.92:biome()==='snow'?.88:1);if(e.type==='raidBoss'){const phase=(e.hp/e.maxHp<.35)?2:(e.hp/e.maxHp<.7)?1:0;if(phase>(e.phase||0)){e.phase=phase;e.speed*=1.12;spawnQueue.push('dart','warden');totalSpawned+=2;texts.push({x:e.x,y:e.y-50,txt:'PHASE '+(phase+1)+'!',color:'#fff2c4',life:1.7});burst(e.x,e.y,e.color,24);}}e.d+=e.speed*factor*motion*dt;let p=positionAt(e.d);e.x=p.x;e.y=p.y;if(e.d>=pathLength){enemies.splice(enemies.indexOf(e),1);const beforeHealth=health;gateHit(e);burst(925,p.y,'#a65333',13);texts.push({x:850,y:p.y,txt:health===beforeHealth?'🛡️':`-${beforeHealth-health} ♥`,color:'#ffded1',life:1.0});if(health===0)lose();updateUI()}}
  if(gameOver)return;
  for(const t of towers){const s=battleStats(t);if(!s.rate)continue;t.cool-=dt;if(t.cool>0)continue;let target=targeting(t);if(!target)continue;const def=towerDef(t);t.angle=Math.atan2(target.y-t.y,target.x-t.x);t.cool=s.rate;
- shots.push({x:t.x,y:t.y,target,ownerId:t.ownerId||((p2pRole==='host')?myId:'solo'),damage:s.damage*powerBoost(t),speed:def.speed*(Rule.WEATHER[weatherKey()].projectile||1),color:def.color,r:s.splash?7:4,splash:s.splash,slow:s.slow,poison:s.poison,chain:s.chain,life:2.5});}
+ shots.push({x:t.x,y:t.y,target,ownerId:t.ownerId||((p2pRole==='host')?myId:'solo'),damage:s.damage*powerBoost(t),speed:def.speed*(Rule.WEATHER[weatherKey()].projectile||1),color:def.color,r:s.splash?7:4,splash:s.splash,slow:s.slow,poison:s.poison,chain:s.chain,element:t.element||null,life:2.5});}
  for(let i=shots.length-1;i>=0;i--){let s=shots[i];s.life-=dt;if(s.life<=0){shots.splice(i,1);continue}if(!enemies.includes(s.target)){shots.splice(i,1);continue}const dx=s.target.x-s.x,dy=s.target.y-s.y,dist=Math.hypot(dx,dy),move=s.speed*dt;if(dist<=move+5){impactShot(s,s.target);shots.splice(i,1)}else{s.x+=dx/dist*move;s.y+=dy/dist*move}}
  if(active&&spawnQueue.length===0&&enemies.length===0){active=false;autoCountdown=autoStart?5:0;const reward=earnedCoins();
  if(p2pRole==='host'){
@@ -687,7 +842,7 @@ function update(dt){clock+=dt;if(!active&&!gameOver&&!paused&&autoStart){if(auto
    awardCoins(member.id,payout);
   }
  }else credits+=reward;
- if(wave%10===0){chests++;if(health<20)health++;toast('🎁 Milestone chest earned! Open it below.')}if(wave%4===0){merchantRound=wave/4;merchantUsed=[];toast('🧳 Traveling merchant has arrived!')}gateShield=Math.min(20,gateShield+Math.min(baseLevel,4));earnXP(15+Math.floor(wave/2));texts.push({x:470,y:245,txt:`VALLEY SECURED · +${reward} 🟡`,color:'#f8f2b1',life:1.8});updateUI()}
+ if(wave%10===0){chests++;if(health<20)health++;toast('🎁 Milestone chest earned! Open it below.')}if(wave%4===0){merchantRound=wave/4;merchantUsed=[];toast('🧳 Traveling merchant has arrived!')}gateShield=Math.min(20,gateShield+Math.min(baseLevel,4));v10AfterWave();earnXP(15+Math.floor(wave/2));texts.push({x:470,y:245,txt:`VALLEY SECURED · +${reward} 🟡`,color:'#f8f2b1',life:1.8});updateUI()}
 }
 function lose(){autoCountdown=0;gameOver=true;active=false;paused=false;saveBest();$('endWave').textContent=`WAVE ${wave}`;$('endKills').textContent=`${kills} enemies defeated · Personal best: ${bestWave}`;$('overlay').classList.add('show');updateUI()}
 function drawRounded(x,y,w,h,r,color){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}
@@ -767,10 +922,11 @@ function drawTurret(t){const g=ctx,d=towerDef(t);g.save();g.translate(t.x,t.y);g
  g.restore();
  if(p2pRole&&t.ownerId){ctx.save();ctx.strokeStyle=playerColor(t.ownerId);ctx.lineWidth=3;ctx.beginPath();ctx.arc(t.x,t.y,19,0,2*PI);ctx.stroke();ctx.restore();}
  if(t.evolution){const v=Rule.EVOLUTIONS[t.evolution];ctx.save();ctx.strokeStyle=v.color;ctx.globalAlpha=.5+.18*Math.sin(clock*2);ctx.lineWidth=3;ctx.beginPath();ctx.arc(t.x,t.y,29+2*Math.sin(clock*3),0,2*PI);ctx.stroke();ctx.textAlign='center';ctx.font='15px system-ui';ctx.fillText(v.icon,t.x+21,t.y-20);ctx.font='900 10px system-ui';ctx.fillText('✦'+(t.evolutionStage||1),t.x+22,t.y+30);ctx.restore();}
+ if(t.element&&V10_ELEMENTS[t.element]){ctx.save();ctx.fillStyle=V10_ELEMENTS[t.element].color;ctx.beginPath();ctx.arc(t.x+16,t.y-17,9,0,2*PI);ctx.fill();ctx.font='12px system-ui';ctx.textAlign='center';ctx.fillText(V10_ELEMENTS[t.element].icon,t.x+16,t.y-13);ctx.restore();}
  if(t.level>1){drawRounded(t.x-21,t.y+16,42,14,5,'#3c5639');ctx.textAlign='center';ctx.font='900 10px system-ui';ctx.fillStyle='#fff5dd';ctx.fillText('LV '+t.level,t.x,t.y+27)}
 }
 function drawEnemy(e){
- const g=ctx,r=e.r,walker=e.type==='glider',runner=e.type==='dart',brute=e.type==='warden',crawler=e.type==='crawler',boss=e.type==='boss';
+ const g=ctx,r=e.r,walker=e.type==='glider',runner=e.type==='dart',brute=e.type==='warden',crawler=e.type==='crawler',boss=e.type==='boss'||e.type==='raidBoss';
  const p=positionAt(Math.min(pathLength,e.d+6));const angle=Math.atan2(p.y-e.y,p.x-e.x);
  const stride=Math.sin(clock*(runner?17:boss?6:10)+e.d*.07)*r*.24;
  const skin=e.color||'#9fc083',coat=boss?'#58413c':brute?'#66564a':runner?'#6d6f4e':crawler?'#776653':'#5f6960';
@@ -804,9 +960,9 @@ function drawEnemy(e){
 function drawGateFortifications(){if(baseLevel<=0&&gateShield<=0)return;ctx.save();const y=positionAt(pathLength).y;const x=925;
  const segments=Math.min(7,2+baseLevel);ctx.strokeStyle=baseLevel>2?'#736747':'#a58760';ctx.lineWidth=6+Math.min(7,baseLevel);ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x-10,y-21);ctx.lineTo(x-10,y+21);ctx.stroke();for(let i=0;i<segments;i++){ctx.fillStyle=baseLevel>2?'#d0c6a1':'#c3a776';ctx.fillRect(x-36+i*9,y-27,7,55);}
  if(gateShield){ctx.strokeStyle='#b4e7dcaa';ctx.lineWidth=2+Math.min(3,gateShield/4);ctx.beginPath();ctx.arc(x-6,y,37+Math.sin(clock*3)*2,0,2*PI);ctx.stroke();ctx.font='bold 12px system-ui';ctx.textAlign='center';ctx.fillStyle='#f4f6f0';ctx.fillText('🛡️'+gateShield,x-5,y-44)}ctx.restore();}
-function render(){ctx.clearRect(0,0,960,600);ctx.drawImage(land,0,0);drawGateFortifications();
+function render(){ctx.clearRect(0,0,960,600);ctx.drawImage(land,0,0);drawVillage();drawGateFortifications();
  // Hover selection keeps a clear build grid without covering the natural landscape.
- if(hover&&!selectedTower&&selectedType&&!gameOver){let {c,r}=hover,x=c*CELL+CELL/2,y=r*CELL+CELL/2,d=getSelectionDef(selectedType);if(c>=0&&r>=0&&c<COLS&&r<ROWS){let valid=!invalidTile(c,r)&&!towers.some(t=>t.c===c&&t.r===r);ctx.save();ctx.fillStyle=valid?'#d9ebbd74':'#dc6b6b83';ctx.fillRect(c*CELL+1,r*CELL+1,CELL-2,CELL-2);ctx.strokeStyle=valid?'#eef8dc':'#ffe3da';ctx.lineWidth=3;ctx.strokeRect(c*CELL+3,r*CELL+3,CELL-6,CELL-6);if(valid){ctx.beginPath();ctx.arc(x,y,d.range,0,2*PI);ctx.fillStyle='#d8efb71f';ctx.fill();ctx.strokeStyle='#f2eed8bc';ctx.lineWidth=2;ctx.setLineDash([7,8]);ctx.stroke()}ctx.restore()}}
+ if(hover&&!selectedTower&&(selectedType||villageSelected)&&!gameOver){let {c,r}=hover,x=c*CELL+CELL/2,y=r*CELL+CELL/2,d=villageSelected?null:getSelectionDef(selectedType);if(c>=0&&r>=0&&c<COLS&&r<ROWS){let valid=!invalidTile(c,r)&&!towers.some(t=>t.c===c&&t.r===r)&&!villageBuildings.some(b=>b.c===c&&b.r===r);ctx.save();ctx.fillStyle=valid?'#d9ebbd74':'#dc6b6b83';ctx.fillRect(c*CELL+1,r*CELL+1,CELL-2,CELL-2);ctx.strokeStyle=valid?'#eef8dc':'#ffe3da';ctx.lineWidth=3;ctx.strokeRect(c*CELL+3,r*CELL+3,CELL-6,CELL-6);if(valid&&d?.range){ctx.beginPath();ctx.arc(x,y,d.range,0,2*PI);ctx.fillStyle='#d8efb71f';ctx.fill();ctx.strokeStyle='#f2eed8bc';ctx.lineWidth=2;ctx.setLineDash([7,8]);ctx.stroke()}ctx.restore()}}
  for(const t of towers){const d=towerDef(t),s=battleStats(t);if(selectedTower===t){ctx.beginPath();ctx.arc(t.x,t.y,s.range,0,2*PI);ctx.fillStyle='#e6f0c62c';ctx.fill();ctx.strokeStyle='#fff2becc';ctx.lineWidth=2;ctx.setLineDash([7,6]);ctx.stroke();ctx.setLineDash([])}drawTurret(t)}
  for(const e of enemies)drawEnemy(e);
  for(const drop of scrollDrops){const rarity=Rule.RARITIES[drop.rarity],b=Math.sin(clock*4+drop.id)*3;ctx.save();ctx.shadowColor=rarity.color;ctx.shadowBlur=isPhone()?0:15;ctx.fillStyle='#fff4d3';ctx.strokeStyle=rarity.color;ctx.lineWidth=3;ctx.beginPath();ctx.arc(drop.x,drop.y-8+b,17,0,2*PI);ctx.fill();ctx.stroke();ctx.shadowBlur=0;ctx.textAlign='center';ctx.font='20px system-ui';ctx.fillText('📜',drop.x,drop.y-1+b);ctx.restore();}
@@ -822,7 +978,7 @@ function frame(time){if(isPhone()&&time-lastTimestamp<31){requestAnimationFrame(
    for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.96;p.vy*=.96;p.life-=dt;if(p.life<=0)particles.splice(i,1)}
    for(let i=texts.length-1;i>=0;i--){let t=texts[i];t.y-=22*dt;t.life-=dt;if(t.life<=0)texts.splice(i,1)}
  }else if(!paused&&!gameOver){update(dt*speed);if(active||autoCountdown>0){if(Math.floor(clock*5)!==Math.floor((clock-dt*speed)*5))updateAutoUI()}}
- if(p2pRole==='host'&&time-lastBroadcast>210){lastBroadcast=time;broadcastP2P();}render();requestAnimationFrame(frame)}
+ if(p2pRole==='host'&&time-lastBroadcast>240){lastBroadcast=time;broadcastP2P();}const boss=v10GetActiveRaid();if(boss){$('v10BossHealth').style.width=Math.max(0,boss.hp/boss.maxHp*100)+'%';$('v10BossBar').classList.add('visible');}render();requestAnimationFrame(frame)}
 let cancelTouchClick=false,dragStart=null;
 canvas.addEventListener('pointerdown',e=>{if(e.pointerType==='touch'){cancelTouchClick=false;dragStart={x:e.clientX,y:e.clientY,moved:false}}});
 canvas.addEventListener('pointermove',e=>{if(dragStart&&e.pointerType==='touch'&&Math.hypot(e.clientX-dragStart.x,e.clientY-dragStart.y)>12){dragStart.moved=true;cancelTouchClick=true;}});
@@ -830,9 +986,10 @@ canvas.addEventListener('pointerup',()=>{dragStart=null;});
 canvas.addEventListener('mousemove',ev=>{if(isPhone())return;let rc=canvas.getBoundingClientRect();hover={c:Math.floor((ev.clientX-rc.left)*canvas.width/rc.width/CELL),r:Math.floor((ev.clientY-rc.top)*canvas.height/rc.height/CELL)}});canvas.addEventListener('mouseleave',()=>{hover=null});canvas.addEventListener('click',ev=>{if(cancelTouchClick){cancelTouchClick=false;return;}let rc=canvas.getBoundingClientRect();let c=Math.floor((ev.clientX-rc.left)*canvas.width/rc.width/CELL),r=Math.floor((ev.clientY-rc.top)*canvas.height/rc.height/CELL);const px=(ev.clientX-rc.left)*canvas.width/rc.width,py=(ev.clientY-rc.top)*canvas.height/rc.height;
  const drop=[...scrollDrops].reverse().find(d=>Math.hypot(px-d.x,py-d.y)<23);if(drop){collectScroll(drop.id);return;}
  let turret=towers.find(t=>t.c===c&&t.r===r);
- if(turret){pendingPlacement=null;hover=null;selectedTower=turret;selectedType=null;updateUI();return;}
+   if(!turret&&villageBuildings.some(b=>b.c===c&&b.r===r)){selectedVillage=villageBuildings.find(b=>b.c===c&&b.r===r);v10OpenTab('kingdom');toast(V10_BUILDINGS[selectedVillage.type].name);return;}
+ if(turret){pendingPlacement=null;hover=null;selectedTower=turret;selectedType=null;villageSelected=null;updateUI();if(matchMedia('(orientation:landscape) and (max-height:560px)').matches)v10OpenTab('armory','details');return;}
  if(isPhone()){
-   if(!selectedType){toast('Choose a turret from Quick Build first');return;}
+   if(!selectedType&&!villageSelected){toast('Choose a tower or building first');return;}
    const same=pendingPlacement&&pendingPlacement.c===c&&pendingPlacement.r===r;
    if(same&&!invalidTile(c,r)){build(c,r);pendingPlacement=null;hover=null;updatePlacementUI();return;}
    pendingPlacement={c,r};hover={c,r};updatePlacementUI();return;
@@ -846,7 +1003,7 @@ function syncMobileShop(){
    const icon=document.createElement('span');icon.textContent=d.icon||'⚙';
    const title=document.createElement('b');title.textContent=id.startsWith('custom:')?'Custom '+(Number(id.slice(7))+1):d.name;
    const price=document.createElement('small');price.textContent=d.cost+' 🟡';
-   btn.append(icon,title,price);btn.addEventListener('click',()=>{pendingPlacement=null;hover=null;selectedType=id;selectedTower=null;updateUI();});e.append(btn);
+   btn.append(icon,title,price);btn.addEventListener('click',()=>{pendingPlacement=null;hover=null;villageSelected=null;selectedType=id;selectedTower=null;updateUI();});e.append(btn);
  }
  syncMobileShopState();
 }
@@ -870,10 +1027,10 @@ function updatePlacementUI(){
  const visible=isPhone()&&!!pendingPlacement&&!selectedTower;
  panel.classList.toggle('visible',visible);
  if(!visible)return;
- const {c,r}=pendingPlacement;const block=invalidTile(c,r)||towers.some(t=>t.c===c&&t.r===r)?'Tile is blocked':null;
- const d=selectedType?getSelectionDef(selectedType):null;
- const enough=d&&credits>=d.cost;
- $('placementText').textContent=block?`🚫 ${block} — choose clear grass`:!d?'Choose a turret':!enough?`${d.name} · Need ${d.cost} coins`:`${d.name} on tile ${c+1},${r+1} · ${d.cost} coins`;
+ const {c,r}=pendingPlacement;const block=!v10CanBuild(c,r)?'Tile is blocked':null;
+ const d=villageSelected?V10_BUILDINGS[villageSelected]:selectedType?getSelectionDef(selectedType):null;
+ const enough=d&&credits>=(d.coins??d.cost)&&(!villageSelected||v10CanBuyBuilding(villageSelected));
+ $('placementText').textContent=block?`🚫 ${block} — choose clear grass`:!d?'Choose a turret':!enough?`${d.name} · Need more coins/materials`:`${d.name} on tile ${c+1},${r+1} · ${d.coins??d.cost} coins`;
  $('placeConfirm').disabled=!!block||!enough||gameOver;
 }
 $('placeConfirm').addEventListener('click',()=>{if(!pendingPlacement)return;const {c,r}=pendingPlacement;build(c,r);pendingPlacement=null;hover=null;updatePlacementUI()});
@@ -913,9 +1070,9 @@ function p2pPlayers(){syncHostWallet();return players.map(p=>({id:p.id,name:p.na
 function snapshotP2P(to){return{
  code:roomCode,youId:to,hostId,mapDay,players:p2pPlayers(),
  game:{credits:(ranger(to)?.coins??credits),health,wave,kills,active,paused,speed,gameOver,spawnedCount,totalSpawned,bestWave,
-  clock,autoStart,autoCountdown,chests,merchantRound,merchantUsed,baseLevel,gateShield,relicsOwned,equippedRelics,
-  towers:towers.map(t=>({id:t.id,c:t.c,r:t.r,x:t.x,y:t.y,ownerId:t.ownerId||myId,type:t.type,blueprint:t.blueprint,level:t.level,spent:t.spent,angle:t.angle,evolution:t.evolution||null,evolutionStage:t.evolutionStage||0,scrolls:t.scrolls||[],parts:t.parts||null})),
-  enemies:enemies.map(e=>({id:e.id,type:e.type,bossKind:e.bossKind||null,x:e.x,y:e.y,d:e.d,maxHp:e.maxHp,hp:e.hp,speed:e.speed,air:e.air,color:e.color,r:e.r,slowT:e.slowT,poisonT:e.poisonT})),
+  clock,autoStart,autoCountdown,chests,merchantRound,merchantUsed,baseLevel,gateShield,relicsOwned,equippedRelics,villageBuildings,villageMaterials,v10Mode,v10Region,raidActive,pendingRaid,
+  towers:towers.map(t=>({id:t.id,c:t.c,r:t.r,x:t.x,y:t.y,ownerId:t.ownerId||myId,type:t.type,blueprint:t.blueprint,level:t.level,spent:t.spent,angle:t.angle,evolution:t.evolution||null,evolutionStage:t.evolutionStage||0,scrolls:t.scrolls||[],parts:t.parts||null,element:t.element||null})),
+  enemies:enemies.map(e=>({id:e.id,type:e.type,bossKind:e.bossKind||null,x:e.x,y:e.y,d:e.d,maxHp:e.maxHp,hp:e.hp,speed:e.speed,air:e.air,color:e.color,r:e.r,slowT:e.slowT,poisonT:e.poisonT,raidKey:e.raidKey||null,phase:e.phase||0})),
   shots:shots.slice(0,95).map(s=>({x:s.x,y:s.y,r:s.r,color:s.color})),scrollDrops:scrollDrops.map(x=>({...x})),scrollInventory:scrollInventory.map(x=>({...x}))
  }};
 }
@@ -929,9 +1086,14 @@ function hostGuestAction(action,payload,actorId){
  if(gameOver&&!['reset'].includes(action))return 'Game has ended';
  if(t&&['upgrade','sell','evolve','ascend','combine'].includes(action)&&t.ownerId!==actorId)return 'This turret belongs to another ranger';
  switch(action){
+ case 'villageUpgrade':{const b=villageBuildings.find(x=>x.id===p.id);if(!b||b.ownerId!==actorId||b.level>=3)return 'Building upgrade unavailable';const cost=v10UpgradePrice(b);if(!pay(cost.coins)||villageMaterials.wood<cost.wood||villageMaterials.stone<cost.stone)return 'Not enough resources';member.coins-=cost.coins;villageMaterials.wood-=cost.wood;villageMaterials.stone-=cost.stone;b.level++;break;}
+ case 'villageBuild':{const type=String(p.type||'');if(!V10_BUILDINGS[type]||!v10CanBuild(p.c,p.r)||!v10CanBuyBuilding(type,member.coins))return 'Cannot build village structure';member.coins-=V10_BUILDINGS[type].coins;v10CreateBuilding(type,p.c,p.r,actorId);break;}
+ case 'elementInfuse':{if(!t||!V10_ELEMENTS[p.key]||!(Rule.stats(t)?.rate>0)||t.ownerId!==actorId||t.element===p.key)return 'Infusion unavailable';const price=95+(t.element?55:0);if(!pay(price))return 'Insufficient coins';member.coins-=price;t.element=p.key;break;}
+ case 'raidStart':{if(actorId!==hostId||active||!V10_RAIDS[p.key])return 'Host must queue raid between waves';pendingRaid=p.key;v10Mode='raid';v10Region=null;break;}
+ case 'adventureStart':{if(actorId!==hostId||active)return 'Host must start adventure';const reg=V10_REGIONS.find(x=>x.id===p.key);if(!reg)return 'Unknown region';if(mapDay!==reg.map)applyMapDay(reg.map,true);else reset();v10Mode='adventure';v10Region=reg.id;break;}
  case 'build':{
   const c=p.c,r=p.r;if(!Number.isInteger(c)||!Number.isInteger(r)||c<0||c>=COLS||r<0||r>=ROWS)return 'Invalid tile';
-  if(invalidTile(c,r)||towers.some(x=>x.c===c&&x.r===r))return 'That tile is blocked';
+  if(!v10CanBuild(c,r))return 'That tile is blocked';
   const type=String(p.type||'');const bp=type==='custom'?Rule.normalizeBlueprint(p.blueprint):null;
   const d=type==='custom'?Rule.customDefinition(bp):Object.hasOwn(TOWERS,type)?TOWERS[type]:null;
   if(!d||!pay(d.cost))return 'Insufficient coins or invalid turret';
@@ -1048,7 +1210,7 @@ function applySnapshot(info){
  towers=g.towers;
  const previous=new Map(enemies.map(e=>[e.id,e]));
  enemies=(g.enemies||[]).map(e=>{const prev=previous.get(e.id);return {...e,x:prev?.x??e.x,y:prev?.y??e.y,targetX:e.x,targetY:e.y};});
- shots=g.shots||[];scrollDrops=g.scrollDrops||[];scrollInventory=g.scrollInventory||[];chests=g.chests||0;merchantRound=g.merchantRound||0;merchantUsed=g.merchantUsed||[];baseLevel=g.baseLevel||0;gateShield=g.gateShield||0;relicsOwned=g.relicsOwned||[];equippedRelics=g.equippedRelics||[];for(const en of enemies)if(!seenEnemyIds.has(en.id)){seenEnemyIds.add(en.id);discoverZombie(en);}
+ shots=g.shots||[];scrollDrops=g.scrollDrops||[];scrollInventory=g.scrollInventory||[];chests=g.chests||0;merchantRound=g.merchantRound||0;merchantUsed=g.merchantUsed||[];baseLevel=g.baseLevel||0;gateShield=g.gateShield||0;relicsOwned=g.relicsOwned||[];equippedRelics=g.equippedRelics||[];villageBuildings=g.villageBuildings||[];villageMaterials=g.villageMaterials||{wood:45,stone:35};v10Mode=g.v10Mode||'endless';v10Region=g.v10Region||null;raidActive=g.raidActive||null;pendingRaid=g.pendingRaid||null;for(const en of enemies)if(!seenEnemyIds.has(en.id)){seenEnemyIds.add(en.id);discoverZombie(en);}
  if(oldTowerId!==undefined){selectedTower=towers.find(t=>t.id===oldTowerId)||null}
  else selectedTower=null;
  for(const t of towers)if(!oldTowerIds.has(t.id)){burst(t.x,t.y,towerDef(t).color,13);}
@@ -1056,7 +1218,7 @@ function applySnapshot(info){
  else $('overlay').classList.remove('show');
  $('pause').textContent=paused?'▶ Resume':'Ⅱ Pause';$('speed').textContent=`⚡ ${speed}× Speed`;
  $('speed').classList.toggle('speed-on',speed===1);
- autoStart=!!g.autoStart;autoCountdown=Math.max(0,Number(g.autoCountdown)||0);const signature=[autoStart,Math.ceil(autoCountdown),credits,health,wave,kills,players.map(p=>`${p.id}:${p.kills}:${p.points}:${p.coins}`).join(';'),active,paused,speed,gameOver,spawnedCount,enemies.length,hostId,players.map(p=>p.id+(p.connected?1:0)).join(','),towers.map(t=>`${t.id}-${t.level}-${t.evolution}-${(t.scrolls||[]).length}`).join(';'),scrollInventory.map(x=>x.kind+x.rarity).join(','),scrollDrops.length,chests,merchantRound,merchantUsed.join(','),baseLevel,gateShield,relicsOwned.join(','),equippedRelics.join(',')].join('|');
+ autoStart=!!g.autoStart;autoCountdown=Math.max(0,Number(g.autoCountdown)||0);const signature=[autoStart,Math.ceil(autoCountdown),credits,health,wave,kills,players.map(p=>`${p.id}:${p.kills}:${p.points}:${p.coins}`).join(';'),active,paused,speed,gameOver,spawnedCount,enemies.length,hostId,players.map(p=>p.id+(p.connected?1:0)).join(','),towers.map(t=>`${t.id}-${t.level}-${t.evolution}-${(t.scrolls||[]).length}`).join(';'),scrollInventory.map(x=>x.kind+x.rarity).join(','),scrollDrops.length,chests,merchantRound,merchantUsed.join(','),baseLevel,gateShield,relicsOwned.join(','),equippedRelics.join(','),villageBuildings.length,villageMaterials.wood,villageMaterials.stone,v10Mode,v10Region,raidActive,pendingRaid].join('|');
  if(signature!==lastNetSig){lastNetSig=signature;updateUI();if(changedWave||players.length!==document.querySelectorAll("#playerList .player-chip").length)updateLobby();}
  if(changedWave&&g.wave>0&&oldWave>0)toast(`Wave ${g.wave} started!`);
  if(oldHealth>health)toast(`⚠ The gate lost ${oldHealth-health} health!`);
@@ -1110,7 +1272,7 @@ function getInviteLink(){
 async function copyInvite(){const link=getInviteLink();try{await navigator.clipboard.writeText(link);toast('Invite copied! Friends can open it from other networks.');}catch{prompt('Copy and send this invite link:',link)}}
 async function initLobby(){
  updateLobby();
- try{const savedName=localStorage.getItem('fieldkeepPlayerName');if(savedName)$('playerName').value=savedName;}catch{}
+ try{const savedName=localStorage.getItem('fieldkeepPlayerName');if(savedName)$('playerName').value=savedName;else if(v10Meta.name)$('playerName').value=v10Meta.name;}catch{}
  const requested=new URLSearchParams(location.search).get('room');if(requested)$('roomCode').value=requested.toUpperCase().slice(0,6);
  $('playerName').addEventListener('change',()=>{try{localStorage.setItem('fieldkeepPlayerName',$('playerName').value)}catch{}});
  if(location.protocol==='file:'){networkInfo=null;updateLobby();$('serverHint').textContent='Solo works offline. Online parties need an internet connection.';return}
@@ -1179,7 +1341,7 @@ function updateWorkshop(){const bp=draftBlueprint();if(!bp)return;const def=Rule
  const notes={none:'Normal single-target shots.',slow:'Slows zombies it hits for a short time.',splash:'Damages groups caught in each blast.',poison:'Damages zombies over time after being hit.',chain:'Bounces damage to nearby zombies.'};
  $('customEffectNote').textContent=notes[bp.effect]+(bp.effect==='none'?'':` Ability level ${bp.power}.`);
 }
-function renderSavedBlueprints(){const container=$('savedBlueprints');if(!container)return;container.replaceChildren();for(let i=0;i<blueprints.length;i++){const b=blueprints[i];if(!b)continue;const row=document.createElement('div');row.className='blueprint-row'+(selectedType==='custom:'+i?' active':'');const equip=document.createElement('button');equip.className='equip';equip.textContent=`⚙ Custom #${i+1} · ${Rule.blueprintCost(b)} 🟡`;equip.addEventListener('click',()=>{selectedType='custom:'+i;selectedTower=null;updateUI();renderSavedBlueprints()});const edit=document.createElement('button');edit.className='edit';edit.textContent='Edit';edit.addEventListener('click',()=>{$('saveSlot').value=String(i);loadWorkshop(b);toast(`Editing custom slot ${i+1}`)});row.append(equip,edit);container.appendChild(row)}if(!container.children.length){const empty=document.createElement('span');empty.className='empty';empty.textContent='No designs saved yet. Start with the sliders above!';container.appendChild(empty)}}
+function renderSavedBlueprints(){const container=$('savedBlueprints');if(!container)return;container.replaceChildren();for(let i=0;i<blueprints.length;i++){const b=blueprints[i];if(!b)continue;const row=document.createElement('div');row.className='blueprint-row'+(selectedType==='custom:'+i?' active':'');const equip=document.createElement('button');equip.className='equip';equip.textContent=`⚙ Custom #${i+1} · ${Rule.blueprintCost(b)} 🟡`;equip.addEventListener('click',()=>{villageSelected=null;selectedType='custom:'+i;selectedTower=null;updateUI();renderSavedBlueprints()});const edit=document.createElement('button');edit.className='edit';edit.textContent='Edit';edit.addEventListener('click',()=>{$('saveSlot').value=String(i);loadWorkshop(b);toast(`Editing custom slot ${i+1}`)});row.append(equip,edit);container.appendChild(row)}if(!container.children.length){const empty=document.createElement('span');empty.className='empty';empty.textContent='No designs saved yet. Start with the sliders above!';container.appendChild(empty)}}
 function saveBlueprint(){const bp=draftBlueprint();if(!bp){toast('Choose valid turret stats');return;}const slot=Number($('saveSlot').value);if(!Number.isInteger(slot)||slot<0||slot>3)return;while(blueprints.length<=slot)blueprints.push(null);blueprints[slot]=bp;rememberBlueprints();selectedTower=null;selectedType='custom:'+slot;makeShop();updateUI();toast(`Saved Custom #${slot+1} for ${Rule.blueprintCost(bp)} coins — ready to place!`);}
 for(const id of ['wDamage','wFireRate','wRange','wSpeed','wEffect','wPower'])$(id).addEventListener('input',updateWorkshop);
 $('saveBlueprint').addEventListener('click',saveBlueprint);
@@ -1190,7 +1352,7 @@ const dangerLabels={grave:'🛡️ Grave Warden: shields nearby zombies',rusher:
 function updateSystemsUI(){
  const weather=Rule.WEATHER[weatherKey()];$('weatherLabel').textContent=weather.label+' — '+weather.desc;
  const bonus=Rule.BIOMES[biome()]||['🌍 Field','No special bonus'];$('biomeLabel').textContent=bonus.join(' · ');
- const boss=enemies.find(x=>x.type==='boss');$('bossNotice').textContent=boss?dangerLabels[boss.bossKind]||'⚠ Giant zombie':wave%5===4?'⚠ Boss wave up next':'🏰 Fortified Frontier';
+ const boss=enemies.find(x=>x.type==='boss'||x.type==='raidBoss');$('bossNotice').textContent=boss?.type==='raidBoss'?'👑 '+(V10_RAIDS[boss.raidKey]?.name||'World Boss'):boss?dangerLabels[boss.bossKind]||'⚠ Giant zombie':wave%5===4?'⚠ Boss wave up next':'🏰 Fortified Frontier';
  $('chestCount').textContent=chests+' chest'+(chests===1?'':'s');$('chestInfo').textContent=lastChestReward||'Clear waves 10, 20, 30… to collect treasure chests.';$('openChest').disabled=!chests||gameOver;
  $('merchantBadge').textContent=merchantRound?'VISITING':'AWAY';const offers=$('merchantOffers');offers.replaceChildren();if(!merchantRound){offers.textContent='The merchant is traveling. Clear a multiple of four waves to meet them.'}else for(const offer of getMerchantOffers()){const line=document.createElement('div');line.className='v7-row';const left=document.createElement('span');left.className='copy';left.innerHTML=`<b>${offer.label}</b><small>${offer.desc}</small>`;const btn=document.createElement('button');btn.textContent=merchantUsed.includes(offer.id)?'SOLD':offer.cost+' 🟡';btn.disabled=merchantUsed.includes(offer.id)||credits<offer.cost||gameOver;btn.addEventListener('click',()=>buyMerchant(offer.id));line.append(left,btn);offers.append(line);}
  const fusion=$('fusionList');fusion.replaceChildren();const recipes=[];for(let i=0;i<scrollInventory.length;i++){const f=Rule.fusionInfo(scrollInventory,i);if(f?.ready&&!recipes.some(x=>x.kind===f.kind&&x.source===scrollInventory[i].rarity))recipes.push({...f,index:i,source:scrollInventory[i].rarity});}$('fusionCount').textContent=recipes.length+' recipe'+(recipes.length===1?'':'s');if(!recipes.length)fusion.innerHTML='<span class="v7-info">Collect three of the same kind and rarity to unlock a fusion recipe.</span>';for(const f of recipes){const line=document.createElement('div');line.className='v7-row';const left=document.createElement('span');left.className='copy';left.textContent=`${Rule.SCROLLS[f.kind].icon} ${Rule.RARITIES[f.source].name} ${Rule.SCROLLS[f.kind].name} ×3 → ${Rule.RARITIES[f.rarity].name}`;const btn=document.createElement('button');btn.textContent=`Fuse · ${f.cost} 🟡`;btn.disabled=credits<f.cost||gameOver;btn.addEventListener('click',()=>fuseScrollAt(f.index));line.append(left,btn);fusion.append(line);}
@@ -1200,6 +1362,54 @@ function updateSystemsUI(){
  const encyclopedia=$('bestiaryList');encyclopedia.replaceChildren();const allEntries=[...Object.entries(ZOMBIES).filter(([k])=>k!=='boss').map(([id,data])=>[id,data]),...Object.entries(Rule.BOSSES).map(([id,b])=>['boss:'+id,[b.icon+' '+b.name,b.desc]])];let seen=0;for(const [id,data] of allEntries){const entry=bestiary[id],yes=!!entry?.seen;if(yes)seen++;const line=document.createElement('div');line.className='v7-row';const left=document.createElement('span');left.className='copy';left.innerHTML=`<b>${yes?'🧟 '+data[0]:'❓ Undiscovered zombie'}</b><small>${yes?data[1]+' · '+(entry.kills||0)+' defeated':'Meet it on the road to unlock its entry.'}</small>`;line.append(left);encyclopedia.append(line)}$('bestiaryBadge').textContent=seen+'/'+allEntries.length+' found';
 }
 $('openChest').addEventListener('click',openChest);$('upgradeGate').addEventListener('click',upgradeGate);$('repairGate').addEventListener('click',repairGate);
+
+
+function v10Esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function v10RestoreLegacy(){if(!v10MenuOriginal)return;for(const {el,parent,next} of v10MenuOriginal){if(next&&next.parentNode===parent)parent.insertBefore(el,next);else parent.appendChild(el);}v10MenuOriginal=null;}
+function v10MountLegacy(ids){v10RestoreLegacy();const content=$('v10Content');v10MenuOriginal=[];for(const id of ids){const el=document.getElementById(id)||document.querySelector(id);if(!el)continue;v10MenuOriginal.push({el,parent:el.parentNode,next:el.nextSibling});content.append(el);el.style.scrollMarginTop='0';}content.classList.add('v10-legacy');}
+function v10OpenTab(tab,sub){if(sub)v10ArmorySub=sub;v10Tab=tab;v10DeckVersion='';$('v10Modal').hidden=false;document.querySelectorAll('[data-v10-tab]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v10Tab===tab)));v10RenderTab(tab);}
+function v10CloseTab(){v10RestoreLegacy();$('v10Modal').hidden=true;v10Tab='';v10DeckVersion='';$('v10Content').classList.remove('v10-legacy');document.querySelectorAll('[data-v10-tab]').forEach(b=>b.removeAttribute('aria-pressed'));}
+let v10ArmorySub='loot';
+function v10RenderTab(tab){if(!$('v10Content'))return;v10RestoreLegacy();const el=$('v10Content');el.classList.remove('v10-legacy');const title={kingdom:'Kingdom & Village',element:'Elemental Forge',adventure:'Adventure Atlas',raid:'World Boss Raids',profile:'Ranger Profile',armory:'Scrolls & Armory',party:'Online Party'};
+ $('v10DeckTitle').textContent=title[tab]||'Fieldkeep';
+ if(tab==='kingdom'){
+  const buildings=villageBuildings.map(b=>V10_BUILDINGS[b.type]).filter(Boolean);el.innerHTML=`<p class="v10-lede">Build a living settlement on clear grass. Each ranger spends their own coins; wood and stone are shared across the party.</p><div class="v10-stat-row"><div class="v10-stat"><strong>${Math.floor(credits)} 🪙</strong><small>Your wallet</small></div><div class="v10-stat"><strong>${villageMaterials.wood} 🪵</strong><small>Wood</small></div><div class="v10-stat"><strong>${villageMaterials.stone} 🪨</strong><small>Stone</small></div></div><div class="v10-sep">Build your village</div><div class="v10-grid">${Object.entries(V10_BUILDINGS).map(([id,b])=>`<div class="v10-card ${villageSelected===id?'v10-chosen':''}"><div class="v10-emoji">${b.icon}</div><strong>${b.name}</strong><small>${b.desc}</small><small>${b.coins} 🪙 · ${b.wood} 🪵 · ${b.stone} 🪨</small><button class="v10-action" data-v10-action="villageChoose" data-id="${id}" ${!v10CanBuyBuilding(id)?'disabled':''}>${villageSelected===id?'✓ Selected':'Place on map'}</button></div>`).join('')}</div><div class="v10-sep">Your village</div><p class="v10-lede">${villageBuildings.length} structures. Every cleared wave brings supplies; farms earn their owners coins, mines produce stone, and lumber camps produce wood.</p><div class="v10-grid">${villageBuildings.slice(-10).map(b=>`<div class="v10-card"><strong>${V10_BUILDINGS[b.type]?.icon} ${V10_BUILDINGS[b.type]?.name}</strong><small>Lv ${b.level} · Tile ${b.c+1},${b.r+1} · ${b.ownerId===myId||b.ownerId==='solo'?'Your building':'Teammate'}</small><button class="v10-action secondary" data-v10-action="upgradeBuilding" data-id="${b.id}" ${(b.level>=3||((b.ownerId!==myId)&&(b.ownerId!=='solo'))||credits<v10UpgradePrice(b).coins||villageMaterials.wood<v10UpgradePrice(b).wood||villageMaterials.stone<v10UpgradePrice(b).stone)?'disabled':''}>${b.level>=3?'MAX LEVEL':'Upgrade '+v10UpgradePrice(b).coins+' 🪙'}</button></div>`).join('')||'<small>No buildings yet.</small>'}</div><button class="v10-action secondary" data-v10-action="castleRepair">❤️ Repair castle · ${repairCost()} coins</button><button class="v10-action secondary" data-v10-action="castleWalls">🧱 Fortify castle · ${baseUpgradeCost()} coins</button>`;
+ }else if(tab==='element'){
+  const t=selectedTower&&towers.includes(selectedTower)?selectedTower:null;const selected=t?`${v10Esc(towerDef(t)?.name)} · Level ${t.level}`:'No turret selected';const lock=t&&p2pRole&&t.ownerId&&t.ownerId!==myId;
+  el.innerHTML=`<p class="v10-lede">Infuse one element into a turret. Combine different elements on the same zombie to trigger powerful reactions.</p><div class="v10-card"><strong>🎯 Selected: ${selected}</strong><small>${t?'Element: '+(V10_ELEMENTS[t.element]?.name||'None'):'Tap a placed turret on the battlefield first.'}</small><small>${lock?'This defense belongs to another ranger.':'Infusion: 95 coins, or 150 to switch elements.'}</small></div><div class="v10-sep">Elemental infusions</div><div class="v10-grid">${Object.entries(V10_ELEMENTS).map(([key,elem])=>`<div class="v10-card ${t?.element===key?'v10-chosen':''}"><div class="v10-emoji">${elem.icon}</div><strong>${elem.name}</strong><small>${elem.desc}</small><button class="v10-action" data-v10-action="infuse" data-id="${key}" ${(!t||lock||!(Rule.stats(t)?.rate>0)||t.element===key||credits<(t.element?150:95))?'disabled':''}>${t?.element===key?'✓ Equipped':'Infuse '+(t?.element?150:95)+' 🪙'}</button></div>`).join('')}</div><div class="v10-sep">Element reactions</div><p class="v10-lede">🔥🌿 Wildfire · ❄️⚡ Shock Freeze · 🪨🔥 Lava Burst · 🌿🪨 Thorn Wall · ⚡🔥 Plasma Strike</p>`;
+ }else if(tab==='adventure'){
+  const r=V10_REGIONS.find(x=>x.id===v10Region);el.innerHTML=`<p class="v10-lede">Explore eight regions in order. Finish each wave mission to unlock the next. Adventure records are saved on this device.</p><div class="v10-card"><strong>${r?r.icon+' Active: '+r.name:'🗺️ No adventure running'}</strong><small>${r?`Survive ${r.goal} waves · Currently ${wave}/${r.goal}`:'You can always play Endless Survival outside Adventure Mode.'}</small>${r?`<div class="v10-progress"><i style="width:${Math.min(100,100*wave/r.goal)}%"></i></div>`:''}</div><div class="v10-sep">Region atlas</div><div class="v10-grid">${V10_REGIONS.map((r,i)=>{const done=v10Meta.completed.includes(r.id),locked=i>0&&!v10Meta.completed.includes(V10_REGIONS[i-1].id);return `<div class="v10-card"><div class="v10-emoji">${r.icon}</div><strong>${r.name}</strong><small>${r.desc}</small><small>Wave ${r.goal} · ${done?'✓ Complete':locked?'🔒 Locked':'Available'}</small><button class="v10-action" data-v10-action="adventure" data-id="${r.id}" ${locked||active?'disabled':''}>${done?'Replay mission':locked?'Locked':'Start mission'}</button></div>`}).join('')}</div><button class="v10-action secondary" data-v10-action="endless">🌳 Return to Endless Mode</button>`;
+ }else if(tab==='raid'){
+  el.innerHTML=`<p class="v10-lede">Challenge giant world bosses with multiple phases. Queue a boss while building, then start the next wave. Co-op players can fight together.</p><div class="v10-stat-row"><div class="v10-stat"><strong>${v10Meta.raidWins}</strong><small>Raid wins</small></div><div class="v10-stat"><strong>${v10Meta.raidTokens}</strong><small>Raid tokens</small></div><div class="v10-stat"><strong>${v10Meta.bossKills}</strong><small>Total bosses</small></div></div>${pendingRaid?`<div class="v10-card"><strong>⚠️ ${V10_RAIDS[pendingRaid]?.name} queued!</strong><small>Close this menu and tap Start Wave to begin the raid.</small></div>`:''}<div class="v10-sep">Raid bosses</div><div class="v10-grid">${Object.entries(V10_RAIDS).map(([id,r])=>`<div class="v10-card"><div class="v10-emoji">${r.icon}</div><strong>${r.name}</strong><small>${r.desc}</small><button class="v10-action" data-v10-action="raid" data-id="${id}" ${active||gameOver||(multiplayer&&!ownSession())?'disabled':''}>Queue raid</button></div>`).join('')}</div><p class="v10-lede">Bosses grow stronger with each wave. Defeat a raid boss for two chests, a powerful scroll, raid tokens, and bonus coins.</p>`;
+ }else if(tab==='profile'){
+  const level=Math.floor(Math.sqrt((v10Meta.xp||0)/80))+1;const name=v10Esc(v10Meta.name||'Ranger');const icons=['🛡️','🏹','🧙','🌲','🐺','👑'];const titles=['Evergreen','Castle Architect','Raid Hunter','Storm Warden'];el.innerHTML=`<div class="v10-card"><div class="v10-emoji">${v10Meta.avatar||'🛡️'}</div><strong>${name} · LEVEL ${level}</strong><small>${v10Esc(v10Meta.banner||'Evergreen')} · Locally saved profile</small><div class="v10-progress"><i style="width:${Math.min(100,(v10Meta.xp%((level+1)*80))/((level+1)*80)*100)}%"></i></div></div><div class="v10-stat-row"><div class="v10-stat"><strong>${v10Meta.totalKills||0}</strong><small>Career kills</small></div><div class="v10-stat"><strong>${v10Meta.bestWave||0}</strong><small>Best wave</small></div><div class="v10-stat"><strong>${v10Meta.raidWins||0}</strong><small>Raid wins</small></div></div><div class="v10-stat-row"><div class="v10-stat"><strong>${v10Meta.completed.length}/8</strong><small>Regions</small></div><div class="v10-stat"><strong>${v10Meta.bossKills||0}</strong><small>Boss kills</small></div><div class="v10-stat"><strong>${v10Meta.xp||0}</strong><small>Career XP</small></div></div><label class="v10-sep" for="v10Name">Ranger name</label><input class="v10-input" maxlength="18" id="v10Name" value="${name}" autocomplete="nickname" /><div class="v10-sep">Choose your avatar</div><div class="v10-grid">${icons.map(icon=>`<button class="v10-action ${v10Meta.avatar===icon?'secondary':''}" data-v10-action="avatar" data-id="${icon}">${icon} ${v10Meta.avatar===icon?'✓ Selected':'Choose'}</button>`).join('')}</div><div class="v10-sep">Player title</div><div class="v10-grid">${titles.map((t,i)=>`<button class="v10-action ${v10Meta.banner===t?'secondary':''}" data-v10-action="title" data-id="${t}" ${(i===1&&villageBuildings.length<3)||(i===2&&!v10Meta.raidWins)||(i===3&&v10Meta.completed.length<4)?'disabled':''}>${t}</button>`).join('')}</div><button class="v10-action" data-v10-action="saveProfile">Save profile</button><p class="v10-lede">Profile saves in this browser. Online party stats are displayed in the leaderboard and are not stored on a central account.</p>`;
+ }else if(tab==='armory'){
+  el.innerHTML=`<p class="v10-lede">All your original Fieldkeep tools are preserved.</p><div class="v10-grid"><button class="v10-action" data-v10-action="armory" data-id="loot">📜 Scrolls</button><button class="v10-action" data-v10-action="armory" data-id="workshop">⚙️ Workshop</button><button class="v10-action" data-v10-action="armory" data-id="details">⬆️ Tower upgrades</button><button class="v10-action" data-v10-action="armory" data-id="progression">✨ More systems</button></div><div class="v10-sep">${({loot:'Scroll collection',workshop:'Custom turret workshop',details:'Selected turret',progression:'Progression & special abilities'})[v10ArmorySub]||'Collection'}</div>`;
+  v10MountLegacy(({loot:['lootPanel'],workshop:['workshop'],details:['section.panel.selection'],progression:['progressionArea']})[v10ArmorySub]||['lootPanel']);
+ }else if(tab==='party'){
+  el.innerHTML='<p class="v10-lede">Create an online party and share a code. Private wallets and the same world map remain synced.</p>';
+  v10MountLegacy(['partyArea']);
+ }else{el.textContent='Select an option.';}
+}
+function v10HandleDeckAction(action,key){switch(action){
+ case'villageChoose':if(!V10_BUILDINGS[key])return;villageSelected=key;selectedType=null;selectedTower=null;pendingPlacement=null;hover=null;v10CloseTab();toast('🏡 '+V10_BUILDINGS[key].name+': tap clear grass to build');updateUI();break;
+ case'infuse':infuseElement(key);break;
+ case'adventure':v10LaunchAdventure(key);break;
+ case'raid':v10QueueRaid(key);break;
+ case'endless':if(active){toast('Finish this wave first');break;}v10Mode='endless';v10Region=null;pendingRaid=null;toast('🌳 Endless Frontier mode ready');updateUI();break;
+ case'avatar':if(['🛡️','🏹','🧙','🌲','🐺','👑'].includes(key)){v10Meta.avatar=key;saveV10();v10RenderTab('profile');}break;
+ case'title':if(['Evergreen','Castle Architect','Raid Hunter','Storm Warden'].includes(key)){v10Meta.banner=key;saveV10();v10RenderTab('profile')}break;
+ case'saveProfile':v10Meta.name=safeName($('v10Name').value);saveV10();$('playerName').value=v10Meta.name;try{localStorage.setItem('fieldkeepPlayerName',v10Meta.name)}catch{}toast('👤 Profile saved');v10RenderTab('profile');break;
+ case'upgradeBuilding':v10UpgradeBuilding(key);break;
+ case'castleRepair':repairGate();break;
+ case'castleWalls':upgradeGate();break;
+ case'armory':v10ArmorySub=key;v10RenderTab('armory');break;
+}}
+for(const btn of document.querySelectorAll('[data-v10-tab]'))btn.addEventListener('click',()=>v10OpenTab(btn.dataset.v10Tab));
+$('v10Close').addEventListener('click',v10CloseTab);$('v10Dimmer').addEventListener('click',v10CloseTab);
+$('v10Content').addEventListener('click',ev=>{const b=ev.target.closest('[data-v10-action]');if(b)v10HandleDeckAction(b.dataset.v10Action,b.dataset.id||'')});
+$('v10Full').addEventListener('click',()=>{if(!document.fullscreenElement){document.documentElement.requestFullscreen?.().catch(()=>toast('Fullscreen is unavailable on this browser'))}else document.exitFullscreen?.()});
+document.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&!$('v10Modal').hidden)v10CloseTab()});
 
 setupMaps();reset();initLobby();requestAnimationFrame(t=>{lastTimestamp=t;requestAnimationFrame(frame)});
 if(location.protocol==='https:'&&'serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));

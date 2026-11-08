@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Fieldkeep V7 — Legends of the Frontier</title>
+<title>Fieldkeep V8 — World Events & Online Parties</title>
 <style>
 :root{color-scheme:light;--bg:#e7ebda;--paper:#f9f8ee;--panel:#fffdf4;--ink:#2e3c2d;--forest:#35583b;--dark:#203d2a;--line:#d7ddc5;--muted:#77816d;--gold:#a66c24;--red:#a94335;--teal:#3e796c}
 *{box-sizing:border-box}
@@ -124,13 +124,20 @@ body:before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.21;ba
 .level-highlight{margin:8px 0;font-size:10px;color:#4d7f55;font-weight:800}
 @media(min-width:1031px){.v7-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:15px}.v7-panels details.panel{min-height:52px}}
 @media(max-width:640px){.v7-grid{grid-template-columns:1fr}.v7-row{flex-wrap:wrap}.v7-row button{margin-left:auto}}
+
+/* V8 world events and auto waves */
+#eventBanner{display:flex;align-items:center;gap:12px;margin:0 0 12px;padding:13px 15px;border:1px solid #bfcbae;border-radius:12px;background:linear-gradient(120deg,#f5f6e8,#eaf1d9);box-shadow:0 5px 12px #244c2712;line-height:1.3}
+#eventBanner.active{background:linear-gradient(120deg,#edf5de,#f4eacb);border-color:var(--event-color,#85b16e)}
+#eventSymbol{font-size:26px}.event-copy{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}.event-copy strong{font-size:12px;color:#3b583d}.event-copy small{font-size:11px;color:#6b7f63;line-height:1.5}.event-timer{white-space:nowrap;border:1px solid #cbd7bd;border-radius:8px;padding:8px 10px;background:#fffdf5;color:#416a42;font-size:16px;font-weight:900;font-variant-numeric:tabular-nums}
+#autoStart.enabled{color:#265b37;background:#e0f2d8;border-color:#8eb282}.auto-countdown{font-size:11px;font-weight:750;color:#4a744e}
+@media(max-width:640px){#eventBanner{padding:10px;gap:8px}.event-timer{font-size:13px;padding:7px}}
 </style>
 </head>
 <body>
 <div class="shell">
- <header class="header"><div><div class="eyebrow">THE ZOMBIE FRONTIER</div><h1 class="title">FIELD<span>KEEP</span></h1><p class="subtitle">Defend the frontier! Fuse scrolls, earn relics, evolve turrets, and conquer zombie bosses!</p></div><div class="version">V7 · SCROLL FUSION · RELICS · BOSSES</div></header>
+ <header class="header"><div><div class="eyebrow">THE ZOMBIE FRONTIER</div><h1 class="title">FIELD<span>KEEP</span></h1><p class="subtitle">Defend the frontier with worldwide events, evolving defenses, and online co-op!</p></div><div class="version">V8 · WORLD EVENTS · ONLINE PARTIES</div></header>
  <section class="lobby panel" aria-label="Multiplayer room lobby">
- <div class="lobby-head"><div><h2 class="panel-heading">🌍 Play with friends</h2><p class="panel-sub" id="serverHint">Checking co-op server… Solo play works without a server.</p></div><span class="lobby-label" id="lobbyState">SOLO MODE</span></div>
+ <div class="lobby-head"><div><h2 class="panel-heading">🌍 Online Parties · 6-digit codes</h2><p class="panel-sub" id="serverHint">Online party codes work from GitHub Pages. Host must keep the tab open.</p></div><span class="lobby-label" id="lobbyState">SOLO MODE</span></div>
  <div class="lobby-inputs" id="lobbyInputs">
  <label class="mini-label" for="playerName">YOUR NAME<input id="playerName" maxlength="18" autocomplete="nickname" placeholder="Ranger" value="Ranger" /></label>
  <button id="createRoom" class="btn primary">＋ Create room</button>
@@ -144,11 +151,12 @@ body:before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.21;ba
  <div class="map-picker" id="mapPicker" role="group" aria-label="Select one of 31 day maps"></div>
  </section>
  <div class="stats"><div class="stat"><span class="stat-label">Wave</span><span class="stat-value cyan" id="waveStat">0</span></div><div class="stat"><span class="stat-label">Coins</span><span class="stat-value gold" id="goldStat">320</span></div><div class="stat"><span class="stat-label">Gate hearts</span><span class="stat-value heart" id="lifeStat">20 / 20</span><span class="heart-grid" id="heartGrid" aria-label="20 hearts remaining"></span></div><div class="stat"><span class="stat-label">Best wave</span><span class="stat-value" id="bestStat">0</span></div></div>
- <div id="weatherStrip"><span id="weatherLabel">☀️ Sunshine · Loading forecast…</span><span id="biomeLabel">🌳 Biome bonus</span><span class="v7-boss" id="bossNotice">🏰 FORTIFIED FRONTIER</span></div>
+ <div id="eventBanner" role="status" aria-live="polite"><span id="eventSymbol">⏳</span><span class="event-copy"><strong id="eventTitle">NEXT WORLD EVENT</strong><small id="eventDesc">Every 20 minutes · lasts 5 minutes</small></span><span id="eventTimer" class="event-timer">--:--</span></div>
+  <div id="weatherStrip"><span id="weatherLabel">☀️ Sunshine · Loading forecast…</span><span id="biomeLabel">🌳 Biome bonus</span><span class="v7-boss" id="bossNotice">🏰 FORTIFIED FRONTIER</span></div>
 <main class="layout"><section class="game-column">
  <div class="arena"><canvas width="960" height="600" id="board" aria-label="Tower defense game board"></canvas><div class="arena-top"><div class="tag"><span class="signal" id="signal"></span><span id="status">BUILD PHASE</span></div><div class="tag" id="counter">READY FOR WAVE 1</div></div><div class="toast" id="toast"></div><div class="overlay" id="overlay"><div class="endcard"><div class="eyebrow">THE GATE HAS FALLEN</div><h2>THE FORT WAS LOST</h2><p>Your field defenses fought hard. Rebuild and protect the valley again.</p><div class="big" id="endWave">WAVE 1</div><p id="endKills">0 enemies defeated</p><button class="btn primary" id="restart">↻ Try Again</button></div></div></div>
  <div class="progress"><div id="progress"></div></div>
- <div class="controls"><button class="btn primary" id="nextWave">▶ START WAVE 1</button><button class="btn" id="pause">Ⅱ Pause</button><button class="btn speed-on" id="speed">⚡ 1× Speed</button><div class="control-spacer"></div><button class="btn" id="reset">↻ Restart</button></div>
+ <div class="controls"><button class="btn primary" id="nextWave">▶ START WAVE 1</button><button class="btn" id="pause">Ⅱ Pause</button><button class="btn speed-on" id="speed">⚡ 1× Speed</button><button class="btn" id="autoStart" aria-pressed="false">⏱ Auto Start: OFF</button><span id="autoCountdown" class="auto-countdown" aria-live="off"></span><div class="control-spacer"></div><button class="btn" id="reset">↻ Restart</button></div>
  </section><aside class="sidebar">
  <section class="panel"><h2 class="panel-heading">🪵 Build Defenses</h2><p class="panel-sub">Choose a turret and click clear grass. Trees, rocks, water, and the road block construction. In co-op, coins, scrolls, evolutions and turrets belong to the whole team. Support towers can boost nearby defenses or produce income.</p><div class="tower-list" id="shop"></div><div class="divider"></div><div class="hint"><b>Heads up:</b> Zombies grow stronger every wave. Runners arrive at wave 3, brutes at wave 4, crawlers at wave 7, and a giant boss every fifth wave!</div></section>
  <section class="panel loot-panel" id="lootPanel"><div class="loot-top"><h2 class="panel-heading">📜 Zombie Scrolls</h2><span class="loot-count" id="lootCount">0 collected</span></div>
@@ -171,7 +179,8 @@ body:before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.21;ba
 <section class="panel selection"><h2 class="panel-heading">🛠 Selected Defense</h2><div id="details" class="empty">Select or build a turret. Infinite levels, scroll slots and three evolutions are available here.</div></section>
  <section class="panel"><h2 class="panel-heading">⌨ Quick Controls</h2><div class="hint"><span class="kbd">1</span> – <span class="kbd">9</span> select preset turret · <span class="kbd">0</span> supply cart · <span class="kbd">Space</span> start wave · <span class="kbd">P</span> pause · <span class="kbd">Esc</span> clear selection.<br>Keep zombies away from your gate! Every fifth wave brings a giant zombie. Each day of the month has its own map.</div></section>
  </aside></main>
-<section class="v7-panels" aria-label="Fieldkeep V7 progression">
+<section class="v7-panels" aria-label="Fieldkeep V8 progression">
+  <details class="panel"><summary>🌠 World Event Calendar <span class="v7-tag">5 MIN / 20 MIN</span></summary><div class="v7-body"><p class="v7-info">A global event starts every twenty minutes (at :00, :20 and :40 on the clock) and runs for five minutes. Players worldwide see the same event. Rarity is selected for every time slot.</p><div class="v7-grid"><div class="v7-row">⚪ <b>Common</b> <small>54%</small></div><div class="v7-row">🟢 <b>Uncommon</b> <small>25%</small></div><div class="v7-row">🔵 <b>Rare</b> <small>13%</small></div><div class="v7-row">🟡 <b>Legendary</b> <small>6%</small></div><div class="v7-row">🟣 <b>Mythic</b> <small>2%</small></div></div><p class="v7-info">Event bonuses only apply while their timer is active. No purchase is required.</p></div></details>
  <details class="panel" open><summary>📜 Scroll Fusion <span class="v7-tag" id="fusionCount">0 recipes</span></summary><div class="v7-body"><p class="v7-info">Fuse <b>three matching scrolls</b> of the same power and rarity into one stronger scroll. Scrolls go up to Divine. Requires coins.</p><div id="fusionList"></div></div></details>
  <details class="panel" open><summary>🎁 Treasure Chests <span class="v7-tag" id="chestCount">0 chests</span></summary><div class="v7-body"><p class="v7-info">Earn a chest for each ten waves cleared. Open one to get coins, scrolls, rare relics or gate protection.</p><div id="chestInfo" class="v7-callout">Clear wave 10 to earn your first chest.</div><button class="btn primary" id="openChest">🎁 Open Chest</button></div></details>
  <details class="panel" open><summary>🧳 Traveling Merchant <span class="v7-tag" id="merchantBadge">AWAY</span></summary><div class="v7-body"><p class="v7-info">The merchant stops by after every four cleared waves. Spend run coins on limited offers.</p><div id="merchantOffers"></div></div></details>
@@ -374,11 +383,31 @@ return{TYPES,EFFECTS,RARITIES,SCROLLS,EVOLUTIONS,EVOLUTION_STAGES,WEATHER,BIOMES
 
 </script>
 <script>
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;if(root)root.FieldkeepEvents=api;})(typeof window!=='undefined'?window:null,function(){'use strict';
+const PERIOD=20*60*1000,DURATION=5*60*1000;
+const EVENTS={
+ common:[{id:'harvest',name:'Harvest Festival',icon:'🌾',desc:'35% extra wave coins',coins:1.35},{id:'breeze',name:'Verdant Breeze',icon:'🍃',desc:'10% extra turret range',range:1.10}],
+ uncommon:[{id:'scrollfall',name:'Scrollfall',icon:'📜',desc:'50% better scroll drop chance',loot:1.5},{id:'thicket',name:'Thicket Blessing',icon:'🌿',desc:'Zombies move 12% slower',enemySpeed:.88}],
+ rare:[{id:'moon',name:'Moonrise Surge',icon:'🌙',desc:'Turrets fire 25% faster',fireRate:1.25},{id:'gold',name:'Golden Hour',icon:'🌟',desc:'75% extra wave coins',coins:1.75}],
+ legendary:[{id:'ancient',name:'Ancient Awakening',icon:'🏺',desc:'40% more damage and 70% more scroll drops',damage:1.40,loot:1.7}],
+ mythic:[{id:'celestial',name:'Celestial Bloom',icon:'✨',desc:'65% more damage, double drops, 60% more coins',damage:1.65,loot:2,coins:1.6}]
+};
+const RARITY={common:{name:'Common',color:'#697d55'},uncommon:{name:'Uncommon',color:'#469a68'},rare:{name:'Rare',color:'#3f80c3'},legendary:{name:'Legendary',color:'#bb872a'},mythic:{name:'Mythic',color:'#9b54c4'}};
+// Stateless deterministic PRNG: all clients choose the same event from its UTC time slot.
+function hash(n){let x=(n^0x9e3779b9)>>>0;x=Math.imul(x^(x>>>16),0x85ebca6b);x=Math.imul(x^(x>>>13),0xc2b2ae35);return (x^(x>>>16))>>>0;}
+function eventForSlot(slot){const roll=hash(slot*19+137)%1000;const rarity=roll<540?'common':roll<790?'uncommon':roll<920?'rare':roll<980?'legendary':'mythic';const list=EVENTS[rarity];return{...list[hash(slot*31+902)%list.length],rarity,slot};}
+function current(now=Date.now()){const slot=Math.floor(now/PERIOD),elapsed=((now%PERIOD)+PERIOD)%PERIOD,active=elapsed<DURATION;return{active,event:active?eventForSlot(slot):null,nextEvent:eventForSlot(slot+1),slot,remainingMs:active?DURATION-elapsed:PERIOD-elapsed,nextAt:(slot+1)*PERIOD};}
+function mods(now=Date.now()){const v=current(now);return v.active?v.event:{coins:1,damage:1,range:1,fireRate:1,loot:1,enemySpeed:1};}
+function clock(ms){const n=Math.max(0,Math.ceil(ms/1000));return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');}
+return{PERIOD,DURATION,EVENTS,RARITY,current,eventForSlot,mods,clock};});
+
+</script>
+<script>
 (() => { 'use strict';
 const canvas=document.getElementById('board'), ctx=canvas.getContext('2d');
 const CELL=60, COLS=16, ROWS=10, PI=Math.PI;
 const $=id=>document.getElementById(id);
-const Rule=FieldkeepTurrets, TOWERS=Rule.TYPES;
+const Rule=FieldkeepTurrets, TOWERS=Rule.TYPES, World=FieldkeepEvents;
 const TYPES=Object.keys(TOWERS);
 const TODAY=new Date().getDate();
 let mapDay=TODAY,currentMap=FieldkeepMaps.getMap(mapDay);
@@ -407,7 +436,7 @@ function discoverZombie(e,killed=false){const key=e.type==='boss'?'boss:'+String
 function biome(){return currentMap.biome||'meadow'}
 function weatherKey(){return Rule.weatherFor(mapDay,Math.max(1,wave))}
 function relicOn(id){return equippedRelics.includes(id)}
-function battleStats(t){const s={...tStats(t)};const wt=Rule.WEATHER[weatherKey()];const bm=biome();
+function battleStats(t){const s={...tStats(t)};const world=World.mods();s.damage*=world.damage||1;s.range*=world.range||1;if(s.rate&&world.fireRate)s.rate=Math.max(.045,s.rate/world.fireRate);const wt=Rule.WEATHER[weatherKey()];const bm=biome();
  s.range*=wt.range||1;s.damage*=wt.damage||1;if(wt.chain&&s.rate)s.chain+=wt.chain;
  if(['desert','autumn','meadow'].includes(bm))s.damage*=bm==='desert'?1.09:bm==='autumn'?1.08:1.05;
  if(['pine','stone'].includes(bm))s.range*=bm==='stone'?1.10:1.08;
@@ -419,7 +448,7 @@ function battleStats(t){const s={...tStats(t)};const wt=Rule.WEATHER[weatherKey(
  if(relicOn('thorn')&&s.poison)s.poison*=1.20;
  return s;
 }
-function getWaveReward(){let n=40+wave*3;for(const t of towers)n+=battleStats(t).income;if(relicOn('coin'))n=Math.round(n*1.2);return n;}
+function getWaveReward(){let n=40+wave*3;for(const t of towers)n+=battleStats(t).income;if(relicOn('coin'))n=Math.round(n*1.2);n=Math.round(n*(World.mods().coins||1));return n;}
 function baseUpgradeCost(){return Math.round(125*Math.pow(baseLevel+1,1.65));}
 function repairCost(){return Math.round(60+wave*3);}
 function gateHit(e){if(gateShield>0){gateShield--;toast('🛡️ Gate shields absorbed the attack!');return;}if(relicOn('heartwood')&&!heartwoodUsed){heartwoodUsed=true;toast('💚 Heartwood Charm protected your gate!');return;}health=Math.max(0,health-Math.max(1,(e.type==='boss'?4:1)-Math.floor(baseLevel/2)));}
@@ -437,8 +466,10 @@ function canCombine(a,b){return a&&b&&a!==b&&a.type!=='hybrid'&&b.type!=='hybrid
 function combineTurrets(otherId){const a=selectedTower,b=towers.find(t=>t.id===otherId);if(!canCombine(a,b)){toast('Two nearby level 5 turrets are required');return;}const cost=Rule.combineCost(a,b);if(credits<cost){toast('Not enough coins to combine');return;}if(multiplayer){sendAction('combine',{id:a.id,otherId});return;}credits-=cost;const original={type:a.type,blueprint:a.blueprint};a.parts=[original,{type:b.type,blueprint:b.blueprint}];a.type='hybrid';
  a.level=Math.max(a.level,b.level);a.spent+=cost+b.spent;a.scrolls=[...(a.scrolls||[]),...(b.scrolls||[])].slice(0,Rule.scrollSlots(a));towers=towers.filter(t=>t!==b);burst(a.x,a.y,'#be9fd6',30);toast('✣ Hybrid turret forged!');updateUI();}
 let multiplayer=false, roomToken=null, myId=null, hostId=null, roomCode=null, players=[], eventSource=null, onlineSince=0, lastNetSig='', networkInfo=null;
+let autoStart=localStorage.getItem('fieldkeep_v8_autostart')==='true',autoCountdown=0;
+let p2pRole=null,p2pPeer=null,p2pConn=null,p2pGuests=new Map(),p2pPending=false,lastBroadcast=0;
 
-function reset(){towers=[];enemies=[];shots=[];particles=[];texts=[];scrollDrops=[];scrollInventory=[];credits=320+(!multiplayer?Math.round(profile.skills.economy*20):0);health=20;chests=0;merchantRound=0;merchantUsed=[];baseLevel=0;gateShield=!multiplayer?profile.skills.hearts:0;relicsOwned=[];equippedRelics=[];heartwoodUsed=false;bossLog=[];lastChestReward='';wave=0;kills=0;active=false;paused=false;speed=1;gameOver=false;selectedType='pulse';selectedTower=null;hover=null;spawnQueue=[];spawnTime=0;spawnedCount=0;totalSpawned=0;clock=0;lastTimestamp=performance.now();bestWave=getBest();$('overlay').classList.remove('show');$('pause').textContent='Ⅱ Pause';$('speed').textContent='⚡ 1× Speed';$('speed').classList.add('speed-on');makeShop();updateUI();toast('V7: fuse scrolls, open chests, unlock skills, and evolve at five milestones!')}
+function reset(){autoCountdown=autoStart?4:0;towers=[];enemies=[];shots=[];particles=[];texts=[];scrollDrops=[];scrollInventory=[];credits=320+(!multiplayer?Math.round(profile.skills.economy*20):0);health=20;chests=0;merchantRound=0;merchantUsed=[];baseLevel=0;gateShield=!multiplayer?profile.skills.hearts:0;relicsOwned=[];equippedRelics=[];heartwoodUsed=false;bossLog=[];lastChestReward='';wave=0;kills=0;active=false;paused=false;speed=1;gameOver=false;selectedType='pulse';selectedTower=null;hover=null;spawnQueue=[];spawnTime=0;spawnedCount=0;totalSpawned=0;clock=0;lastTimestamp=performance.now();bestWave=getBest();$('overlay').classList.remove('show');$('pause').textContent='Ⅱ Pause';$('speed').textContent='⚡ 1× Speed';$('speed').classList.add('speed-on');makeShop();updateUI();toast('V8: World Events + Auto Start + online party codes!')}
 function toast(message){const el=$('toast');el.textContent=message;el.classList.add('active');clearTimeout(toasterTimer);toasterTimer=setTimeout(()=>el.classList.remove('active'),2600)}
 function makeShop(){const e=$('shop');e.replaceChildren();for(let i=0;i<TYPES.length;i++){const id=TYPES[i],d=TOWERS[id];const b=document.createElement('button');b.className='tower-btn';b.dataset.id=id;b.innerHTML=`<span class="tower-icon" style="--tower:${d.color}">${d.icon}</span><span><div class="tower-name">${d.name} <small>${i<9?'['+(i+1)+']':i===9?'[0]':''}</small></div><div class="tower-desc">${d.desc}</div></span><span class="tower-price">${d.cost} 🟡</span>`;b.addEventListener('click',()=>{selectedType=id;selectedTower=null;updateUI()});e.appendChild(b)}
  for(let i=0;i<blueprints.length;i++){const def=getSelectionDef('custom:'+i);if(!def)continue;const b=document.createElement('button');b.className='tower-btn';b.dataset.id='custom:'+i;b.innerHTML=`<span class="tower-icon">⚙</span><span><div class="tower-name">Custom #${i+1}</div><div class="tower-desc">${blueprints[i].effect} · ${blueprints[i].damage} damage</div></span><span class="tower-price">${def.cost} 🟡</span>`;b.addEventListener('click',()=>{selectedType=b.dataset.id;selectedTower=null;updateUI()});e.appendChild(b)}
@@ -446,7 +477,7 @@ function makeShop(){const e=$('shop');e.replaceChildren();for(let i=0;i<TYPES.le
 
 const sellValue=Rule.sellValue, upgradeCost=Rule.upgradeCost, tStats=Rule.stats;
 function lootLabel(item){const sc=Rule.SCROLLS[item.kind],rr=Rule.RARITIES[item.rarity];return `Lv${rr.tier} ${rr.name} ${sc.name}`;}
-function addDrop(e){const skillChance=!multiplayer?profile.skills.loot*.04:0;const sc=Rule.rollScroll(e.type,wave,()=>Math.max(0,Math.random()-skillChance));if(!sc)return;
+function addDrop(e){const skillChance=!multiplayer?profile.skills.loot*.04:0;const eventLoot=World.mods().loot||1;let rngCalls=0;const sc=Rule.rollScroll(e.type,wave,()=>{rngCalls++;return rngCalls===1?Math.max(0,Math.random()/eventLoot-skillChance):Math.random();});if(!sc)return;
  const drop={...sc,id:uid++,x:e.x,y:e.y,life:12};scrollDrops.push(drop);
  texts.push({x:e.x,y:e.y-23,txt:`📜 LV${Rule.RARITIES[sc.rarity].tier} SCROLL`,color:Rule.RARITIES[sc.rarity].color,life:1.5});}
 function collectScroll(id){const index=scrollDrops.findIndex(d=>d.id===id);if(index<0)return;
@@ -487,8 +518,8 @@ const e=$('details');if(selectedTower&&towers.includes(selectedTower)){
  $('sell').addEventListener('click',()=>{if(multiplayer){sendAction('sell',{id:t.id});return;}credits+=sellValue(t);towers=towers.filter(x=>x!==t);burst(t.x,t.y,'#b9c4ff',12);selectedTower=null;updateUI()});
  for(const btn of e.querySelectorAll('[data-evo]'))btn.addEventListener('click',()=>evolveTurret(btn.dataset.evo));
 }else{e.className='empty';e.textContent=selectedType?`Placing ${selectedType.startsWith('custom:')?'Custom #'+(Number(selectedType.split(':')[1])+1):getSelectionDef(selectedType).name} (${getSelectionDef(selectedType).cost} coins). Click a free tile to build, or click an existing turret to upgrade.`:'Click a built turret to inspect, evolve, or apply a scroll.'}
-updateLootUI();updateSystemsUI();}
-function startWave(){if(multiplayer){sendAction('startWave');return}if(active||gameOver)return;merchantRound=0;merchantUsed=[];heartwoodUsed=false;wave++;bestWave=Math.max(bestWave,wave);saveBest();spawnQueue=[];let n=8+Math.floor(wave*2.6);for(let i=0;i<n;i++){let type;if(wave>=7&&i%4===0)type='crawler';else if(wave>=4&&i%9===0)type='warden';else if(wave>=3&&i%5===0)type='dart';else type='glider';spawnQueue.push(type)}if(wave%5===0)spawnQueue.push('boss');totalSpawned=spawnQueue.length;spawnedCount=0;spawnTime=0;spawnInterval=Math.max(.27,.71-wave*.013);active=true;updateUI();toast(wave===7?'Crawling zombies are arriving!':wave%5===0?`⚠ Wave ${wave}: ${Rule.BOSSES[['grave','rusher','bloom'][Math.floor(wave/5-1)%3]].name} approaching!`:`Zombie wave ${wave} incoming!`)}
+updateLootUI();updateSystemsUI();updateAutoUI();}
+function startWave(){if(multiplayer){sendAction('startWave');return}if(active||gameOver||paused)return;autoCountdown=0;merchantRound=0;merchantUsed=[];heartwoodUsed=false;wave++;bestWave=Math.max(bestWave,wave);saveBest();spawnQueue=[];let n=8+Math.floor(wave*2.6);for(let i=0;i<n;i++){let type;if(wave>=7&&i%4===0)type='crawler';else if(wave>=4&&i%9===0)type='warden';else if(wave>=3&&i%5===0)type='dart';else type='glider';spawnQueue.push(type)}if(wave%5===0)spawnQueue.push('boss');totalSpawned=spawnQueue.length;spawnedCount=0;spawnTime=0;spawnInterval=Math.max(.27,.71-wave*.013);active=true;updateUI();toast(wave===7?'Crawling zombies are arriving!':wave%5===0?`⚠ Wave ${wave}: ${Rule.BOSSES[['grave','rusher','bloom'][Math.floor(wave/5-1)%3]].name} approaching!`:`Zombie wave ${wave} incoming!`)}
 function spawn(type){let hp,vel,reward,color,r,air=false;
  const scale=Math.pow(1.13,wave-1);
  switch(type){
@@ -520,17 +551,17 @@ function impactShot(s,target){const hitX=target.x,hitY=target.y;
  addDamage(target,s.damage);
  for(const e of chainTargets){if(enemies.includes(e)){addDamage(e,s.damage*.56);burst(e.x,e.y,'#e1c77f',3)}}
 }
-function update(dt){clock+=dt;for(let i=scrollDrops.length-1;i>=0;i--){const drop=scrollDrops[i];drop.life-=dt;if(drop.life<=0){if(scrollInventory.length<60)scrollInventory.push({kind:drop.kind,rarity:drop.rarity});scrollDrops.splice(i,1);updateUI();}}for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.96;p.vy*=.96;p.life-=dt;if(p.life<=0)particles.splice(i,1)}for(let i=texts.length-1;i>=0;i--){let t=texts[i];t.y-=22*dt;t.life-=dt;if(t.life<=0)texts.splice(i,1)}
+function update(dt){clock+=dt;if(!active&&!gameOver&&!paused&&autoStart){if(autoCountdown<=0)autoCountdown=5;autoCountdown-=dt;if(autoCountdown<=0)startWave();}for(let i=scrollDrops.length-1;i>=0;i--){const drop=scrollDrops[i];drop.life-=dt;if(drop.life<=0){if(scrollInventory.length<60)scrollInventory.push({kind:drop.kind,rarity:drop.rarity});scrollDrops.splice(i,1);updateUI();}}for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.96;p.vy*=.96;p.life-=dt;if(p.life<=0)particles.splice(i,1)}for(let i=texts.length-1;i>=0;i--){let t=texts[i];t.y-=22*dt;t.life-=dt;if(t.life<=0)texts.splice(i,1)}
  if(active){spawnTime-=dt;while(spawnQueue.length&&spawnTime<=0){spawn(spawnQueue.shift());spawnedCount++;spawnTime+=spawnInterval;}}
  for(let i=enemies.length-1;i>=0;i--){let e=enemies[i];e.slowT=Math.max(0,e.slowT-dt);if(e.poisonT>0){e.poisonT=Math.max(0,e.poisonT-dt);addDamage(e,(e.poisonDps||0)*dt);if(e.poisonT===0)e.poisonDps=0;if(!enemies.includes(e))continue;}
-  let factor=e.slowT>0?e.slowFactor:1;if(e.type==='boss'&&e.bossKind==='bloom')e.hp=Math.min(e.maxHp,e.hp+e.maxHp*.002*dt);const w=Rule.WEATHER[weatherKey()];let motion=(w.speed||1)*(biome()==='moor'?.95:biome()==='marsh'?.92:biome()==='snow'?.88:1);e.d+=e.speed*factor*motion*dt;let p=positionAt(e.d);e.x=p.x;e.y=p.y;if(e.d>=pathLength){enemies.splice(enemies.indexOf(e),1);const beforeHealth=health;gateHit(e);burst(925,p.y,'#a65333',13);texts.push({x:850,y:p.y,txt:health===beforeHealth?'🛡️':`-${beforeHealth-health} ♥`,color:'#ffded1',life:1.0});if(health===0)lose();updateUI()}}
+  let factor=e.slowT>0?e.slowFactor:1;if(e.type==='boss'&&e.bossKind==='bloom')e.hp=Math.min(e.maxHp,e.hp+e.maxHp*.002*dt);const w=Rule.WEATHER[weatherKey()];let motion=(w.speed||1)*(World.mods().enemySpeed||1)*(biome()==='moor'?.95:biome()==='marsh'?.92:biome()==='snow'?.88:1);e.d+=e.speed*factor*motion*dt;let p=positionAt(e.d);e.x=p.x;e.y=p.y;if(e.d>=pathLength){enemies.splice(enemies.indexOf(e),1);const beforeHealth=health;gateHit(e);burst(925,p.y,'#a65333',13);texts.push({x:850,y:p.y,txt:health===beforeHealth?'🛡️':`-${beforeHealth-health} ♥`,color:'#ffded1',life:1.0});if(health===0)lose();updateUI()}}
  if(gameOver)return;
  for(const t of towers){const s=battleStats(t);if(!s.rate)continue;t.cool-=dt;if(t.cool>0)continue;let target=targeting(t);if(!target)continue;const def=towerDef(t);t.angle=Math.atan2(target.y-t.y,target.x-t.x);t.cool=s.rate;
  shots.push({x:t.x,y:t.y,target,damage:s.damage*powerBoost(t),speed:def.speed*(Rule.WEATHER[weatherKey()].projectile||1),color:def.color,r:s.splash?7:4,splash:s.splash,slow:s.slow,poison:s.poison,chain:s.chain,life:2.5});}
  for(let i=shots.length-1;i>=0;i--){let s=shots[i];s.life-=dt;if(s.life<=0){shots.splice(i,1);continue}if(!enemies.includes(s.target)){shots.splice(i,1);continue}const dx=s.target.x-s.x,dy=s.target.y-s.y,dist=Math.hypot(dx,dy),move=s.speed*dt;if(dist<=move+5){impactShot(s,s.target);shots.splice(i,1)}else{s.x+=dx/dist*move;s.y+=dy/dist*move}}
- if(active&&spawnQueue.length===0&&enemies.length===0){active=false;const reward=earnedCoins();credits+=reward;if(wave%10===0){chests++;if(health<20)health++;toast('🎁 Milestone chest earned! Open it below.')}if(wave%4===0){merchantRound=wave/4;merchantUsed=[];toast('🧳 Traveling merchant has arrived!')}gateShield=Math.min(20,gateShield+Math.min(baseLevel,4));earnXP(15+Math.floor(wave/2));texts.push({x:470,y:245,txt:`VALLEY SECURED · +${reward} 🟡`,color:'#f8f2b1',life:1.8});updateUI()}
+ if(active&&spawnQueue.length===0&&enemies.length===0){active=false;autoCountdown=autoStart?5:0;const reward=earnedCoins();credits+=reward;if(wave%10===0){chests++;if(health<20)health++;toast('🎁 Milestone chest earned! Open it below.')}if(wave%4===0){merchantRound=wave/4;merchantUsed=[];toast('🧳 Traveling merchant has arrived!')}gateShield=Math.min(20,gateShield+Math.min(baseLevel,4));earnXP(15+Math.floor(wave/2));texts.push({x:470,y:245,txt:`VALLEY SECURED · +${reward} 🟡`,color:'#f8f2b1',life:1.8});updateUI()}
 }
-function lose(){gameOver=true;active=false;paused=false;saveBest();$('endWave').textContent=`WAVE ${wave}`;$('endKills').textContent=`${kills} enemies defeated · Personal best: ${bestWave}`;$('overlay').classList.add('show');updateUI()}
+function lose(){autoCountdown=0;gameOver=true;active=false;paused=false;saveBest();$('endWave').textContent=`WAVE ${wave}`;$('endKills').textContent=`${kills} enemies defeated · Personal best: ${bestWave}`;$('overlay').classList.add('show');updateUI()}
 function drawRounded(x,y,w,h,r,color){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}
 // Stable seeded randomness keeps the terrain consistent between frames.
 function terrainRandom(seed){let v=seed>>>0;return ()=>{v=(Math.imul(v,1664525)+1013904223)>>>0;return v/4294967296}}
@@ -660,16 +691,132 @@ function frame(time){let dt=Math.min((time-lastTimestamp)/1000,.045);lastTimesta
    if(!paused&&!gameOver)clock+=dt*speed;
    for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.96;p.vy*=.96;p.life-=dt;if(p.life<=0)particles.splice(i,1)}
    for(let i=texts.length-1;i>=0;i--){let t=texts[i];t.y-=22*dt;t.life-=dt;if(t.life<=0)texts.splice(i,1)}
- }else if(!paused&&!gameOver){update(dt*speed);if(active){if(Math.floor(clock*5)!==Math.floor((clock-dt*speed)*5))updateUI()}}
- render();requestAnimationFrame(frame)}
+ }else if(!paused&&!gameOver){update(dt*speed);if(active||autoCountdown>0){if(Math.floor(clock*5)!==Math.floor((clock-dt*speed)*5))updateAutoUI()}}
+ if(p2pRole==='host'&&time-lastBroadcast>180){lastBroadcast=time;broadcastP2P();}render();requestAnimationFrame(frame)}
 canvas.addEventListener('mousemove',ev=>{let rc=canvas.getBoundingClientRect();hover={c:Math.floor((ev.clientX-rc.left)*canvas.width/rc.width/CELL),r:Math.floor((ev.clientY-rc.top)*canvas.height/rc.height/CELL)}});canvas.addEventListener('mouseleave',()=>{hover=null});canvas.addEventListener('click',ev=>{let rc=canvas.getBoundingClientRect();let c=Math.floor((ev.clientX-rc.left)*canvas.width/rc.width/CELL),r=Math.floor((ev.clientY-rc.top)*canvas.height/rc.height/CELL);const px=(ev.clientX-rc.left)*canvas.width/rc.width,py=(ev.clientY-rc.top)*canvas.height/rc.height;
  const drop=[...scrollDrops].reverse().find(d=>Math.hypot(px-d.x,py-d.y)<23);if(drop){collectScroll(drop.id);return;}
  let turret=towers.find(t=>t.c===c&&t.r===r);if(turret){selectedTower=turret;selectedType=null;updateUI()}else{build(c,r)}});
+function updateAutoUI(){const btn=$('autoStart');if(!btn)return;btn.textContent=autoStart?'⏱ Auto Start: ON':'⏱ Auto Start: OFF';btn.classList.toggle('enabled',autoStart);btn.setAttribute('aria-pressed',String(autoStart));btn.disabled=multiplayer&&!ownSession();$('autoCountdown').textContent=autoStart&&!active&&!gameOver?(paused?'Paused':`Next wave in ${Math.max(0,Math.ceil(autoCountdown))}s`):'';}
+function toggleAutoStart(){if(multiplayer){if(ownSession())sendAction('autoStart',{enabled:!autoStart});return;}autoStart=!autoStart;autoCountdown=autoStart?5:0;try{localStorage.setItem('fieldkeep_v8_autostart',String(autoStart))}catch{}updateAutoUI();toast(autoStart?'⏱ Auto waves enabled — 5-second build breaks':'⏱ Auto waves disabled')}
+$('autoStart').addEventListener('click',toggleAutoStart);
+function updateEventBanner(){const current=World.current(),e=current.event,container=$('eventBanner');container.classList.toggle('active',!!e);container.style.setProperty('--event-color',e?World.RARITY[e.rarity].color:'#9cab83');$('eventSymbol').textContent=e?e.icon:'⏳';$('eventTitle').textContent=e?World.RARITY[e.rarity].name.toUpperCase()+' · '+e.name.toUpperCase():'NEXT WORLD EVENT';$('eventDesc').textContent=e?e.desc+' · Active for 5 minutes':`Starts at :00, :20, and :40 · Next: ${current.nextEvent.name}`;$('eventTimer').textContent=World.clock(current.remainingMs);}
+setInterval(updateEventBanner,1000);updateEventBanner();
 $('nextWave').addEventListener('click',startWave);
 $('restart').addEventListener('click',()=>multiplayer?sendAction('reset'):reset());
 $('reset').addEventListener('click',()=>multiplayer?sendAction('reset'):reset());
 $('pause').addEventListener('click',()=>{if(gameOver)return;if(multiplayer){sendAction('pause');return}paused=!paused;$('pause').textContent=paused?'▶ Resume':'Ⅱ Pause';updateUI()});
 $('speed').addEventListener('click',()=>{if(multiplayer){sendAction('speed');return}speed=speed===1?2:1;$('speed').textContent=`⚡ ${speed}× Speed`;$('speed').classList.toggle('speed-on',speed===1)});
+
+// Browser-to-browser internet party codes. A host's tab runs the simulation.
+// PeerJS Cloud supplies signaling; WebRTC carries shared state, without a paid game server.
+const PEER_LIB='https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js';
+const P2P_PREFIX='fieldkeep-v8-';
+const CODE_ALPHABET='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+function randomRoomCode(){const bytes=new Uint8Array(6);crypto.getRandomValues(bytes);return [...bytes].map(n=>CODE_ALPHABET[n%CODE_ALPHABET.length]).join('');}
+let peerLibPromise=null;
+function loadPeerLib(){if(typeof window.Peer==='function')return Promise.resolve();if(!peerLibPromise)peerLibPromise=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=PEER_LIB;script.onload=()=>typeof window.Peer==='function'?resolve():reject(Error('Online library did not load'));script.onerror=()=>reject(Error('Cannot load online multiplayer library. Check internet access.'));document.head.appendChild(script);}).catch(e=>{peerLibPromise=null;throw e});return peerLibPromise;}
+const safeName=x=>String(x||'Ranger').replace(/[^\p{L}\p{N} ._-]/gu,'').trim().slice(0,18)||'Ranger';
+function p2pPlayers(){return players.map(p=>({...p}));}
+function snapshotP2P(to){return{
+ code:roomCode,youId:to,hostId,mapDay,players:p2pPlayers(),
+ game:{credits,health,wave,kills,active,paused,speed,gameOver,spawnedCount,totalSpawned,bestWave,
+  clock,autoStart,autoCountdown,chests,merchantRound,merchantUsed,baseLevel,gateShield,relicsOwned,equippedRelics,
+  towers:towers.map(t=>({id:t.id,c:t.c,r:t.r,x:t.x,y:t.y,type:t.type,blueprint:t.blueprint,level:t.level,spent:t.spent,angle:t.angle,evolution:t.evolution||null,evolutionStage:t.evolutionStage||0,scrolls:t.scrolls||[],parts:t.parts||null})),
+  enemies:enemies.map(e=>({id:e.id,type:e.type,bossKind:e.bossKind||null,x:e.x,y:e.y,d:e.d,maxHp:e.maxHp,hp:e.hp,speed:e.speed,air:e.air,color:e.color,r:e.r,slowT:e.slowT,poisonT:e.poisonT})),
+  shots:shots.map(s=>({x:s.x,y:s.y,r:s.r,color:s.color})),scrollDrops:scrollDrops.map(x=>({...x})),scrollInventory:scrollInventory.map(x=>({...x}))
+ }};
+}
+function broadcastP2P(){if(p2pRole!=='host')return;for(const [id,conn] of p2pGuests){if(conn.open){try{conn.send({kind:'state',state:snapshotP2P(id)})}catch{}}}}
+function leavePeerRoom(){const wasHost=p2pRole==='host';p2pRole=null;p2pPending=false;for(const c of p2pGuests.values()){try{c.close()}catch{}}p2pGuests.clear();if(p2pConn)try{p2pConn.close()}catch{}if(p2pPeer)try{p2pPeer.destroy()}catch{}p2pConn=null;p2pPeer=null;roomCode=null;hostId=null;myId=null;players=[];multiplayer=false;updateLobby();reset();if(!wasHost)toast('You can keep playing solo.');}
+function hostGuestAction(action,payload){
+ // All checks run in the host browser; guest commands do not carry coin prices or game state.
+ const p=payload&&typeof payload==='object'?payload:{};
+ const t=towers.find(x=>x.id===p.id);
+ const pay=cost=>Number.isSafeInteger(cost)&&cost>=0&&credits>=cost;
+ if(gameOver&&!['reset'].includes(action))return 'Game has ended';
+ switch(action){
+ case 'build':{
+  const c=p.c,r=p.r;if(!Number.isInteger(c)||!Number.isInteger(r)||c<0||c>=COLS||r<0||r>=ROWS)return 'Invalid tile';
+  if(invalidTile(c,r)||towers.some(x=>x.c===c&&x.r===r))return 'That tile is blocked';
+  const type=String(p.type||'');const bp=type==='custom'?Rule.normalizeBlueprint(p.blueprint):null;
+  const d=type==='custom'?Rule.customDefinition(bp):Object.hasOwn(TOWERS,type)?TOWERS[type]:null;
+  if(!d||!pay(d.cost))return 'Insufficient coins or invalid turret';
+  credits-=d.cost;towers.push({id:uid++,c,r,x:c*CELL+CELL/2,y:r*CELL+CELL/2,type,blueprint:bp,level:1,spent:0,scrolls:[],evolution:null,evolutionStage:0,cool:Math.random()*.25,angle:-PI/2});break;
+ }
+ case 'upgrade':{if(!t||!pay(upgradeCost(t)))return 'Cannot upgrade';const cost=upgradeCost(t);credits-=cost;t.spent+=cost;t.level++;break;}
+ case 'sell':{if(!t)return 'Unknown turret';credits+=sellValue(t);towers=towers.filter(x=>x!==t);break;}
+ case 'pickupScroll':{const i=scrollDrops.findIndex(x=>x.id===p.id);if(i<0||scrollInventory.length>=60)return 'Scroll unavailable';const [item]=scrollDrops.splice(i,1);scrollInventory.push({kind:item.kind,rarity:item.rarity});break;}
+ case 'applyScroll':{if(!t||!Number.isInteger(p.index)||p.index<0||p.index>=scrollInventory.length)return 'Scroll unavailable';const err=Rule.applyScroll(t,scrollInventory[p.index]);if(err)return err;scrollInventory.splice(p.index,1);break;}
+ case 'evolve':{if(!t||t.level<5||t.evolution||!Object.hasOwn(Rule.EVOLUTIONS,p.path)||!pay(Rule.evolutionCost(t)))return 'Evolution unavailable';const price=Rule.evolutionCost(t);credits-=price;t.spent+=price;t.evolution=p.path;t.evolutionStage=1;break;}
+ case 'ascend':{if(!t?.evolution||!Rule.nextEvolutionLevel(t)||t.level<Rule.nextEvolutionLevel(t)||!pay(Rule.ascensionCost(t)))return 'Ascension unavailable';const price=Rule.ascensionCost(t);credits-=price;t.spent+=price;t.evolutionStage=(t.evolutionStage||1)+1;break;}
+ case 'fuseScroll':{const r=Rule.fusionInfo(scrollInventory,p.index);if(!r?.ready||!pay(r.cost))return 'Fusion unavailable';credits-=r.cost;for(const i of [...r.indices].sort((a,b)=>b-a))scrollInventory.splice(i,1);scrollInventory.push({kind:r.kind,rarity:r.rarity});break;}
+ case 'openChest':{if(!chests)return 'No chest available';chests--;lastChestReward=chestReward();break;}
+ case 'merchantBuy':{
+  const offer=getMerchantOffers().find(x=>x.id===p.id);if(!merchantRound||!offer||merchantUsed.includes(p.id)||!pay(offer.cost))return 'Merchant offer unavailable';credits-=offer.cost;merchantUsed.push(p.id);
+  if(p.id==='scroll'){if(scrollInventory.length<60){const kinds=Object.keys(Rule.SCROLLS);scrollInventory.push({rarity:'epic',kind:kinds[Math.floor(Math.random()*kinds.length)]});}else credits+=100;}
+  else if(p.id==='shield')gateShield=Math.min(20,gateShield+2);
+  else{const keys=Object.keys(Rule.RELICS).filter(x=>!relicsOwned.includes(x));if(keys.length)relicsOwned.push(keys[Math.floor(Math.random()*keys.length)]);else credits+=200;}
+  break;
+ }
+ case 'equipRelic':{if(!Object.hasOwn(Rule.RELICS,p.id)||!relicsOwned.includes(p.id))return 'Relic not owned';if(equippedRelics.includes(p.id))equippedRelics=equippedRelics.filter(x=>x!==p.id);else if(equippedRelics.length<2)equippedRelics.push(p.id);else return 'Only 2 relics can be equipped';break;}
+ case 'upgradeGate':{const price=baseUpgradeCost();if(!pay(price))return 'Not enough coins';credits-=price;baseLevel++;gateShield=Math.min(20,gateShield+2);break;}
+ case 'repairGate':{const price=repairCost();if(health>=20||!pay(price))return 'Cannot repair';credits-=price;health++;break;}
+ case 'combine':{
+  const a=t,b=towers.find(x=>x.id===p.otherId);if(!canCombine(a,b)||!pay(Rule.combineCost(a,b)))return 'Hybrid unavailable';const price=Rule.combineCost(a,b);credits-=price;a.parts=[{type:a.type,blueprint:a.blueprint},{type:b.type,blueprint:b.blueprint}];a.type='hybrid';a.level=Math.max(a.level,b.level);a.spent+=price+b.spent;a.scrolls=[...(a.scrolls||[]),...(b.scrolls||[])].slice(0,Rule.scrollSlots(a));towers=towers.filter(x=>x!==b);break;
+ }
+ default:return 'Only the host may control the waves or use that command';
+ }
+ updateUI();return null;
+}
+function attachHostConnection(conn){
+ if(p2pRole!=='host'){conn.close();return;}
+ const id=conn.peer;let registered=false;const watchdog=setTimeout(()=>{if(!registered)conn.close();},9000);
+ conn.on('data',msg=>{
+  if(!msg||typeof msg!=='object')return;
+  if(!registered){
+   if(msg.kind!=='hello'||p2pGuests.size>=4){conn.send({kind:'error',message:'Party is full or join request invalid'});conn.close();return;}
+   registered=true;clearTimeout(watchdog);p2pGuests.set(id,conn);players.push({id,name:safeName(msg.name),connected:true});
+   conn.send({kind:'welcome',code:roomCode,hostId,myId:id});broadcastP2P();updateLobby();toast(safeName(msg.name)+' joined the party!');return;
+  }
+  if(msg.kind==='action'){
+   const now=Date.now();if(now-(conn.lastActionAt||0)<40)return;conn.lastActionAt=now;
+   const error=hostGuestAction(msg.action,msg.payload);
+   if(error)conn.send({kind:'error',message:error});else broadcastP2P();
+  }
+ });
+ conn.on('close',()=>{clearTimeout(watchdog);if(p2pGuests.get(id)===conn){p2pGuests.delete(id);players=players.filter(x=>x.id!==id);updateLobby();broadcastP2P();}});
+ conn.on('error',()=>{});
+}
+async function createPeerRoom(){
+ p2pPending=true;$('createRoom').disabled=true;$('serverHint').textContent='Connecting to online party network…';
+ try{
+  await loadPeerLib();const code=randomRoomCode();const peer=new Peer(P2P_PREFIX+code.toLowerCase());p2pPeer=peer;
+  await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('Could not reach party network')),14000);peer.once('open',()=>{clearTimeout(timer);resolve();});peer.once('error',err=>{clearTimeout(timer);reject(err)});});
+  p2pRole='host';roomCode=code;myId=p2pPeer.id;hostId=myId;players=[{id:myId,name:safeName($('playerName').value),connected:true}];
+  peer.on('connection',attachHostConnection);
+  peer.on('error',err=>toast('Party connection issue: '+err.type));
+  // The host runs the normal single-player simulation and shares the authoritative snapshot.
+  updateLobby();broadcastP2P();toast('🌐 Party '+roomCode+' is online. Share the code!');
+ }catch(e){if(p2pPeer)try{p2pPeer.destroy()}catch{}p2pPeer=null;toast('Unable to host: '+e.message);$('serverHint').textContent='Online connection failed. Try again.';}
+ finally{p2pPending=false;$('createRoom').disabled=false;}
+}
+async function joinPeerRoom(code){
+ p2pPending=true;$('joinRoom').disabled=true;$('serverHint').textContent='Joining online party '+code+'…';
+ try{
+  await loadPeerLib();const peer=new Peer();p2pPeer=peer;
+  await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('Could not connect to party network')),14000);peer.once('open',()=>{clearTimeout(timer);resolve()});peer.once('error',err=>{clearTimeout(timer);reject(err)});});
+  const conn=peer.connect(P2P_PREFIX+code.toLowerCase(),{reliable:true,serialization:'json'});p2pConn=conn;
+  await new Promise((resolve,reject)=>{
+   const timer=setTimeout(()=>reject(Error('Party not found or connection blocked. Ask the host to stay online.')),18000);
+   conn.on('open',()=>conn.send({kind:'hello',name:safeName($('playerName').value)}));
+   conn.on('data',msg=>{if(msg?.kind==='welcome'){clearTimeout(timer);roomCode=msg.code;myId=peer.id;hostId=msg.hostId;p2pRole='guest';multiplayer=true;players=[];updateLobby();resolve();}else if(msg?.kind==='error'){if(!p2pRole){clearTimeout(timer);reject(Error(msg.message||'Unable to join'));}else toast(msg.message||'Action failed');}else if(msg?.kind==='state'&&p2pRole==='guest'){applySnapshot(msg.state);}});
+   conn.on('close',()=>{if(p2pRole==='guest'){toast('Host disconnected. Returning to solo.');leavePeerRoom();}else{clearTimeout(timer);reject(Error('Connection closed'));}});
+   conn.on('error',err=>{if(!p2pRole){clearTimeout(timer);reject(err);}else toast('Connection interrupted');});
+  });
+  toast('🌍 Joined room '+roomCode+' · online co-op ready!');
+ }catch(e){if(p2pPeer)try{p2pPeer.destroy()}catch{}p2pPeer=null;p2pConn=null;toast('Could not join: '+e.message);updateLobby();}
+ finally{p2pPending=false;$('joinRoom').disabled=false;}
+}
 
 async function postJson(url,params){
  const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(params)});
@@ -677,17 +824,16 @@ async function postJson(url,params){
  if(!response.ok)throw Error(body.error||`Server error ${response.status}`);
  return body;
 }
-function ownSession(){return multiplayer&&myId===hostId}
+function ownSession(){return p2pRole==='host'||(multiplayer&&myId===hostId)}
 function updateLobby(){refreshMapPicker();
- $('lobbyInputs').hidden=multiplayer;$('lobbyJoined').hidden=!multiplayer;
+ $('lobbyInputs').hidden=multiplayer||p2pRole==='host';$('lobbyJoined').hidden=!(multiplayer||p2pRole==='host');
  $('activeCode').textContent=roomCode||'------';
- $('lobbyState').textContent=multiplayer?(ownSession()?'ROOM HOST':'IN A ROOM'):'SOLO MODE';
- $('lobbyState').classList.toggle('connected',multiplayer);
+ $('lobbyState').textContent=multiplayer||p2pRole==='host'?(ownSession()?'ROOM HOST':'IN A ROOM'):'SOLO MODE';
+ $('lobbyState').classList.toggle('connected',multiplayer||p2pRole==='host');
  const members=$('playerList');members.replaceChildren();
  for(const p of players){const chip=document.createElement('span');chip.className='player-chip'+(p.id===myId?' me':'')+(p.connected?'':' offline');chip.textContent=`${p.id===hostId?'♛ ':''}${p.name}${p.id===myId?' (you)':''}${p.connected?'':' · reconnecting'}`;members.appendChild(chip)}
- $('serverHint').textContent=multiplayer?`${players.length}/5 players · Shared coins, waves and towers · ${ownSession()?'You control wave timing.':'The host controls wave timing.'}`:
-   networkInfo?'Create a room or join using a 6-character code. Everyone must open the same game server.':'Solo works here. For co-op, run the included Node.js server or deploy it online.';
- $('reset').disabled=multiplayer&&!ownSession();$('restart').disabled=multiplayer&&!ownSession();
+ $('serverHint').textContent=p2pRole?`${players.length}/5 online players · ${ownSession()?'Keep this tab open to host.':'Connected to host.'} Share your room code across networks.`:multiplayer?`${players.length}/5 players · Shared coins, waves and towers · ${ownSession()?'You control wave timing.':'The host controls wave timing.'}`:networkInfo?'Create or join a room on this game server.':'Online party codes · Create or join from any network. Host must stay connected.';
+ $('reset').disabled=multiplayer&&!ownSession();$('restart').disabled=multiplayer&&!ownSession();updateAutoUI();
 }
 function clearRoomData(){
  if(eventSource){eventSource.close();eventSource=null}
@@ -713,13 +859,14 @@ function applySnapshot(info){
  else $('overlay').classList.remove('show');
  $('pause').textContent=paused?'▶ Resume':'Ⅱ Pause';$('speed').textContent=`⚡ ${speed}× Speed`;
  $('speed').classList.toggle('speed-on',speed===1);
- const signature=[credits,health,wave,kills,active,paused,speed,gameOver,spawnedCount,enemies.length,hostId,players.map(p=>p.id+(p.connected?1:0)).join(','),towers.map(t=>`${t.id}-${t.level}-${t.evolution}-${(t.scrolls||[]).length}`).join(';'),scrollInventory.map(x=>x.kind+x.rarity).join(','),scrollDrops.length,chests,merchantRound,merchantUsed.join(','),baseLevel,gateShield,relicsOwned.join(','),equippedRelics.join(',')].join('|');
+ autoStart=!!g.autoStart;autoCountdown=Math.max(0,Number(g.autoCountdown)||0);const signature=[autoStart,Math.ceil(autoCountdown),credits,health,wave,kills,active,paused,speed,gameOver,spawnedCount,enemies.length,hostId,players.map(p=>p.id+(p.connected?1:0)).join(','),towers.map(t=>`${t.id}-${t.level}-${t.evolution}-${(t.scrolls||[]).length}`).join(';'),scrollInventory.map(x=>x.kind+x.rarity).join(','),scrollDrops.length,chests,merchantRound,merchantUsed.join(','),baseLevel,gateShield,relicsOwned.join(','),equippedRelics.join(',')].join('|');
  if(signature!==lastNetSig){lastNetSig=signature;updateUI();updateLobby();}
  if(changedWave&&g.wave>0&&oldWave>0)toast(`Wave ${g.wave} started!`);
  if(oldHealth>health)toast(`⚠ The gate lost ${oldHealth-health} health!`);
  if(oldKills<kills&&kills-oldKills>3){} // high-frequency kill events stay in shared stats
 }
 async function sendAction(action,payload={}){
+ if(p2pRole==='guest'){if(!p2pConn?.open){toast('Room connection lost');return;}p2pConn.send({kind:'action',action,payload});return;}
  if(!multiplayer||!roomToken)return;
  try{await postJson('/api/action',{token:roomToken,action,payload});}
  catch(e){toast(e.message)}
@@ -738,37 +885,40 @@ async function connectRoom(data,restoring=false){
  toast(restoring?`Rejoined room ${roomCode}`:`Joined room ${roomCode}`);
 }
 async function createRoom(){
- if(multiplayer)return;
+ if(multiplayer||p2pRole||p2pPending)return;
+ if(!networkInfo){return createPeerRoom();}
  $('createRoom').disabled=true;
  try{const data=await postJson('/api/create',{name:$('playerName').value,day:mapDay});await connectRoom(data)}
  catch(err){toast(err.message);$('serverHint').textContent='Co-op server unavailable. Start it using START_FIELDKEEP.bat.'}
  finally{$('createRoom').disabled=false;}
 }
 async function joinRoom(){
- if(multiplayer)return;const code=$('roomCode').value.trim().toUpperCase();if(!/^[A-Z2-9]{6}$/.test(code)){toast('Enter your friend’s 6-character room code');return}
+ if(multiplayer||p2pRole||p2pPending)return;const code=$('roomCode').value.trim().toUpperCase();if(!/^[A-Z2-9]{6}$/.test(code)){toast('Enter your friend’s 6-character room code');return}
+ if(!networkInfo)return joinPeerRoom(code);
  $('joinRoom').disabled=true;
  try{const data=await postJson('/api/join',{code,name:$('playerName').value});await connectRoom(data)}
  catch(err){toast(err.message)}finally{$('joinRoom').disabled=false;}
 }
 async function leaveRoom(){
+ if(p2pRole){leavePeerRoom();toast('Left the online party');return;}
  const token=roomToken;clearRoomData();
  if(token)try{await postJson('/api/leave',{token});}catch{}
  toast('You left the room. Solo mode is ready.');
 }
 function getInviteLink(){
- let host=location.origin;
+ let host=(location.origin+location.pathname.replace(/[^/]*\.html$/, '')).replace(/\/$/,'');
  if(['localhost','127.0.0.1'].includes(location.hostname)&&networkInfo?.lanUrls?.length)host=networkInfo.lanUrls[0];
  return `${host}/?room=${encodeURIComponent(roomCode)}`;
 }
-async function copyInvite(){const link=getInviteLink();try{await navigator.clipboard.writeText(link);toast('Invite link copied! Share it with friends on your network.');}catch{prompt('Copy and send this invite link:',link)}}
+async function copyInvite(){const link=getInviteLink();try{await navigator.clipboard.writeText(link);toast('Invite copied! Friends can open it from other networks.');}catch{prompt('Copy and send this invite link:',link)}}
 async function initLobby(){
  updateLobby();
  try{const savedName=localStorage.getItem('fieldkeepPlayerName');if(savedName)$('playerName').value=savedName;}catch{}
  const requested=new URLSearchParams(location.search).get('room');if(requested)$('roomCode').value=requested.toUpperCase().slice(0,6);
  $('playerName').addEventListener('change',()=>{try{localStorage.setItem('fieldkeepPlayerName',$('playerName').value)}catch{}});
- if(location.protocol==='file:'){$('createRoom').disabled=true;$('joinRoom').disabled=true;$('serverHint').textContent='Solo mode. For code-based co-op, open START_FIELDKEEP.bat and use the browser address it opens.';return}
+ if(location.protocol==='file:'){networkInfo=null;updateLobby();$('serverHint').textContent='Solo works offline. Online parties need an internet connection.';return}
  try{const res=await fetch('/api/health');if(!res.ok)throw Error('No server');networkInfo=await res.json();updateLobby();}
- catch{$('createRoom').disabled=true;$('joinRoom').disabled=true;updateLobby();return}
+ catch{networkInfo=null;updateLobby();return}
  let saved;try{saved=JSON.parse(sessionStorage.getItem('fieldkeepRoomSession')||'null')}catch{}
  if(saved?.token){try{const res=await fetch(`/api/me?token=${encodeURIComponent(saved.token)}`);if(res.ok){const me=await res.json();await connectRoom({...saved,code:me.code,playerId:me.playerId,hostId:me.hostId},true);return}}
  catch{}try{sessionStorage.removeItem('fieldkeepRoomSession')}catch{}}

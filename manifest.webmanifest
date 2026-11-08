@@ -1,13 +1,13 @@
 {
-  "name": "Fieldkeep V10: Kingdoms & Raids",
+  "name": "Fieldkeep V11: Kingdoms & Alliances",
   "short_name": "Fieldkeep",
-  "description": "Build villages, command elemental turrets, adventure through eight regions, and battle world bosses.",
+  "description": "Defend your castle, build a woodland kingdom, recruit heroes and form a local alliance.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "landscape",
-  "background_color": "#142d23",
-  "theme_color": "#142d23",
+  "background_color": "#142b22",
+  "theme_color": "#142b22",
   "icons": [
     {
       "src": "icon.svg",

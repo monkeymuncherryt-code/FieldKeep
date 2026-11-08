@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="Fieldkeep" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="apple-touch-icon" href="icon.svg" />
-<title>Fieldkeep V10 — Kingdoms & Raids</title>
+<title>Fieldkeep V11 — Kingdoms & Alliances</title>
 <style>
 :root{color-scheme:light;--bg:#e7ebda;--paper:#f9f8ee;--panel:#fffdf4;--ink:#2e3c2d;--forest:#35583b;--dark:#203d2a;--line:#d7ddc5;--muted:#77816d;--gold:#a66c24;--red:#a94335;--teal:#3e796c}
 *{box-sizing:border-box}
@@ -304,11 +304,15 @@ body:before{opacity:.08}
  .game-column{width:calc(100% - 160px)!important}.controls{right:160px!important}.layout{top:68px}
  }
 
+/* FIELDKEEP V11 · Kingdoms world-map entry */
+.v11-kingdom-link{display:flex;align-items:center;justify-content:center;gap:3px;text-decoration:none;background:linear-gradient(135deg,#9f733f,#7e542f);border-color:#deb678;color:#fff8de;box-shadow:0 4px 16px #5a341b55}
+.v11-kingdom-link:active{transform:translateY(1px)}
+@media(max-width:760px){.v11-kingdom-link{min-width:0}}
 </style>
 </head>
 <body>
 <div class="shell">
- <header class="header"><div><div class="eyebrow">THE ZOMBIE FRONTIER</div><h1 class="title">FIELD<span>KEEP</span></h1><p class="subtitle">Build a kingdom. Command the elements. Survive legendary raids.</p></div><div class="version">V10 · KINGDOMS & RAIDS</div></header>
+ <header class="header"><div><div class="eyebrow">THE ZOMBIE FRONTIER</div><h1 class="title">FIELD<span>KEEP</span></h1><p class="subtitle">Defend the frontier. Build an alliance. Grow your world.</p></div><div class="version">V11 · KINGDOMS & ALLIANCES</div></header>
 <nav class="v10-toolbar" id="v10Toolbar" aria-label="Kingdom game menu">
  <button class="v10-tab" data-v10-tab="kingdom">🏰 <span>Kingdom</span></button>
  <button class="v10-tab" data-v10-tab="element">🌋 <span>Elements</span></button>
@@ -317,6 +321,7 @@ body:before{opacity:.08}
  <button class="v10-tab" data-v10-tab="profile">👤 <span>Profile</span></button>
  <button class="v10-tab" data-v10-tab="armory">📜 <span>Armory</span></button>
  <button class="v10-tab" data-v10-tab="party">👥 <span>Party</span></button>
+ <a class="v10-tab v11-kingdom-link" href="./kingdoms.html" role="button">🌍 <span>Kingdoms</span></a>
  <button id="v10Full" class="v10-tab v10-full">⛶ <span>Screen</span></button>
  </nav>
  <div class="v10-brief" id="v10Brief" aria-live="off"><span id="v10Mode">🌳 ENDLESS FRONTIER</span><span id="v10Supplies">🪵 0 · 🪨 0</span><span id="v10RaidMini">20 ❤️</span></div>
@@ -743,7 +748,7 @@ function renderLeaderboard(){
 let autoStart=localStorage.getItem('fieldkeep_v8_autostart')==='true',autoCountdown=0;
 let p2pRole=null,p2pPeer=null,p2pConn=null,p2pGuests=new Map(),p2pPending=false,lastBroadcast=0;
 
-function reset(){v10ResetRun();pendingPlacement=null;autoCountdown=autoStart?4:0;towers=[];enemies=[];shots=[];particles=[];texts=[];scrollDrops=[];scrollInventory=[];credits=320+(!multiplayer?Math.round(profile.skills.economy*20):0);if(p2pRole==='host'){for(const ranger of players){ranger.coins=320;ranger.kills=0;ranger.points=0;}syncHostWallet();}lastScoresSig='';soloPoints=0;seenEnemyIds.clear();health=20;chests=0;merchantRound=0;merchantUsed=[];baseLevel=0;gateShield=!multiplayer?profile.skills.hearts:0;relicsOwned=[];equippedRelics=[];heartwoodUsed=false;bossLog=[];lastChestReward='';wave=0;kills=0;active=false;paused=false;speed=1;gameOver=false;selectedType='pulse';selectedTower=null;hover=null;spawnQueue=[];spawnTime=0;spawnedCount=0;totalSpawned=0;clock=0;lastTimestamp=performance.now();bestWave=getBest();$('overlay').classList.remove('show');$('pause').textContent='Ⅱ Pause';$('speed').textContent='⚡ 1× Speed';$('speed').classList.add('speed-on');makeShop();updateUI();toast('V10: Kingdoms & Raids — build your frontier!')}
+function reset(){v10ResetRun();pendingPlacement=null;autoCountdown=autoStart?4:0;towers=[];enemies=[];shots=[];particles=[];texts=[];scrollDrops=[];scrollInventory=[];credits=320+(!multiplayer?Math.round(profile.skills.economy*20):0);if(p2pRole==='host'){for(const ranger of players){ranger.coins=320;ranger.kills=0;ranger.points=0;}syncHostWallet();}lastScoresSig='';soloPoints=0;seenEnemyIds.clear();health=20;chests=0;merchantRound=0;merchantUsed=[];baseLevel=0;gateShield=!multiplayer?profile.skills.hearts:0;relicsOwned=[];equippedRelics=[];heartwoodUsed=false;bossLog=[];lastChestReward='';wave=0;kills=0;active=false;paused=false;speed=1;gameOver=false;selectedType='pulse';selectedTower=null;hover=null;spawnQueue=[];spawnTime=0;spawnedCount=0;totalSpawned=0;clock=0;lastTimestamp=performance.now();bestWave=getBest();$('overlay').classList.remove('show');$('pause').textContent='Ⅱ Pause';$('speed').textContent='⚡ 1× Speed';$('speed').classList.add('speed-on');makeShop();updateUI();toast('V11: Kingdoms & Alliances — your frontier awaits!')}
 function toast(message){const el=$('toast');el.textContent=message;el.classList.add('active');clearTimeout(toasterTimer);toasterTimer=setTimeout(()=>el.classList.remove('active'),2600)}
 function makeShop(){const e=$('shop');e.replaceChildren();for(let i=0;i<TYPES.length;i++){const id=TYPES[i],d=TOWERS[id];const b=document.createElement('button');b.className='tower-btn';b.dataset.id=id;b.innerHTML=`<span class="tower-icon" style="--tower:${d.color}">${d.icon}</span><span><div class="tower-name">${d.name} <small>${i<9?'['+(i+1)+']':i===9?'[0]':''}</small></div><div class="tower-desc">${d.desc}</div></span><span class="tower-price">${d.cost} 🟡</span>`;b.addEventListener('click',()=>{villageSelected=null;selectedType=id;selectedTower=null;updateUI()});e.appendChild(b)}
  for(let i=0;i<blueprints.length;i++){const def=getSelectionDef('custom:'+i);if(!def)continue;const b=document.createElement('button');b.className='tower-btn';b.dataset.id='custom:'+i;b.innerHTML=`<span class="tower-icon">⚙</span><span><div class="tower-name">Custom #${i+1}</div><div class="tower-desc">${blueprints[i].effect} · ${blueprints[i].damage} damage</div></span><span class="tower-price">${def.cost} 🟡</span>`;b.addEventListener('click',()=>{selectedType=b.dataset.id;selectedTower=null;updateUI()});e.appendChild(b)}

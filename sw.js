@@ -1,5 +1,5 @@
-/* Fieldkeep V11 Kingdoms & Raids: network-first game, offline solo fallback */
-const CACHE='fieldkeep-v11-alliances-1';
+/* Fieldkeep V12 Kingdoms & Raids: network-first game, offline solo fallback */
+const CACHE='fieldkeep-v12-kingdom-world-1';
 const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg','./kingdoms.html'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(Promise.all([caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('fieldkeep-')&&k!==CACHE).map(k=>caches.delete(k)))),self.clients.claim()])));

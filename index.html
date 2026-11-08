@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Fieldkeep V5 — Turret Workshop + 31 Maps</title>
+<title>Fieldkeep V6 — Turret Workshop + 31 Maps</title>
 <style>
 :root{color-scheme:light;--bg:#e7ebda;--paper:#f9f8ee;--panel:#fffdf4;--ink:#2e3c2d;--forest:#35583b;--dark:#203d2a;--line:#d7ddc5;--muted:#77816d;--gold:#a66c24;--red:#a94335;--teal:#3e796c}
 *{box-sizing:border-box}
@@ -90,11 +90,27 @@ body:before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.21;ba
 .tower-list{max-height:560px;overflow-y:auto;padding-right:2px}.tower-icon{font-size:19px}.sidebar .panel{min-width:0}
 @media(max-width:1030px){.sidebar{grid-template-columns:1fr 1fr}.panel.workshop{grid-column:span 1}.tower-list{max-height:none}.panel:last-child{grid-column:span 2}}
 @media(max-width:640px){.sidebar{display:flex}.heart-grid{font-size:11px}}
+
+/* V6 progression: scroll loot, inventory and evolution panels. */
+.loot-panel{background:linear-gradient(155deg,#fffdf2,#f1f3e6);border-color:#c9d6b0}
+.loot-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.loot-count{font-size:10px;font-weight:900;color:#6e7859;border-radius:999px;background:#e4ebd6;padding:5px 9px}
+.loot-inventory{display:flex;flex-direction:column;gap:7px;max-height:310px;overflow-y:auto}
+.loot-btn{display:flex;width:100%;align-items:center;gap:10px;text-align:left;border:1px solid #d4dac4;border-radius:10px;padding:8px 9px;background:#fafbf1;color:#344b35;cursor:pointer;font:inherit}
+.loot-btn:disabled{opacity:.5;cursor:not-allowed}.loot-btn:not(:disabled):hover{border-color:#67945b;background:#ecf4e2}
+.loot-glyph{display:grid;place-items:center;font-size:23px;width:38px;height:38px;border-radius:9px;background:#f1ebd7;border:2px solid var(--rarity)}
+.loot-meta{flex:1;min-width:0}.loot-name{font-size:11px;font-weight:900;white-space:nowrap}.loot-desc{margin-top:3px;font-size:10px;color:#7a866f}.loot-use{font-size:10px;font-weight:900;color:#6b8756}
+.evolution-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.evo-btn{min-width:0;padding:9px 4px;border:1px solid #c4d3b5;background:#eef2e4;color:#3a5d42;border-radius:9px;font-size:10px;font-weight:900;cursor:pointer;line-height:1.45}
+.evo-btn:hover:not(:disabled){background:#daeacb}.evo-btn:disabled{opacity:.5;cursor:not-allowed}
+.evo-title{font-size:17px;display:block}.evo-help{font-size:10px;color:#718062;line-height:1.5;margin-top:6px}
+.level-progress{margin:7px 0 10px;background:#e5edda;border-radius:999px;height:6px;overflow:hidden}.level-progress>span{display:block;height:100%;background:#8caf67}
+@media(max-width:640px){.loot-inventory{max-height:275px}.evolution-grid{gap:4px}.evo-btn{font-size:9px}}
 </style>
 </head>
 <body>
 <div class="shell">
- <header class="header"><div><div class="eyebrow">THE ZOMBIE FRONTIER</div><h1 class="title">FIELD<span>KEEP</span></h1><p class="subtitle">Survive the zombie horde across 31 Earth-inspired battlegrounds — solo or co-op!</p></div><div class="version">31 DAILY MAPS · TURRET WORKSHOP · V5</div></header>
+ <header class="header"><div><div class="eyebrow">THE ZOMBIE FRONTIER</div><h1 class="title">FIELD<span>KEEP</span></h1><p class="subtitle">Survive 31 battlefields, collect zombie scrolls, and evolve your defenses!</p></div><div class="version">31 MAPS · SCROLLS · EVOLUTION · V6</div></header>
  <section class="lobby panel" aria-label="Multiplayer room lobby">
  <div class="lobby-head"><div><h2 class="panel-heading">🌍 Play with friends</h2><p class="panel-sub" id="serverHint">Checking co-op server… Solo play works without a server.</p></div><span class="lobby-label" id="lobbyState">SOLO MODE</span></div>
  <div class="lobby-inputs" id="lobbyInputs">
@@ -115,7 +131,11 @@ body:before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.21;ba
  <div class="progress"><div id="progress"></div></div>
  <div class="controls"><button class="btn primary" id="nextWave">▶ START WAVE 1</button><button class="btn" id="pause">Ⅱ Pause</button><button class="btn speed-on" id="speed">⚡ 1× Speed</button><div class="control-spacer"></div><button class="btn" id="reset">↻ Restart</button></div>
  </section><aside class="sidebar">
- <section class="panel"><h2 class="panel-heading">🪵 Build Defenses</h2><p class="panel-sub">Choose a turret and click clear grass. Trees, rocks, water, and the road block construction. In co-op, coins and turrets belong to the whole team. Support towers can boost nearby defenses or produce income.</p><div class="tower-list" id="shop"></div><div class="divider"></div><div class="hint"><b>Heads up:</b> Zombies grow stronger every wave. Runners arrive at wave 3, brutes at wave 4, crawlers at wave 7, and a giant boss every fifth wave!</div></section>
+ <section class="panel"><h2 class="panel-heading">🪵 Build Defenses</h2><p class="panel-sub">Choose a turret and click clear grass. Trees, rocks, water, and the road block construction. In co-op, coins, scrolls, evolutions and turrets belong to the whole team. Support towers can boost nearby defenses or produce income.</p><div class="tower-list" id="shop"></div><div class="divider"></div><div class="hint"><b>Heads up:</b> Zombies grow stronger every wave. Runners arrive at wave 3, brutes at wave 4, crawlers at wave 7, and a giant boss every fifth wave!</div></section>
+ <section class="panel loot-panel" id="lootPanel"><div class="loot-top"><h2 class="panel-heading">📜 Zombie Scrolls</h2><span class="loot-count" id="lootCount">0 collected</span></div>
+ <p class="panel-sub">Zombies drop glowing scrolls. Tap a drop on the road, or it will be collected automatically. <b>Select a turret</b>, then choose a scroll below to power it up. Bosses always drop one!</p>
+ <div id="scrollInventory" class="loot-inventory"><span class="empty">Defeat zombies to discover scrolls.</span></div>
+ <div class="evo-help">Scroll levels: 1 Common · 2 Rare · 3 Epic · 4 Legendary. Each turret has 3 scroll slots; evolving adds a 4th.</div></section>
  <section class="panel workshop" id="workshop"><div class="workshop-header"><h2 class="panel-heading">⚙️ Custom Turret Workshop</h2><span class="workshop-chip">4 BLUEPRINT SLOTS</span></div><p class="panel-sub">Build your own defense. Price changes with every stat, and stronger special effects cost more. Save a design to add it to your shop.</p>
 <div class="workshop-rows">
 <label class="workshop-line"><span>⚔ Damage <strong id="damageVal">30</strong></span><input type="range" id="wDamage" min="10" max="140" step="5" value="30"/></label>
@@ -129,9 +149,9 @@ body:before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.21;ba
 <div class="workshop-save"><label for="saveSlot">Save to slot</label><select id="saveSlot"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option></select><button class="btn primary" id="saveBlueprint">💾 Save & Equip</button></div>
 <div class="saved-blueprints" id="savedBlueprints"><span class="empty">No custom blueprints saved yet.</span></div>
 </section>
-<section class="panel selection"><h2 class="panel-heading">🛠 Selected Defense</h2><div id="details" class="empty">Choose a turret from the shop, or click one you've already built to inspect and upgrade it.</div></section>
+<section class="panel selection"><h2 class="panel-heading">🛠 Selected Defense</h2><div id="details" class="empty">Select or build a turret. Infinite levels, scroll slots and three evolutions are available here.</div></section>
  <section class="panel"><h2 class="panel-heading">⌨ Quick Controls</h2><div class="hint"><span class="kbd">1</span> – <span class="kbd">9</span> select preset turret · <span class="kbd">0</span> supply cart · <span class="kbd">Space</span> start wave · <span class="kbd">P</span> pause · <span class="kbd">Esc</span> clear selection.<br>Keep zombies away from your gate! Every fifth wave brings a giant zombie. Each day of the month has its own map.</div></section>
- </aside></main><footer class="footer">FIELDKEEP V5 — 31 daily maps · 20 hearts · Custom turret workshop · Five-player co-op</footer>
+ </aside></main><footer class="footer">FIELDKEEP V6 — 31 maps · 20 hearts · Scroll loot · Unlimited upgrades · Turret evolution · Co-op</footer>
 </div>
 <script>
 /* Fieldkeep V4: Shared, deterministic maps for browser and co-op server. */
@@ -240,7 +260,7 @@ body:before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.21;ba
 
 </script>
 <script>
-/* Fieldkeep V5 — one shared turret ruleset for solo and multiplayer. */
+/* Fieldkeep V6: shared deterministic turret, scroll and evolution rules (browser + server). */
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;if(root)root.FieldkeepTurrets=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){'use strict';
 const TYPES={
  pulse:{name:'Sentry Tower',short:'SENTRY',cost:65,color:'#9d8a52',icon:'♜',desc:'Reliable all-round defense',range:134,damage:19,rate:.60,speed:560,targets:'both'},
@@ -252,10 +272,15 @@ const TYPES={
  venom:{name:'Thorn Thrower',short:'THORN',cost:150,color:'#598a54',icon:'❧',desc:'Poison drains zombie health',range:145,damage:14,rate:.94,speed:490,targets:'both',poison:16},
  storm:{name:'Chain Ballista',short:'CHAIN',cost:205,color:'#8a8861',icon:'⤳',desc:'Jumps to nearby targets',range:165,damage:32,rate:1.25,speed:680,targets:'both',chain:2},
  beacon:{name:'War Drum',short:'BUFF',cost:170,color:'#b18a59',icon:'♫',desc:'Boosts nearby turret damage',range:132,damage:0,rate:0,speed:0,targets:'both',buff:.28},
- harvester:{name:'Supply Cart',short:'COINS',cost:165,color:'#aa874f',icon:'▣',desc:'Earns coins after each wave',range:0,damage:0,rate:0,speed:0,targets:'both',income:34}
+ harvester:{name:'Supply Cart',short:'COINS',cost:165,color:'#aa874f',icon:'▣',desc:'Earns coins after each wave',range:0,damage:0,rate:0,speed:0,targets:'both',income:34},
+ briar:{name:'Briar Cannon',short:'BRIAR',cost:225,color:'#477c51',icon:'❀',desc:'Poison clouds and thorny splash',range:155,damage:31,rate:1.05,speed:470,targets:'both',splash:42,poison:11},
+ lantern:{name:'Harvest Lantern',short:'LANTERN',cost:235,color:'#b29a54',icon:'✦',desc:'Support aura and wave income',range:118,damage:0,rate:0,speed:0,targets:'both',buff:.17,income:18}
 };
 const EFFECTS=['none','slow','splash','poison','chain'];
 const COLORS={none:'#8a8d70',slow:'#659eab',splash:'#b98157',poison:'#638b4c',chain:'#9a865c'};
+const RARITIES={common:{name:'Common',color:'#b8c1a6',mult:1,tier:1},rare:{name:'Rare',color:'#77afd9',mult:1.75,tier:2},epic:{name:'Epic',color:'#b389de',mult:2.75,tier:3},legendary:{name:'Legendary',color:'#e7b754',mult:4.2,tier:4}};
+const SCROLLS={might:{name:'Might',icon:'⚔️',desc:'Extra damage',base:.085},haste:{name:'Haste',icon:'⚡',desc:'Faster attacks',base:.065},reach:{name:'Eagle Eye',icon:'🎯',desc:'Extra attack range',base:10},venom:{name:'Venom',icon:'🍃',desc:'Poison on hit',base:6},bounty:{name:'Bounty',icon:'🪙',desc:'Bonus coins each wave',base:7}};
+const EVOLUTIONS={ember:{name:'Emberheart',icon:'🔥',color:'#d9844b',desc:'Powerful area attacks'},tempest:{name:'Stormwarden',icon:'⚡',color:'#80b4c2',desc:'Quick attacks that chain'},wildwood:{name:'Wildwood',icon:'🌿',color:'#79a35b',desc:'Greater reach and slows'}};
 function onStep(v,min,max,step){return typeof v==='number'&&Number.isFinite(v)&&v>=min&&v<=max&&Math.abs((v-min)/step-Math.round((v-min)/step))<1e-5;}
 function normalizeBlueprint(raw){if(!raw||typeof raw!=='object'||Array.isArray(raw))return null;
  const {damage,fireRate,range,speed,effect,power}=raw;
@@ -275,10 +300,33 @@ function customDefinition(raw){const b=normalizeBlueprint(raw);if(!b)return null
  if(b.effect==='chain')d.chain=b.power+1;
  return d;}
 function definition(t){if(!t||!t.type)return null;return t.type==='custom'?customDefinition(t.blueprint):TYPES[t.type]||null;}
-function stats(t){const d=definition(t);if(!d)return null;const level=Number(t.level)||1;return{range:d.range+(d.range?12*(level-1):0),damage:d.damage*Math.pow(1.37,level-1),rate:d.rate?d.rate*Math.pow(.92,level-1):0,splash:d.splash||0,slow:d.slow||0,poison:d.poison?d.poison*Math.pow(1.25,level-1):0,chain:d.chain||0,buff:d.buff?d.buff+.06*(level-1):0,income:d.income?Math.round(d.income*(1+.65*(level-1))):0};}
-function upgradeCost(t){const d=definition(t);return d?Math.round(d.cost*(.65+t.level*.47)):null;}
-function sellValue(t){const d=definition(t);return d?Math.round((d.cost+t.spent)*.68):null;}
-return{TYPES,EFFECTS,normalizeBlueprint,blueprintCost,customDefinition,definition,stats,upgradeCost,sellValue};
+function normalizeScroll(raw){if(!raw||typeof raw!=='object')return null;return Object.hasOwn(SCROLLS,raw.kind)&&Object.hasOwn(RARITIES,raw.rarity)?{kind:raw.kind,rarity:raw.rarity}:null;}
+function scrollDescription(raw){const s=normalizeScroll(raw);if(!s)return '';const amount=SCROLLS[s.kind].base*RARITIES[s.rarity].mult;return {might:'+'+Math.round(amount*100)+'% damage',haste:'+'+Math.round(amount*100)+'% attack speed',reach:'+'+Math.round(amount)+' range',venom:'+'+Math.round(amount)+' poison damage/s',bounty:'+'+Math.round(amount)+' coins per wave'}[s.kind];}
+function isCombat(t){const d=definition(t);return !!d&&d.rate>0;}
+function scrollSlots(t){return t?.evolution?4:3;}
+function canApplyScroll(t,raw){const s=normalizeScroll(raw);if(!s||!definition(t))return 'Invalid scroll';if((t.scrolls||[]).length>=scrollSlots(t))return 'Scroll slots full. Evolve to unlock a fourth slot.';
+ if(!isCombat(t)&&s.kind!=='bounty')return 'Support towers can only use Bounty scrolls.';return null;}
+function applyScroll(t,raw){const err=canApplyScroll(t,raw);if(err)return err;if(!Array.isArray(t.scrolls))t.scrolls=[];t.scrolls.push(normalizeScroll(raw));return null;}
+function rollScroll(type,wave,rng=Math.random){const chance=type==='boss'?1:type==='warden'?.28:.195;
+ if(rng()>chance)return null;
+ const roll=rng(),rarity=roll<.055+Math.min(.045,wave*.0015)?'legendary':roll<.20+Math.min(.055,wave*.001)?'epic':roll<.46?'rare':'common';
+ const keys=Object.keys(SCROLLS);return{rarity,kind:keys[Math.floor(rng()*keys.length)]};}
+function stats(t){const d=definition(t);if(!d)return null;const level=Math.max(1,Number(t.level)||1),n=level-1;
+ let result={range:d.range+(d.range?8*Math.sqrt(n):0),damage:d.damage*(1+.19*n+.028*Math.pow(n,1.22)),rate:d.rate?Math.max(.065,d.rate/(1+.065*n)):0,splash:d.splash||0,slow:d.slow||0,poison:d.poison?d.poison*(1+.18*n):0,chain:d.chain||0,buff:d.buff?d.buff+.016*Math.sqrt(n):0,income:d.income?Math.round(d.income*(1+.43*n)):0};
+ switch(t.evolution){case'ember':if(result.rate){result.damage*=1.5;result.splash=Math.max(result.splash,50)}else{result.buff*=1.45;result.income=Math.round(result.income*1.45)}break;
+ case'tempest':if(result.rate){result.rate=Math.max(.052,result.rate*.70);result.chain=Math.max(result.chain,2)}else{result.buff*=1.55;result.income=Math.round(result.income*1.35)}break;
+ case'wildwood':if(result.rate){result.range+=45;result.slow=result.slow?Math.min(result.slow,.55):.65}else{result.range+=45;result.buff*=1.25;result.income=Math.round(result.income*1.25)}break;}
+ let power=0,fast=0,range=0,venom=0,bounty=0;
+ for(const raw of (Array.isArray(t.scrolls)?t.scrolls:[])){const s=normalizeScroll(raw);if(!s)continue;const val=SCROLLS[s.kind].base*RARITIES[s.rarity].mult;
+ if(s.kind==='might')power+=val;else if(s.kind==='haste')fast+=val;else if(s.kind==='reach')range+=val;else if(s.kind==='venom')venom+=val;else if(s.kind==='bounty')bounty+=val;}
+ result.damage*=1+power; if(result.rate)result.rate=Math.max(.05,result.rate/(1+fast));if(result.range)result.range+=range; if(result.rate&&venom)result.poison+=venom; result.income+=Math.round(bounty);
+ // Protect the simulation from overflow while retaining no arbitrary level cap.
+ for(const key of Object.keys(result))if(!Number.isFinite(result[key]))result[key]=Number.MAX_SAFE_INTEGER;
+ return result;}
+function upgradeCost(t){const d=definition(t);if(!d)return null;const level=Math.max(1,Number(t.level)||1);return Math.min(Number.MAX_SAFE_INTEGER,Math.round(d.cost*(.65+.42*Math.pow(level,.98))*Math.pow(1.037,Math.min(level,650))));}
+function evolutionCost(t){const d=definition(t);if(!d)return null;return Math.round(d.cost*2.3+Math.sqrt(Math.max(1,Number(t.level)||1))*25);}
+function sellValue(t){const d=definition(t);return d?Math.round((d.cost+(t.spent||0))*.68):null;}
+return{TYPES,EFFECTS,RARITIES,SCROLLS,EVOLUTIONS,normalizeBlueprint,blueprintCost,customDefinition,definition,stats,upgradeCost,evolutionCost,sellValue,normalizeScroll,scrollDescription,canApplyScroll,applyScroll,rollScroll,scrollSlots};
 });
 
 </script>
@@ -294,7 +342,7 @@ let mapDay=TODAY,currentMap=FieldkeepMaps.getMap(mapDay);
 let pts=currentMap.points,pathLength=currentMap.pathLength,pathTiles=currentMap.pathTiles;
 let scenicTrees=currentMap.trees,scenicRocks=currentMap.rocks,scenicPonds=currentMap.ponds;
 function positionAt(distance){return currentMap.positionAt(distance)}
-let towers,enemies,shots,particles,texts,credits,health,wave,kills,active,paused,speed,gameOver,selectedType,selectedTower,hover,spawnQueue,spawnTime,spawnInterval,spawnedCount,totalSpawned,bestWave,clock,lastTimestamp,toasterTimer;
+let towers,enemies,shots,particles,texts,scrollDrops,scrollInventory,credits,health,wave,kills,active,paused,speed,gameOver,selectedType,selectedTower,hover,spawnQueue,spawnTime,spawnInterval,spawnedCount,totalSpawned,bestWave,clock,lastTimestamp,toasterTimer;
 function getBest(){try{return Number(localStorage.getItem('fieldkeep_v4_best_day_'+mapDay)||0)}catch(e){return 0}}
 function saveBest(){try{localStorage.setItem('fieldkeep_v4_best_day_'+mapDay,String(bestWave))}catch(e){}}
 let uid=1;
@@ -305,16 +353,54 @@ const towerDef=t=>Rule.definition(t);
 function rememberBlueprints(){try{localStorage.setItem('fieldkeep_custom_blueprints_v5',JSON.stringify(blueprints));}catch{}}
 let multiplayer=false, roomToken=null, myId=null, hostId=null, roomCode=null, players=[], eventSource=null, onlineSince=0, lastNetSig='', networkInfo=null;
 
-function reset(){towers=[];enemies=[];shots=[];particles=[];texts=[];credits=320;health=20;wave=0;kills=0;active=false;paused=false;speed=1;gameOver=false;selectedType='pulse';selectedTower=null;hover=null;spawnQueue=[];spawnTime=0;spawnedCount=0;totalSpawned=0;clock=0;lastTimestamp=performance.now();bestWave=getBest();$('overlay').classList.remove('show');$('pause').textContent='Ⅱ Pause';$('speed').textContent='⚡ 1× Speed';$('speed').classList.add('speed-on');makeShop();updateUI();toast('Select a turret, place it on the grid, then launch a wave!')}
+function reset(){towers=[];enemies=[];shots=[];particles=[];texts=[];scrollDrops=[];scrollInventory=[];credits=320;health=20;wave=0;kills=0;active=false;paused=false;speed=1;gameOver=false;selectedType='pulse';selectedTower=null;hover=null;spawnQueue=[];spawnTime=0;spawnedCount=0;totalSpawned=0;clock=0;lastTimestamp=performance.now();bestWave=getBest();$('overlay').classList.remove('show');$('pause').textContent='Ⅱ Pause';$('speed').textContent='⚡ 1× Speed';$('speed').classList.add('speed-on');makeShop();updateUI();toast('Build defenses, collect scrolls from zombies, and evolve at level 5!')}
 function toast(message){const el=$('toast');el.textContent=message;el.classList.add('active');clearTimeout(toasterTimer);toasterTimer=setTimeout(()=>el.classList.remove('active'),2600)}
-function makeShop(){const e=$('shop');e.replaceChildren();for(let i=0;i<TYPES.length;i++){const id=TYPES[i],d=TOWERS[id];const b=document.createElement('button');b.className='tower-btn';b.dataset.id=id;b.innerHTML=`<span class="tower-icon" style="--tower:${d.color}">${d.icon}</span><span><div class="tower-name">${d.name} <small>[${i===9?'0':i+1}]</small></div><div class="tower-desc">${d.desc}</div></span><span class="tower-price">${d.cost} 🟡</span>`;b.addEventListener('click',()=>{selectedType=id;selectedTower=null;updateUI()});e.appendChild(b)}
+function makeShop(){const e=$('shop');e.replaceChildren();for(let i=0;i<TYPES.length;i++){const id=TYPES[i],d=TOWERS[id];const b=document.createElement('button');b.className='tower-btn';b.dataset.id=id;b.innerHTML=`<span class="tower-icon" style="--tower:${d.color}">${d.icon}</span><span><div class="tower-name">${d.name} <small>${i<9?'['+(i+1)+']':i===9?'[0]':''}</small></div><div class="tower-desc">${d.desc}</div></span><span class="tower-price">${d.cost} 🟡</span>`;b.addEventListener('click',()=>{selectedType=id;selectedTower=null;updateUI()});e.appendChild(b)}
  for(let i=0;i<blueprints.length;i++){const def=getSelectionDef('custom:'+i);if(!def)continue;const b=document.createElement('button');b.className='tower-btn';b.dataset.id='custom:'+i;b.innerHTML=`<span class="tower-icon">⚙</span><span><div class="tower-name">Custom #${i+1}</div><div class="tower-desc">${blueprints[i].effect} · ${blueprints[i].damage} damage</div></span><span class="tower-price">${def.cost} 🟡</span>`;b.addEventListener('click',()=>{selectedType=b.dataset.id;selectedTower=null;updateUI()});e.appendChild(b)}
  renderSavedBlueprints();}
 
 const sellValue=Rule.sellValue, upgradeCost=Rule.upgradeCost, tStats=Rule.stats;
+function lootLabel(item){const sc=Rule.SCROLLS[item.kind],rr=Rule.RARITIES[item.rarity];return `Lv${rr.tier} ${rr.name} ${sc.name}`;}
+function addDrop(e){const sc=Rule.rollScroll(e.type,wave);if(!sc)return;
+ const drop={...sc,id:uid++,x:e.x,y:e.y,life:12};scrollDrops.push(drop);
+ texts.push({x:e.x,y:e.y-23,txt:`📜 LV${Rule.RARITIES[sc.rarity].tier} SCROLL`,color:Rule.RARITIES[sc.rarity].color,life:1.5});}
+function collectScroll(id){const index=scrollDrops.findIndex(d=>d.id===id);if(index<0)return;
+ if(multiplayer){sendAction('pickupScroll',{id});return;}
+ const drop=scrollDrops.splice(index,1)[0];if(scrollInventory.length>=36){toast('Scroll bag full (36). Apply some scrolls!');return;}
+ scrollInventory.push({kind:drop.kind,rarity:drop.rarity});toast(`Collected ${lootLabel(drop)}!`);updateUI();}
+function useScroll(index){const turret=selectedTower;
+ if(!turret){toast('Select one of your placed turrets first!');return;}
+ if(!Number.isInteger(index)||index<0||index>=scrollInventory.length)return;
+ const scroll=scrollInventory[index],error=Rule.canApplyScroll(turret,scroll);if(error){toast(error);return;}
+ if(multiplayer){sendAction('applyScroll',{id:turret.id,index});return;}
+ const err=Rule.applyScroll(turret,scroll);if(err){toast(err);return;}
+ scrollInventory.splice(index,1);burst(turret.x,turret.y,Rule.RARITIES[scroll.rarity].color,18);
+ texts.push({x:turret.x,y:turret.y-20,txt:`+ ${lootLabel(scroll)}`,color:'#f8ecd0',life:1.4});toast(`${lootLabel(scroll)} applied!`);updateUI();}
+function evolveTurret(path){const turret=selectedTower;if(!turret||turret.level<5||turret.evolution||!Object.hasOwn(Rule.EVOLUTIONS,path))return;
+ const cost=Rule.evolutionCost(turret);if(credits<cost){toast('Not enough coins to evolve!');return;}
+ if(multiplayer){sendAction('evolve',{id:turret.id,path});return;}
+ credits-=cost;turret.spent+=cost;turret.evolution=path;
+ burst(turret.x,turret.y,Rule.EVOLUTIONS[path].color,35);texts.push({x:turret.x,y:turret.y-30,txt:'EVOLVED!',color:'#f9f0bc',life:1.7});toast(`${Rule.EVOLUTIONS[path].name} evolution unlocked!`);updateUI();}
+function updateLootUI(){const panel=$('scrollInventory');panel.replaceChildren();$('lootCount').textContent=`${scrollInventory.length} collected`;
+ if(!scrollInventory.length){const e=document.createElement('span');e.className='empty';e.textContent='No scrolls yet. Defeat zombies to find your first one!';panel.append(e);return;}
+ scrollInventory.forEach((scroll,i)=>{const meta=Rule.SCROLLS[scroll.kind],rar=Rule.RARITIES[scroll.rarity],row=document.createElement('button');row.type='button';row.className='loot-btn';row.style.setProperty('--rarity',rar.color);
+ const glyph=document.createElement('span');glyph.className='loot-glyph';glyph.textContent=meta.icon;
+ const info=document.createElement('span');info.className='loot-meta';const title=document.createElement('span');title.className='loot-name';title.textContent=`Lv${rar.tier} ${rar.name} ${meta.name}`;title.style.color=rar.color==='#b8c1a6'?'#415c40':rar.color;
+ const description=document.createElement('div');description.className='loot-desc';description.textContent=Rule.scrollDescription(scroll);info.append(title,description);
+ const use=document.createElement('span');use.className='loot-use';use.textContent=selectedTower?'APPLY ↗':'SELECT TOWER';row.append(glyph,info,use);row.addEventListener('click',()=>useScroll(i));panel.append(row);});}
+
 function updateUI(){ $('goldStat').textContent=credits; $('lifeStat').textContent=`${health} / 20`; $('heartGrid').innerHTML=Array.from({length:20},(_,i)=>`<span class="${i<health?'':'empty-heart'}">${i<health?'♥':'♡'}</span>`).join(''); $('heartGrid').setAttribute('aria-label',`${health} of 20 hearts remaining`); $('waveStat').textContent=wave;$('bestStat').textContent=bestWave;$('nextWave').disabled=active||gameOver||(multiplayer&&myId!==hostId);$('nextWave').textContent=active?`● WAVE ${wave} IN PROGRESS`:multiplayer&&myId!==hostId?'WAIT FOR HOST':`▶ START WAVE ${wave+1}`;$('pause').disabled=gameOver||(multiplayer&&myId!==hostId);$('speed').disabled=multiplayer&&myId!==hostId;$('status').textContent=gameOver?'GATE DESTROYED':paused?'PAUSED':active?'ZOMBIES APPROACHING':'BUILD PHASE';$('signal').style.background=gameOver?'#c45146':paused?'#e2b95b':active?'#c88950':'#c7d97e';$('counter').textContent=active?`${spawnedCount}/${totalSpawned} ARRIVED · ${enemies.length} ON MAP`:`READY FOR WAVE ${wave+1}`; $('progress').style.width=active?(totalSpawned?`${Math.round(100*(spawnedCount-enemies.length)/totalSpawned)}%`:'0%'):'0%';$('progress').style.minWidth='0';for(const btn of document.querySelectorAll('.tower-btn')){btn.classList.toggle('selected',selectedType===btn.dataset.id&&!selectedTower);btn.classList.toggle('unaffordable',credits<getSelectionDef(btn.dataset.id).cost)}
-const e=$('details');if(selectedTower&&towers.includes(selectedTower)){let t=selectedTower,d=towerDef(t),s=tStats(t),price=upgradeCost(t);e.className='';e.innerHTML=`<div class="detail-head"><span class="detail-name" style="color:${d.color}">${d.icon} ${d.name}</span><span class="detail-level">LVL ${t.level}/5</span></div><div class="detail-grid"><span>Power: <strong>${Math.round(s.damage)}</strong></span><span>Range: <strong>${Math.round(s.range)}</strong></span><span>Rate: <strong>${s.rate?(1/s.rate).toFixed(1)+'/s':'Support'}</strong></span><span>Skill: <strong>${s.income?'+'+s.income+' coins':s.buff?'+'+Math.round(s.buff*100)+'% damage':s.poison?'Poison':s.chain?'Chain':s.splash?'Splash':s.slow?'Slow':'None'}</strong></span></div><div class="actions"><button id="upgrade" class="btn primary" ${t.level>=5||price>credits?'disabled':''}>${t.level>=5?'MAX LEVEL':`↑ Upgrade · ${price} 🟡`}</button><button id="sell" class="btn">Sell · ${sellValue(t)} 🟡</button></div>`;const up=$('upgrade'),se=$('sell');up.addEventListener('click',()=>{if(multiplayer){sendAction('upgrade',{id:t.id});return}if(t.level>=5||credits<upgradeCost(t))return;const p=upgradeCost(t);credits-=p;t.spent+=p;t.level++;burst(t.x,t.y,d.color,15);texts.push({x:t.x,y:t.y-15,txt:'LEVEL UP!',color:d.color,life:1});updateUI()});se.addEventListener('click',()=>{if(multiplayer){sendAction('sell',{id:t.id});return}credits+=sellValue(t);towers=towers.filter(x=>x!==t);burst(t.x,t.y,'#b9c4ff',12);selectedTower=null;updateUI()})
-}else{e.className='empty';e.textContent=selectedType?`Placing ${selectedType.startsWith('custom:')?'Custom #'+(Number(selectedType.split(':')[1])+1):getSelectionDef(selectedType).name} (${getSelectionDef(selectedType).cost} coins). Click a free tile to build, or click an existing turret to upgrade.`:'Click a built turret to inspect its stats and upgrade it.'}}
+const e=$('details');if(selectedTower&&towers.includes(selectedTower)){
+ const t=selectedTower,d=towerDef(t),st=tStats(t),price=upgradeCost(t),evoCost=Rule.evolutionCost(t),evol=t.evolution?Rule.EVOLUTIONS[t.evolution]:null,slots=Rule.scrollSlots(t),applied=t.scrolls||[];
+ e.className='';e.innerHTML=`<div class="detail-head"><span class="detail-name" style="color:${evol?evol.color:d.color}">${evol?evol.icon:d.icon} ${evol?evol.name+' ':''}${d.name}</span><span class="detail-level">LVL ${t.level} ∞</span></div><div class="detail-grid"><span>Power: <strong>${Math.round(st.damage)}</strong></span><span>Range: <strong>${Math.round(st.range)}</strong></span><span>Rate: <strong>${st.rate?(1/st.rate).toFixed(1)+'/s':'Support'}</strong></span><span>Skill: <strong>${st.income?'+'+st.income+' coins':st.buff?'+'+Math.round(st.buff*100)+'% damage':st.poison?'Poison':st.chain?'Chain':st.splash?'Splash':st.slow?'Slow':'None'}</strong></span></div>
+ <div class="evo-help">📜 Scroll slots ${applied.length}/${slots}: ${applied.map(x=>Rule.RARITIES[x.rarity].name+' '+Rule.SCROLLS[x.kind].name).join(', ')||'Empty'}</div>
+ <div class="actions" style="margin-top:10px"><button id="upgrade" class="btn primary" ${price>credits?'disabled':''}>↑ Level ${t.level+1} · ${price} 🟡</button><button id="sell" class="btn">Sell · ${sellValue(t)} 🟡</button></div>
+ ${!evol?(t.level>=5?`<div class="evo-help">✨ Evolution available! Choose a permanent path for ${evoCost} coins:</div><div class="evolution-grid">${Object.entries(Rule.EVOLUTIONS).map(([key,v])=>`<button class="evo-btn" data-evo="${key}" ${credits<evoCost?'disabled':''}><span class="evo-title">${v.icon}</span>${v.name}</button>`).join('')}</div>`:`<div class="evo-help">🔒 Reach level 5 to unlock three evolution paths.</div>`):`<div class="evo-help">✅ EVOLVED: ${evol.name} — ${evol.desc}. Fourth scroll slot unlocked!</div>`}`;
+ $('upgrade').addEventListener('click',()=>{if(multiplayer){sendAction('upgrade',{id:t.id});return;}const cost=upgradeCost(t);if(credits<cost)return;credits-=cost;t.spent+=cost;t.level++;burst(t.x,t.y,d.color,15);texts.push({x:t.x,y:t.y-15,txt:`LEVEL ${t.level}!`,color:d.color,life:1});updateUI()});
+ $('sell').addEventListener('click',()=>{if(multiplayer){sendAction('sell',{id:t.id});return;}credits+=sellValue(t);towers=towers.filter(x=>x!==t);burst(t.x,t.y,'#b9c4ff',12);selectedTower=null;updateUI()});
+ for(const btn of e.querySelectorAll('[data-evo]'))btn.addEventListener('click',()=>evolveTurret(btn.dataset.evo));
+}else{e.className='empty';e.textContent=selectedType?`Placing ${selectedType.startsWith('custom:')?'Custom #'+(Number(selectedType.split(':')[1])+1):getSelectionDef(selectedType).name} (${getSelectionDef(selectedType).cost} coins). Click a free tile to build, or click an existing turret to upgrade.`:'Click a built turret to inspect, evolve, or apply a scroll.'}
+updateLootUI();}
 function startWave(){if(multiplayer){sendAction('startWave');return}if(active||gameOver)return;wave++;bestWave=Math.max(bestWave,wave);saveBest();spawnQueue=[];let n=8+Math.floor(wave*2.6);for(let i=0;i<n;i++){let type;if(wave>=7&&i%4===0)type='crawler';else if(wave>=4&&i%9===0)type='warden';else if(wave>=3&&i%5===0)type='dart';else type='glider';spawnQueue.push(type)}if(wave%5===0)spawnQueue.push('boss');totalSpawned=spawnQueue.length;spawnedCount=0;spawnTime=0;spawnInterval=Math.max(.27,.71-wave*.013);active=true;updateUI();toast(wave===7?'Crawling zombies are arriving!':wave%5===0?`⚠ Wave ${wave}: Giant zombie approaching!`:`Zombie wave ${wave} incoming!`)}
 function spawn(type){let hp,vel,reward,color,r,air=false;
  const scale=Math.pow(1.13,wave-1);
@@ -331,22 +417,22 @@ function spawn(type){let hp,vel,reward,color,r,air=false;
 
 function build(c,r){if(!selectedType||gameOver)return;if(c<0||r<0||c>=COLS||r>=ROWS)return;const blocked=invalidTile(c,r);if(blocked){toast(blocked);return}if(towers.some(t=>t.c===c&&t.r===r)){toast('A turret is already there');return}const d=getSelectionDef(selectedType);if(!d){toast('Save your custom design first');return}
  const isCustom=selectedType.startsWith('custom:');const blueprint=isCustom?{...blueprints[Number(selectedType.split(':')[1])]}:null;const type=isCustom?'custom':selectedType;
- if(multiplayer){sendAction('build',{c,r,type,blueprint});return}if(credits<d.cost){toast(`Not enough coins for ${d.name}.`);return}credits-=d.cost;let t={id:uid++,c,r,x:c*CELL+CELL/2,y:r*CELL+CELL/2,type,blueprint,level:1,spent:0,cool:Math.random()*.25,angle:-PI/2};towers.push(t);burst(t.x,t.y,d.color,11);updateUI()}
+ if(multiplayer){sendAction('build',{c,r,type,blueprint});return}if(credits<d.cost){toast(`Not enough coins for ${d.name}.`);return}credits-=d.cost;let t={id:uid++,c,r,x:c*CELL+CELL/2,y:r*CELL+CELL/2,type,blueprint,level:1,spent:0,scrolls:[],evolution:null,cool:Math.random()*.25,angle:-PI/2};towers.push(t);burst(t.x,t.y,d.color,11);updateUI()}
 
 function burst(x,y,color,count=8){for(let i=0;i<count;i++){let a=Math.random()*2*PI,v=38+Math.random()*150;particles.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,color,life:.28+Math.random()*.37,max:.65,r:1+Math.random()*3})}}
-function addDamage(e,d){if(!enemies.includes(e))return;let mult=e.type==='warden'?.74:1;e.hp-=d*mult;if(e.hp<=0){enemies=enemies.filter(a=>a!==e);credits+=e.reward;kills++;burst(e.x,e.y,e.color,e.type==='boss'?27:12);texts.push({x:e.x,y:e.y,txt:`+${e.reward}`,color:'#fff2b8',life:.95})}else burst(e.x,e.y,e.color,2)}
+function addDamage(e,d){if(!enemies.includes(e))return;let mult=e.type==='warden'?.74:1;e.hp-=d*mult;if(e.hp<=0){enemies=enemies.filter(a=>a!==e);credits+=e.reward;kills++;addDrop(e);burst(e.x,e.y,e.color,e.type==='boss'?27:12);texts.push({x:e.x,y:e.y,txt:`+${e.reward}`,color:'#fff2b8',life:.95})}else burst(e.x,e.y,e.color,2)}
 function targeting(t){const s=tStats(t);if(!s.rate)return null;let best=null;for(const e of enemies){if(Math.hypot(t.x-e.x,t.y-e.y)>s.range)continue;if(!best||e.d>best.d)best=e}return best}
-function powerBoost(t){let value=1;for(const x of towers)if(x!==t&&x.type==='beacon'&&Math.hypot(x.x-t.x,x.y-t.y)<=tStats(x).range)value=Math.max(value,1+tStats(x).buff);return value;}
+function powerBoost(t){let value=1;for(const x of towers)if(x!==t&&(x.type==='beacon'||x.type==='lantern')&&Math.hypot(x.x-t.x,x.y-t.y)<=tStats(x).range)value=Math.max(value,1+tStats(x).buff);return value;}
 function earnedCoins(){let reward=40+wave*3;for(const t of towers)reward+=tStats(t).income;return reward;}
 function impactShot(s,target){const hitX=target.x,hitY=target.y;
- if(s.splash){burst(hitX,hitY,s.color,8);for(const e of [...enemies])if(Math.hypot(e.x-hitX,e.y-hitY)<=s.splash)addDamage(e,s.damage);return;}
+ if(s.splash){burst(hitX,hitY,s.color,8);for(const e of [...enemies])if(Math.hypot(e.x-hitX,e.y-hitY)<=s.splash){if(s.poison){e.poisonT=3.2;e.poisonDps=Math.max(e.poisonDps||0,s.poison)}if(s.slow){e.slowT=1.6;e.slowFactor=s.slow}addDamage(e,s.damage)}return;}
  const chainTargets=s.chain?[...enemies].filter(e=>e!==target&&Math.hypot(e.x-hitX,e.y-hitY)<=95).sort((a,b)=>a.d-b.d).slice(0,s.chain):[];
  if(s.slow){target.slowT=1.6;target.slowFactor=s.slow;}
  if(s.poison){target.poisonT=3.2;target.poisonDps=Math.max(target.poisonDps||0,s.poison);}
  addDamage(target,s.damage);
  for(const e of chainTargets){if(enemies.includes(e)){addDamage(e,s.damage*.56);burst(e.x,e.y,'#e1c77f',3)}}
 }
-function update(dt){clock+=dt;for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.96;p.vy*=.96;p.life-=dt;if(p.life<=0)particles.splice(i,1)}for(let i=texts.length-1;i>=0;i--){let t=texts[i];t.y-=22*dt;t.life-=dt;if(t.life<=0)texts.splice(i,1)}
+function update(dt){clock+=dt;for(let i=scrollDrops.length-1;i>=0;i--){const drop=scrollDrops[i];drop.life-=dt;if(drop.life<=0){if(scrollInventory.length<36)scrollInventory.push({kind:drop.kind,rarity:drop.rarity});scrollDrops.splice(i,1);updateUI();}}for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.96;p.vy*=.96;p.life-=dt;if(p.life<=0)particles.splice(i,1)}for(let i=texts.length-1;i>=0;i--){let t=texts[i];t.y-=22*dt;t.life-=dt;if(t.life<=0)texts.splice(i,1)}
  if(active){spawnTime-=dt;while(spawnQueue.length&&spawnTime<=0){spawn(spawnQueue.shift());spawnedCount++;spawnTime+=spawnInterval;}}
  for(let i=enemies.length-1;i>=0;i--){let e=enemies[i];e.slowT=Math.max(0,e.slowT-dt);if(e.poisonT>0){e.poisonT=Math.max(0,e.poisonT-dt);addDamage(e,(e.poisonDps||0)*dt);if(e.poisonT===0)e.poisonDps=0;if(!enemies.includes(e))continue;}
   let factor=e.slowT>0?e.slowFactor:1;e.d+=e.speed*factor*dt;let p=positionAt(e.d);e.x=p.x;e.y=p.y;if(e.d>=pathLength){enemies.splice(enemies.indexOf(e),1);health=Math.max(0,health-(e.type==='boss'?4:1));burst(925,p.y,'#a65333',13);texts.push({x:850,y:p.y,txt:e.type==='boss'?'-4 ♥':'-1 ♥',color:'#ffded1',life:1.0});if(health===0)lose();updateUI()}}
@@ -354,7 +440,7 @@ function update(dt){clock+=dt;for(let i=particles.length-1;i>=0;i--){let p=parti
  for(const t of towers){const s=tStats(t);if(!s.rate)continue;t.cool-=dt;if(t.cool>0)continue;let target=targeting(t);if(!target)continue;const def=towerDef(t);t.angle=Math.atan2(target.y-t.y,target.x-t.x);t.cool=s.rate;
  shots.push({x:t.x,y:t.y,target,damage:s.damage*powerBoost(t),speed:def.speed,color:def.color,r:s.splash?7:4,splash:s.splash,slow:s.slow,poison:s.poison,chain:s.chain,life:2.5});}
  for(let i=shots.length-1;i>=0;i--){let s=shots[i];s.life-=dt;if(s.life<=0){shots.splice(i,1);continue}if(!enemies.includes(s.target)){shots.splice(i,1);continue}const dx=s.target.x-s.x,dy=s.target.y-s.y,dist=Math.hypot(dx,dy),move=s.speed*dt;if(dist<=move+5){impactShot(s,s.target);shots.splice(i,1)}else{s.x+=dx/dist*move;s.y+=dy/dist*move}}
- if(active&&spawnQueue.length===0&&enemies.length===0){active=false;const reward=earnedCoins();credits+=reward;texts.push({x:470,y:245,txt:`VALLEY SECURED · +${reward} 🟡`,color:'#f8f2b1',life:1.8});updateUI()}
+ if(active&&spawnQueue.length===0&&enemies.length===0){active=false;const reward=earnedCoins();credits+=reward;if(wave%10===0&&health<20){health++;toast('🌼 Milestone bonus: +1 gate heart!')}texts.push({x:470,y:245,txt:`VALLEY SECURED · +${reward} 🟡`,color:'#f8f2b1',life:1.8});updateUI()}
 }
 function lose(){gameOver=true;active=false;paused=false;saveBest();$('endWave').textContent=`WAVE ${wave}`;$('endKills').textContent=`${kills} enemies defeated · Personal best: ${bestWave}`;$('overlay').classList.add('show');updateUI()}
 function drawRounded(x,y,w,h,r,color){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}
@@ -432,7 +518,8 @@ function drawTurret(t){const g=ctx,d=towerDef(t);g.save();g.translate(t.x,t.y);
  else if(t.type==='harvester'){g.fillStyle='#99724c';g.fillRect(-17,-12,34,24);g.fillStyle='#d9ba7f';g.fillRect(-12,-8,24,15);g.fillStyle='#544334';g.beginPath();g.arc(-12,15,6,0,2*PI);g.arc(12,15,6,0,2*PI);g.fill()}
  else{const color=d.color;g.fillStyle=color;g.beginPath();g.roundRect(-16,-14,32,28,7);g.fill();g.fillStyle='#42523c';g.fillRect(0,-5,29,10);g.fillStyle='#ded9aa';g.fillRect(17,-3,12,6);g.fillStyle='#c0ba94';g.beginPath();g.arc(-3,0,9,0,2*PI);g.fill();if(t.type==='rapid'){g.fillStyle='#4f5843';g.fillRect(0,-10,30,5);g.fillRect(0,5,30,5)}if(t.type==='sniper'){g.fillStyle='#434c3f';g.fillRect(3,-4,38,8)}if(t.type==='custom'){g.fillStyle='#fff8dc';g.font='bold 12px system-ui';g.textAlign='center';g.fillText('✧',-4,4)}}
  g.restore();
- if(t.level>1){drawRounded(t.x-15,t.y+16,30,14,5,'#3c5639');ctx.textAlign='center';ctx.font='900 10px system-ui';ctx.fillStyle='#fff5dd';ctx.fillText('LV '+t.level,t.x,t.y+27)}
+ if(t.evolution){const v=Rule.EVOLUTIONS[t.evolution];ctx.save();ctx.strokeStyle=v.color;ctx.globalAlpha=.5+.18*Math.sin(clock*2);ctx.lineWidth=3;ctx.beginPath();ctx.arc(t.x,t.y,29+2*Math.sin(clock*3),0,2*PI);ctx.stroke();ctx.textAlign='center';ctx.font='15px system-ui';ctx.fillText(v.icon,t.x+21,t.y-20);ctx.restore();}
+ if(t.level>1){drawRounded(t.x-21,t.y+16,42,14,5,'#3c5639');ctx.textAlign='center';ctx.font='900 10px system-ui';ctx.fillStyle='#fff5dd';ctx.fillText('LV '+t.level,t.x,t.y+27)}
 }
 function drawEnemy(e){
  const g=ctx,r=e.r,walker=e.type==='glider',runner=e.type==='dart',brute=e.type==='warden',crawler=e.type==='crawler',boss=e.type==='boss';
@@ -470,6 +557,7 @@ function render(){ctx.clearRect(0,0,960,600);ctx.drawImage(land,0,0);
  if(hover&&!selectedTower&&selectedType&&!gameOver){let {c,r}=hover,x=c*CELL+CELL/2,y=r*CELL+CELL/2,d=getSelectionDef(selectedType);if(c>=0&&r>=0&&c<COLS&&r<ROWS){let valid=!invalidTile(c,r)&&!towers.some(t=>t.c===c&&t.r===r);ctx.save();ctx.fillStyle=valid?'#d9ebbd74':'#dc6b6b83';ctx.fillRect(c*CELL+1,r*CELL+1,CELL-2,CELL-2);ctx.strokeStyle=valid?'#eef8dc':'#ffe3da';ctx.lineWidth=3;ctx.strokeRect(c*CELL+3,r*CELL+3,CELL-6,CELL-6);if(valid){ctx.beginPath();ctx.arc(x,y,d.range,0,2*PI);ctx.fillStyle='#d8efb71f';ctx.fill();ctx.strokeStyle='#f2eed8bc';ctx.lineWidth=2;ctx.setLineDash([7,8]);ctx.stroke()}ctx.restore()}}
  for(const t of towers){const d=towerDef(t),s=tStats(t);if(selectedTower===t){ctx.beginPath();ctx.arc(t.x,t.y,s.range,0,2*PI);ctx.fillStyle='#e6f0c62c';ctx.fill();ctx.strokeStyle='#fff2becc';ctx.lineWidth=2;ctx.setLineDash([7,6]);ctx.stroke();ctx.setLineDash([])}drawTurret(t)}
  for(const e of enemies)drawEnemy(e);
+ for(const drop of scrollDrops){const rarity=Rule.RARITIES[drop.rarity],b=Math.sin(clock*4+drop.id)*3;ctx.save();ctx.shadowColor=rarity.color;ctx.shadowBlur=15;ctx.fillStyle='#fff4d3';ctx.strokeStyle=rarity.color;ctx.lineWidth=3;ctx.beginPath();ctx.arc(drop.x,drop.y-8+b,17,0,2*PI);ctx.fill();ctx.stroke();ctx.shadowBlur=0;ctx.textAlign='center';ctx.font='20px system-ui';ctx.fillText('📜',drop.x,drop.y-1+b);ctx.restore();}
  for(const s of shots){ctx.save();ctx.fillStyle=s.color;ctx.strokeStyle='#f8e3b4cc';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,2*PI);ctx.fill();ctx.stroke();ctx.restore()}
  for(const p of particles){ctx.globalAlpha=Math.max(0,p.life/p.max);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,2*PI);ctx.fill()}ctx.globalAlpha=1;
  for(const t of texts){ctx.globalAlpha=Math.min(1,t.life*2);ctx.textAlign='center';ctx.font='900 14px system-ui';ctx.shadowColor='#1d3923';ctx.shadowBlur=6;ctx.fillStyle=t.color;ctx.fillText(t.txt,t.x,t.y)}ctx.globalAlpha=1;ctx.shadowBlur=0;
@@ -481,7 +569,9 @@ function frame(time){let dt=Math.min((time-lastTimestamp)/1000,.045);lastTimesta
    for(let i=texts.length-1;i>=0;i--){let t=texts[i];t.y-=22*dt;t.life-=dt;if(t.life<=0)texts.splice(i,1)}
  }else if(!paused&&!gameOver){update(dt*speed);if(active){if(Math.floor(clock*5)!==Math.floor((clock-dt*speed)*5))updateUI()}}
  render();requestAnimationFrame(frame)}
-canvas.addEventListener('mousemove',ev=>{let rc=canvas.getBoundingClientRect();hover={c:Math.floor((ev.clientX-rc.left)*canvas.width/rc.width/CELL),r:Math.floor((ev.clientY-rc.top)*canvas.height/rc.height/CELL)}});canvas.addEventListener('mouseleave',()=>{hover=null});canvas.addEventListener('click',ev=>{let rc=canvas.getBoundingClientRect();let c=Math.floor((ev.clientX-rc.left)*canvas.width/rc.width/CELL),r=Math.floor((ev.clientY-rc.top)*canvas.height/rc.height/CELL);let turret=towers.find(t=>t.c===c&&t.r===r);if(turret){selectedTower=turret;selectedType=null;updateUI()}else{build(c,r)}});
+canvas.addEventListener('mousemove',ev=>{let rc=canvas.getBoundingClientRect();hover={c:Math.floor((ev.clientX-rc.left)*canvas.width/rc.width/CELL),r:Math.floor((ev.clientY-rc.top)*canvas.height/rc.height/CELL)}});canvas.addEventListener('mouseleave',()=>{hover=null});canvas.addEventListener('click',ev=>{let rc=canvas.getBoundingClientRect();let c=Math.floor((ev.clientX-rc.left)*canvas.width/rc.width/CELL),r=Math.floor((ev.clientY-rc.top)*canvas.height/rc.height/CELL);const px=(ev.clientX-rc.left)*canvas.width/rc.width,py=(ev.clientY-rc.top)*canvas.height/rc.height;
+ const drop=[...scrollDrops].reverse().find(d=>Math.hypot(px-d.x,py-d.y)<23);if(drop){collectScroll(drop.id);return;}
+ let turret=towers.find(t=>t.c===c&&t.r===r);if(turret){selectedTower=turret;selectedType=null;updateUI()}else{build(c,r)}});
 $('nextWave').addEventListener('click',startWave);
 $('restart').addEventListener('click',()=>multiplayer?sendAction('reset'):reset());
 $('reset').addEventListener('click',()=>multiplayer?sendAction('reset'):reset());
@@ -503,7 +593,7 @@ function updateLobby(){refreshMapPicker();
  const members=$('playerList');members.replaceChildren();
  for(const p of players){const chip=document.createElement('span');chip.className='player-chip'+(p.id===myId?' me':'')+(p.connected?'':' offline');chip.textContent=`${p.id===hostId?'♛ ':''}${p.name}${p.id===myId?' (you)':''}${p.connected?'':' · reconnecting'}`;members.appendChild(chip)}
  $('serverHint').textContent=multiplayer?`${players.length}/5 players · Shared coins, waves and towers · ${ownSession()?'You control wave timing.':'The host controls wave timing.'}`:
-   networkInfo?'Create a room or join using a 6-character code. Everyone must open the same game server.':'GitHub Pages solo edition. Room-code co-op requires a separately hosted online server.';
+   networkInfo?'Create a room or join using a 6-character code. Everyone must open the same game server.':'Solo works here. For co-op, run the included Node.js server or deploy it online.';
  $('reset').disabled=multiplayer&&!ownSession();$('restart').disabled=multiplayer&&!ownSession();
 }
 function clearRoomData(){
@@ -522,7 +612,7 @@ function applySnapshot(info){
  const changedWave=g.wave!==wave;
  hostId=info.hostId;players=info.players;roomCode=info.code;refreshMapPicker();
  credits=g.credits;health=g.health;wave=g.wave;kills=g.kills;active=g.active;paused=g.paused;speed=g.speed;gameOver=g.gameOver;spawnedCount=g.spawnedCount;totalSpawned=g.totalSpawned;bestWave=g.bestWave;
- towers=g.towers;enemies=g.enemies;shots=g.shots;
+ towers=g.towers;enemies=g.enemies;shots=g.shots;scrollDrops=g.scrollDrops||[];scrollInventory=g.scrollInventory||[];
  if(oldTowerId!==undefined){selectedTower=towers.find(t=>t.id===oldTowerId)||null}
  else selectedTower=null;
  for(const t of towers)if(!oldTowerIds.has(t.id)){burst(t.x,t.y,towerDef(t).color,13);}
@@ -530,7 +620,7 @@ function applySnapshot(info){
  else $('overlay').classList.remove('show');
  $('pause').textContent=paused?'▶ Resume':'Ⅱ Pause';$('speed').textContent=`⚡ ${speed}× Speed`;
  $('speed').classList.toggle('speed-on',speed===1);
- const signature=[credits,health,wave,kills,active,paused,speed,gameOver,spawnedCount,enemies.length,hostId,players.map(p=>p.id+(p.connected?1:0)).join(','),towers.map(t=>`${t.id}-${t.level}`).join(';')].join('|');
+ const signature=[credits,health,wave,kills,active,paused,speed,gameOver,spawnedCount,enemies.length,hostId,players.map(p=>p.id+(p.connected?1:0)).join(','),towers.map(t=>`${t.id}-${t.level}-${t.evolution}-${(t.scrolls||[]).length}`).join(';'),scrollInventory.map(x=>x.kind+x.rarity).join(','),scrollDrops.length].join('|');
  if(signature!==lastNetSig){lastNetSig=signature;updateUI();updateLobby();}
  if(changedWave&&g.wave>0&&oldWave>0)toast(`Wave ${g.wave} started!`);
  if(oldHealth>health)toast(`⚠ The gate lost ${oldHealth-health} health!`);

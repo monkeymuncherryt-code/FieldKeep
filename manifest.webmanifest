@@ -1,13 +1,13 @@
 {
-  "name": "Fieldkeep V11: Kingdoms & Alliances",
+  "name": "Fieldkeep V12: Kingdom World",
   "short_name": "Fieldkeep",
-  "description": "Defend your castle, build a woodland kingdom, recruit heroes and form a local alliance.",
+  "description": "An original landscape strategy game featuring a buildable city, world exploration, troop marches, and local alliances.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "landscape",
-  "background_color": "#142b22",
-  "theme_color": "#142b22",
+  "background_color": "#10251d",
+  "theme_color": "#102c24",
   "icons": [
     {
       "src": "icon.svg",

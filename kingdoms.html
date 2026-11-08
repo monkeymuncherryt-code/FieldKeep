@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icon.svg" />
-<title>Fieldkeep V11 — Kingdoms</title>
+<title>Fieldkeep V12 — Kingdom World</title>
 <style>
 :root{--ink:#f3ecd5;--muted:#b3c0a9;--line:#55705c;--darker:#10251d;--panel:#1b382e;--panel2:#294837;--gold:#f1c577;--bright:#e1efc9;--warning:#f0b086;--sky:#b4d1c8}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:var(--darker);color:var(--ink);font-family:system-ui,-apple-system,'Segoe UI',sans-serif}body{overflow:hidden}
@@ -43,18 +43,44 @@ button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation
 @media(max-width:600px) and (orientation:landscape){.main{grid-template-columns:44px minmax(0,1fr) 137px}.navbutton{min-height:42px}.navbutton small{display:none}.inspector{padding:5px;gap:4px}.inspector h2{font-size:11px}.inspector .info{font-size:9px}.cardgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(orientation:portrait) and (max-width:650px){.topright .pill:last-child{display:none}.main{grid-template-columns:54px minmax(0,1fr)}.inspector{position:absolute;right:8px;bottom:8px;width:min(215px,65%);max-height:47%;border:1px solid #78916d;border-radius:13px;box-shadow:0 7px 25px #102719ad;z-index:2}.maphead{max-width:67%}.cardgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.metricgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* FIELDKEEP V12 — premium landscape command-center styling */
+:root{--darker:#091c18;--panel:#122d26;--gold:#f2ca82;--ink:#f3eddd;--muted:#acc1b0}
+.top{background:linear-gradient(115deg,#0b211c,#183b2d 68%,#51462e);border-bottom-color:#b9a16b75}
+#app{background:radial-gradient(ellipse at 25% 0%,#365947,#091a15 80%)}
+.nav{background:linear-gradient(180deg,#0e2821,#0d201b);border-right-color:#9ba87c57}
+.navbutton.active{background:linear-gradient(140deg,#66764b,#213c30);border-color:#d9be7a}
+.inspector{background:linear-gradient(165deg,#162f26,#0f211d)}
+.action.gold,.pill.gold{box-shadow:inset 0 1px #fff5,0 5px 14px #0005}
+.maphead{top:56px;background:#10281fea;border-color:#9eae887c;box-shadow:0 12px 30px #07150f77}
+.v12-view-switch{position:absolute;top:11px;left:12px;z-index:3;display:flex;gap:3px;background:#071d18e9;border:1px solid #a9b89180;border-radius:13px;padding:4px;box-shadow:0 6px 19px #0007}
+.v12-view-switch button{border:0;min-width:80px;border-radius:9px;padding:8px 12px;background:transparent;color:#b8c9b9;font-size:12px;font-weight:900;letter-spacing:.07em}
+.v12-view-switch button.active{background:linear-gradient(130deg,#607747,#284b37);color:#fff3d6;box-shadow:inset 0 1px #fff4}
+#v12MiniMap{position:absolute;right:10px;bottom:12px;width:126px;height:87px;z-index:2;border:2px solid #d5c58d9c;border-radius:9px;box-shadow:0 7px 22px #0018;background:#0c2a1f;cursor:pointer;touch-action:manipulation}
+.v12-march-rail{position:absolute;left:12px;bottom:61px;z-index:2;display:flex;gap:5px;max-width:min(65%,420px);overflow-x:auto;scrollbar-width:none;pointer-events:none}
+.v12-march-chip{background:#16342cf0;border:1px solid #c2ae6b80;color:#fff2d8;padding:5px 8px;border-radius:9px;min-width:118px;font-size:10px;box-shadow:0 5px 14px #0006}
+.v12-march-chip b{color:#f2d084}
+.v12-scene-badge{border:1px solid #c0b08088;border-radius:10px;padding:9px;background:#244636bd;line-height:1.5;color:#edf0d8;font-size:11px}
+.v12-march-form{background:#234331;border:1px solid #698c67;padding:9px;border-radius:10px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.v12-march-form select,.v12-march-form input{max-width:100px;border-radius:7px;background:#f0ecd5;color:#243d2e;border:0;padding:8px;font-size:14px;min-height:37px}
+.v12-march-form label{font-size:10px;color:#d4dfcb}
+.v12-muted{opacity:.75}
+.v12-chip{display:inline-block;color:#e7d2a5;background:#274c38;padding:5px 9px;border:1px solid #8d9c6b;border-radius:8px;font-size:10px;font-weight:700}
+.v12-maplegend{font-size:10px;line-height:1.5;color:#cddbbb}
+@media(max-width:760px){.v12-view-switch{top:5px;left:5px;padding:2px}.v12-view-switch button{min-width:64px;padding:6px 7px;font-size:10px}.maphead{top:43px;left:5px;padding:6px 8px;max-width:58%}#v12MiniMap{width:83px;height:63px;bottom:8px;right:5px}.v12-march-rail{bottom:46px;left:5px;max-width:58%}.v12-march-chip{min-width:94px;padding:4px 5px;font-size:9px}.maptools{bottom:6px;left:6px}.maptools button{height:34px;min-width:34px;font-size:15px}}
+@media(max-height:480px) and (orientation:landscape){.v12-march-rail{display:none}.maphead{max-width:53%}}
 </style>
 </head>
 <body>
 <div id="app">
 <header class="top">
- <a href="./index.html" class="brand" title="Back to Fieldkeep Defense"><span class="brandmark">🏰</span><span><h1>FIELD<b>KEEP</b></h1><small>V11 · KINGDOMS</small></span></a>
+ <a href="./index.html" class="brand" title="Back to Fieldkeep Defense"><span class="brandmark">🏰</span><span><h1>FIELD<b>KEEP</b></h1><small>V12 · KINGDOM WORLD</small></span></a>
  <div class="resources" id="resourceBar" aria-label="Kingdom resources"></div>
  <div class="topright"><button class="pill" id="profileQuick">👤 Profile</button><a class="pill gold" href="./index.html">🛡️ Defense</a></div>
 </header>
 <div class="main">
  <nav id="nav" class="nav" aria-label="Kingdom features"></nav>
- <main class="world"><canvas id="kingdomMap" aria-label="Interactive kingdom world map"></canvas><div class="mapshade"></div><div class="maphead"><strong id="worldHeadline">🌍 Verdant Frontier</strong><small id="worldSubhead">Explore · gather · establish territory</small></div><div class="mapcompass">N↑</div><div class="maptools"><button id="zoomIn" aria-label="Zoom in">＋</button><button id="zoomOut" aria-label="Zoom out">－</button><button id="centerMap" aria-label="Go to city">⌂</button></div></main>
+ <main class="world"><canvas id="kingdomMap" aria-label="Interactive kingdom world map"></canvas><div class="mapshade"></div><div class="v12-view-switch"><button class="active" id="v12ViewWorld" aria-label="View world map">🌍 WORLD</button><button id="v12ViewCity" aria-label="View kingdom city">🏰 CITY</button></div><canvas id="v12MiniMap" aria-label="World minimap"></canvas><div class="v12-march-rail" id="v12MarchRail"></div><div class="maphead"><strong id="worldHeadline">🌍 Verdant Frontier</strong><small id="worldSubhead">Explore · gather · establish territory</small></div><div class="mapcompass">N↑</div><div class="maptools"><button id="zoomIn" aria-label="Zoom in">＋</button><button id="zoomOut" aria-label="Zoom out">－</button><button id="centerMap" aria-label="Go to capital">⌂</button></div></main>
  <aside class="inspector" id="inspector" aria-label="Selected map tile details"></aside>
  <div id="drawer" class="drawer" role="presentation"><section class="drawerbox" role="dialog" aria-modal="true" aria-labelledby="drawerTitle"><header class="drawhead"><div><small>FIELDKEEP / WORLD COMMAND</small><h2 id="drawerTitle">Kingdom</h2></div><button class="close" id="closeDrawer" aria-label="Close">✕</button></header><div class="drawbody" id="drawBody"></div></section></div>
 </div>
@@ -63,8 +89,8 @@ button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation
 <script>
 'use strict';
 const el=id=>document.getElementById(id);
-const SAVE='fieldkeep_v11_kingdoms_local_v1';
-const W=26,H=18,CENTER={x:13,y:9};
+const SAVE='fieldkeep_v12_kingdoms_local_v1';
+const W=42,H=30,CENTER={x:13,y:9};
 const NAV=[['world','🌍','World'],['city','🏰','City'],['alliance','🤝','Alliance'],['heroes','🦊','Heroes'],['army','🛡️','Guardians'],['academy','📚','Research'],['quests','📜','Quests'],['vault','💎','Vault'],['companions','🐺','Pets'],['prestige','✨','Prestige'],['seasons','🏆','Season'],['profile','👤','Profile']];
 const CITY={keep:{label:'Great Hall',emoji:'🏰',description:'Heart of the city. Upgrading unlocks stronger buildings.',base:{wood:150,stone:130,gold:90}},farm:{label:'Sunfield Farms',emoji:'🌾',description:'Produces food passively.',base:{wood:55,stone:15,gold:25}},lumber:{label:'Timber Guild',emoji:'🌲',description:'Supplies woodland lumber.',base:{food:55,stone:20,gold:20}},quarry:{label:'Stoneworks',emoji:'⛰️',description:'Produces stone for construction.',base:{food:65,wood:60,gold:25}},market:{label:'Market Square',emoji:'🧺',description:'Passively earns gold from village trade.',base:{wood:80,stone:60,gold:30}},academy:{label:'Scholar Academy',emoji:'📚',description:'Unlocks the kingdom research tree.',base:{wood:85,stone:70,gold:50}},barracks:{label:'Guardian Lodge',emoji:'🛡️',description:'Recruits guardians, scouts and rangers.',base:{food:100,wood:80,stone:40}},vault:{label:'Relic Vault',emoji:'🗝️',description:'Stores and protects expedition rewards.',base:{wood:85,stone:75,gold:40}},workshop:{label:'Tower Atelier',emoji:'🪄',description:'Supports turret prestige progression.',base:{wood:130,stone:110,gold:75}},residence:{label:'Village Homes',emoji:'🏘️',description:'Attracts villagers and raises kingdom power.',base:{wood:65,stone:35,gold:30}},garden:{label:'Peace Garden',emoji:'🌷',description:'Improves morale, visitor rewards and scenery.',base:{wood:40,stone:40,gold:20}},wall:{label:'Castle Walls',emoji:'🧱',description:'Improves city defense rating.',base:{wood:100,stone:145,gold:55}}};
 const TECH={harvest:{title:'Abundant Harvest',icon:'🌾',desc:'+15% passive food income per rank',max:5,cost:{food:125,wood:55,gold:35}},forestry:{title:'Forest Wisdom',icon:'🌲',desc:'+15% wood production per rank',max:5,cost:{food:70,wood:85,stone:45}},masonry:{title:'Stonecraft',icon:'⛰️',desc:'+15% stone production per rank',max:5,cost:{food:80,wood:75,gold:40}},commerce:{title:'Market Routes',icon:'🪙',desc:'+12% gold income per rank',max:5,cost:{wood:100,stone:65,gold:80}},scouting:{title:'Cartographers',icon:'🧭',desc:'Expand the map view with surveys',max:4,cost:{food:110,wood:75,gold:50}},diplomacy:{title:'Diplomatic Ties',icon:'🤝',desc:'Improve alliance help and influence',max:5,cost:{food:120,stone:80,gold:55}},defense:{title:'Castlekeeping',icon:'🛡️',desc:'Improve city resilience and guardians',max:5,cost:{wood:120,stone:120,gold:55}},arcana:{title:'Elemental Studies',icon:'✨',desc:'Improve expedition rewards and crystals',max:5,cost:{wood:110,stone:85,crystal:12}}};
@@ -75,8 +101,8 @@ const RESEARCH_ACTIONS=Object.keys(TECH);
 const LANDMARKS=[{x:8,y:6,id:'ruins',name:'Old Observatory',icon:'🔭',type:'discovery',reward:{crystal:25,gold:70},need:90},{x:18,y:5,id:'grove',name:'Whispering Grove',icon:'🌳',type:'sanctuary',reward:{wood:190,food:150},need:110},{x:22,y:12,id:'outpost',name:'Marshlight Outpost',icon:'🏘️',type:'outpost',reward:{stone:180,gold:150},need:165},{x:4,y:13,id:'beacon',name:'Fallen Beacon',icon:'🗼',type:'discovery',reward:{crystal:35,stone:130},need:155},{x:17,y:14,id:'dragon',name:'Crystal Hollow',icon:'💠',type:'sanctuary',reward:{crystal:48,gold:190},need:215},{x:23,y:3,id:'citadel',name:'Dawn Citadel',icon:'🏯',type:'outpost',reward:{gold:320,crystal:65},need:290}];
 const BONUS_NODES=[{x:10,y:7,type:'wood',icon:'🌲',name:'Cedar Stand'},{x:16,y:10,type:'food',icon:'🌾',name:'Golden Farmstead'},{x:12,y:12,type:'stone',icon:'⛰️',name:'Granite Rise'},{x:6,y:10,type:'wood',icon:'🌲',name:'Old Pinewood'},{x:19,y:9,type:'gold',icon:'🪙',name:'River Market'},{x:20,y:15,type:'crystal',icon:'💎',name:'Starfall Pool'},{x:7,y:3,type:'food',icon:'🌾',name:'Highland Meadow'},{x:16,y:3,type:'stone',icon:'⛰️',name:'Glen Quarry'}];
 const QUESTS={firstcity:{name:'Found your kingdom',desc:'Upgrade any city building.',target:1,reward:{gold:90,food:120}},scholar:{name:'A curious mind',desc:'Complete one kingdom research.',target:1,reward:{wood:110,stone:90}},ranger:{name:'A prepared village',desc:'Recruit guardian units.',target:1,reward:{food:170,gold:80}},mapper:{name:'Beyond the hills',desc:'Survey three map tiles.',target:3,reward:{crystal:18,gold:85}},frontier:{name:'Mark the frontier',desc:'Claim two new territory tiles.',target:2,reward:{wood:170,stone:120}},allies:{name:'Together we grow',desc:'Create an alliance and invite a local NPC ally.',target:1,reward:{gold:150,crystal:15}},fellowship:{name:'Helping hands',desc:'Help another alliance member.',target:1,reward:{food:200,wood:125}},legacy:{name:'Legacy of the city',desc:'Unlock turret prestige.',target:1,reward:{crystal:24,gold:100}},curiosity:{name:'Ancient wisdom',desc:'Complete a landmark expedition.',target:1,reward:{gold:150,crystal:20}}};
-function initial(){const explored=[];for(let y=6;y<=12;y++)for(let x=10;x<=16;x++)explored.push(x+','+y);return{version:11,created:Date.now(),lastTick:Date.now(),name:'Ranger',cityName:'Evergreen Hold',motto:'Grow together. Stand together.',banner:'🌲',color:'#d7ac69',title:'Founder',xp:0,level:1,seasonPoints:0,resources:{food:780,wood:650,stone:510,gold:420,crystal:100},buildings:{keep:1,farm:1,lumber:1,quarry:1,market:1,academy:1,barracks:1,vault:1,workshop:1,residence:1,garden:0,wall:1},research:{},troops:{ranger:32,guardian:18,scout:6},heroes:['rowan'],activeHero:'rowan',heroPos:[13,9],heroCooldown:0,heroLevels:{rowan:1},pets:['fox'],activePet:'fox',vault:{scroll:3,relic:0,token:0,treasure:1},tower:{level:1,prestige:0},explored,claimed:['13,9','13,8','13,10','12,9','14,9'],selected:[13,9],completed:[],questProgress:{},questClaims:[],tasks:[],alliance:null,flags:0,adventure:0,expeditions:0,raidWins:0,reputation:0,achievement:[],dailyClaim:'',weeklyClaim:'',log:['🏡 Evergreen Hold founded.'],lastReward:'',partyHint:false}};
-function fromStorage(){let raw;try{raw=JSON.parse(localStorage.getItem(SAVE)||'null')}catch{}if(!raw||raw.version!==11)return initial();const base=initial();const s={...base,...raw};s.resources={...base.resources,...raw.resources};s.buildings={...base.buildings,...raw.buildings};s.troops={...base.troops,...raw.troops};for(const field of ['tasks','explored','claimed','completed','questClaims','heroes','pets','log'])if(!Array.isArray(s[field]))s[field]=base[field];s.research=s.research&&typeof s.research==='object'?s.research:{};s.questProgress=s.questProgress&&typeof s.questProgress==='object'?s.questProgress:{};if(!Array.isArray(s.selected)||s.selected.length!==2)s.selected=[13,9];return s}
+function initial(){const explored=[];for(let y=6;y<=12;y++)for(let x=10;x<=16;x++)explored.push(x+','+y);return{version:12,created:Date.now(),lastTick:Date.now(),name:'Ranger',cityName:'Evergreen Hold',motto:'Grow together. Stand together.',banner:'🌲',color:'#d7ac69',title:'Founder',xp:0,level:1,seasonPoints:0,resources:{food:780,wood:650,stone:510,gold:420,crystal:100},buildings:{keep:1,farm:1,lumber:1,quarry:1,market:1,academy:1,barracks:1,vault:1,workshop:1,residence:1,garden:0,wall:1},research:{},troops:{ranger:32,guardian:18,scout:6},heroes:['rowan'],activeHero:'rowan',heroPos:[13,9],heroCooldown:0,heroLevels:{rowan:1},pets:['fox'],activePet:'fox',vault:{scroll:3,relic:0,token:0,treasure:1},tower:{level:1,prestige:0},explored,claimed:['13,9','13,8','13,10','12,9','14,9'],selected:[13,9],completed:[],questProgress:{},questClaims:[],tasks:[],alliance:null,flags:0,adventure:0,expeditions:0,raidWins:0,reputation:0,achievement:[],dailyClaim:'',weeklyClaim:'',log:['🏡 Evergreen Hold founded.'],lastReward:'',partyHint:false}};
+function fromStorage(){let raw;try{raw=JSON.parse(localStorage.getItem(SAVE)||localStorage.getItem('fieldkeep_v11_kingdoms_local_v1')||'null')}catch{}if(!raw||![11,12].includes(raw.version))return initial();const base=initial();const s={...base,...raw};s.version=12;s.resources={...base.resources,...raw.resources};s.buildings={...base.buildings,...raw.buildings};s.troops={...base.troops,...raw.troops};for(const field of ['tasks','explored','claimed','completed','questClaims','heroes','pets','log'])if(!Array.isArray(s[field]))s[field]=base[field];s.research=s.research&&typeof s.research==='object'?s.research:{};s.questProgress=s.questProgress&&typeof s.questProgress==='object'?s.questProgress:{};if(!Array.isArray(s.selected)||s.selected.length!==2)s.selected=[13,9];return s}
 let s=fromStorage(); let tab='world';let selected=s.selected;let camera={x:13,y:9,zoom:1.1};let drawingDirty=true;let pointerDown=null;let lastFrame=0;let tickAt=Date.now();
 const key=(x,y)=>x+','+y;const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));const fmt=n=>Math.floor(n).toLocaleString('en-US');const cap=n=>Number.isFinite(n)?Math.max(0,Math.floor(n)):0;const safe=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function note(msg){el('flash').textContent=msg;s.log.unshift(String(msg).slice(0,160));s.log=s.log.slice(0,45);}
@@ -251,7 +277,246 @@ canvas.addEventListener('pointercancel',()=>{pointerDown=null});
 canvas.addEventListener('wheel',e=>{e.preventDefault();camera.zoom=clamp(camera.zoom*(e.deltaY>0?.9:1.1),.75,2.2);drawingDirty=true},{passive:false});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&drawerVisible)drawerClose();if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.key==='+')camera.zoom=clamp(camera.zoom*1.15,.75,2.2);if(e.key==='-')camera.zoom=clamp(camera.zoom/1.15,.75,2.2);drawingDirty=true});
 function hydrate(){const oldProfile=(()=>{try{return JSON.parse(localStorage.getItem('fieldkeep_v10_profile')||'null')}catch{return null}})();if(oldProfile&&s.name==='Ranger'&&typeof oldProfile.name==='string'&&oldProfile.name!=='Ranger')s.name=oldProfile.name.replace(/[<>]/g,'').slice(0,18);if(!s.alliance)note('🌍 A new kingdom awaits. Explore the frontier!');drawHUD();navInit();renderInspector();resize();requestAnimationFrame(doFrame);window.addEventListener('resize',resize);setInterval(tick,1000);setInterval(()=>{if(drawerVisible){el('drawBody').querySelectorAll('[data-remaining]').forEach(e=>e.textContent=Math.max(0,Math.ceil((Number(e.dataset.remaining)-Date.now())/1000))+'s')}},800);save();}
+ 
+// === V12 Kingdom World expansion (preserves the V11 simulation) ===
+const V12_CAMP=[
+ {x:15,y:11,lv:1,name:'Briarwood Band',icon:'🪓'},
+ {x:11,y:8,lv:1,name:'Mosslight Camp',icon:'🏕️'},
+ {x:18,y:10,lv:2,name:'Oakshade Outlaws',icon:'🏕️'},
+ {x:20,y:14,lv:3,name:'Stonepass Raiders',icon:'🛡️'},
+ {x:24,y:18,lv:4,name:'Brambleguard Camp',icon:'🏕️'},
+ {x:31,y:12,lv:5,name:'Sunfall Warband',icon:'🏰'},
+ {x:35,y:23,lv:7,name:'Thornspire Keep',icon:'🏯'},
+ {x:29,y:25,lv:6,name:'Moonfen Company',icon:'🏕️'},
+ {x:38,y:6,lv:8,name:'Highland Marauders',icon:'⚔️'}
+];
+const V12_TROOP={infantry:{label:'Infantry',icon:'🛡️',cost:{food:45,stone:24},count:12,power:2,speed:1},archers:{label:'Archers',icon:'🏹',cost:{food:42,wood:30},count:10,power:2.3,speed:1.15},cavalry:{label:'Cavalry',icon:'🐎',cost:{food:70,wood:30,gold:18},count:6,power:3.4,speed:1.75},siege:{label:'Siege Carts',icon:'🛞',cost:{wood:95,stone:70,gold:25},count:3,power:5,speed:.72}};
+const V12_CITY_SITES={
+ keep:[9,5],farm:[4,8],lumber:[2,4],quarry:[15,3],market:[12,8],academy:[13,2],barracks:[6,2],vault:[16,8],workshop:[15,6],residence:[5,5],garden:[8,9],wall:[9,1]
+};
+const V12_SITE_CHOICES=[[2,4],[4,8],[15,3],[12,8],[13,2],[6,2],[16,8],[15,6],[5,5],[8,9],[9,1],[17,10],[2,10],[1,7],[17,1],[1,1],[10,10],[8,5]];
+if(!s.army||typeof s.army!=='object')s.army={infantry:60,archers:40,cavalry:20,siege:9};
+for(const id of Object.keys(V12_TROOP))s.army[id]=Math.max(0,Math.floor(Number(s.army[id])||0));
+if(!Array.isArray(s.marches))s.marches=[];
+if(!Array.isArray(s.armyTraining))s.armyTraining=[];
+if(!Array.isArray(s.clearedCamps))s.clearedCamps=[];
+if(!s.citySites||typeof s.citySites!=='object')s.citySites={...V12_CITY_SITES};
+if(!s.commanderTalents||typeof s.commanderTalents!=='object')s.commanderTalents={};
+if(!s.allianceProjects||typeof s.allianceProjects!=='object')s.allianceProjects={outpost:0,unity:0,gathering:0};
+let v12Mode='world',v12MoveBuilding='',v12CityPan={x:0,y:0};
+let v12Drag=null;
+const V12_MORE_NAV=[['marches','🐎','Marches']];
+NAV.splice(2,0,...V12_MORE_NAV);
+const v12CampAt=(x,y)=>V12_CAMP.find(c=>c.x===x&&c.y===y&&!s.clearedCamps.includes(key(x,y)));
+const v12Available=()=>Object.values(s.army).reduce((a,b)=>a+b,0);
+const v12MarchCount=()=>s.marches.length;
+const v12CampaignPower=()=>Object.entries(s.army).reduce((a,[k,n])=>a+(V12_TROOP[k]?.power||1)*n,0)+s.level*7;
+const v12CityAt=(x,y)=>Object.keys(s.citySites).find(id=>Math.hypot(s.citySites[id][0]-x,s.citySites[id][1]-y)<1.1);
+const v12CampStrength=(camp)=>30+camp.lv*32;
+const v12FormatTime=(ms)=>Math.max(0,Math.ceil(ms/1000))+'s';
+function v12CompleteMarch(m){
+ const units=m.units||{}, qty=Object.values(units).reduce((a,b)=>a+b,0);
+ if(m.type==='scout'){
+  const rad=3+Math.floor((s.research.scouting||0)/2);
+  for(let yy=m.y-rad;yy<=m.y+rad;yy++)for(let xx=m.x-rad;xx<=m.x+rad;xx++)if(xx>=0&&yy>=0&&xx<W&&yy<H&&Math.hypot(xx-m.x,yy-m.y)<=rad&&!s.explored.includes(key(xx,yy)))s.explored.push(key(xx,yy));
+  note('🧭 Expedition scouts mapped new frontier tiles.');quest('mapper');gainXP(24);
+ }else if(m.type==='gather'){
+  const node=nodeAt(m.x,m.y), id=node&&['food','wood','stone','gold','crystal'].includes(node.type)?node.type:(terrain(m.x,m.y)==='forest'?'wood':terrain(m.x,m.y)==='hill'?'stone':'food');
+  let amount=id==='crystal'?18+qty:Math.round(60+qty*4.8+(s.research.harvest||0)*12);
+  reward({[id]:amount});gainXP(20);quest('curiosity');note(`🧺 ${m.commander} returned with ${amount} ${id}.`);
+ }else if(m.type==='attack'){
+  const camp=V12_CAMP.find(c=>c.x===m.x&&c.y===m.y);
+  if(camp&&!s.clearedCamps.includes(key(m.x,m.y))){
+   s.clearedCamps.push(key(m.x,m.y));
+   const bonus=camp.lv*45;
+   reward({gold:65+bonus,wood:35+camp.lv*16,stone:25+camp.lv*12,crystal:4+camp.lv*2,scroll:camp.lv>=4?1:0});
+   gainXP(55+camp.lv*16);quest('curiosity');
+   note(`🏆 ${camp.name} defeated! Your commander earned supplies and XP.`);
+   const loss=Math.max(0,Math.min(qty-1,Math.round(qty*(.045+.01*camp.lv))));
+   m.losses=loss;
+  }else note('🏕️ The camp is no longer active. Your troop formation returned.');
+ }
+ // Units return to the garrison after each abstract expedition, minus losses from camps.
+ let losses=Math.max(0,m.losses||0);
+ for(const [type,count] of Object.entries(units)){
+  let lost=Math.min(count,losses);losses-=lost;s.army[type]=(s.army[type]||0)+count-lost;
+ }
+ drawingDirty=true;
+}
+function v12FinishDue(){
+ const now=Date.now();let changed=false;
+ for(const job of s.armyTraining.filter(x=>x.end<=now)){s.army[job.id]+=job.count;gainXP(8);note('🛡️ '+job.count+' '+V12_TROOP[job.id].label+' finished training.');changed=true;}
+ s.armyTraining=s.armyTraining.filter(x=>x.end>now);
+ for(const m of s.marches.filter(x=>x.end<=now)){v12CompleteMarch(m);changed=true;}
+ s.marches=s.marches.filter(x=>x.end>now);
+ if(changed){save();drawHUD();renderInspector();refreshPanelIfOpen();}
+ v12DrawRail();
+}
+function v12SendMarch(type){
+ const [x,y]=selected;const target=type==='attack'?v12CampAt(x,y):nodeAt(x,y);
+ if(s.marches.length>=Math.min(4,2+Math.floor((s.research.scouting||0)/3)))return note('🐎 All march slots are occupied.');
+ if(type==='attack'&&!target)return note('Select an active barbarian camp on the map.');
+ if(type==='gather'&&(!visible(x,y)||!target||!['wood','food','stone','gold','crystal'].includes(target.type)))return note('Choose an explored resource node to gather.');
+ if(type==='scout'&&visible(x,y))return note('Choose unexplored territory for scouting.');
+ if(type!=='scout'&&!visible(x,y))return note('Scout the territory before sending armies there.');
+ if(type==='scout'&&s.army.cavalry<1&&s.troops.scout<1)return note('Recruit scouts or cavalry to explore.');
+ const select=document.getElementById('v12TroopType'),field=document.getElementById('v12TroopAmount');
+ let unitType=select?.value||'infantry';let amount=Number(field?.value||12);
+ if(!Number.isFinite(amount)||!Number.isInteger(amount)||amount<1||amount>120)return note('Choose 1–120 troops.');
+ if(!V12_TROOP[unitType])unitType='infantry';
+ if((s.army[unitType]||0)<amount)return note('Not enough '+V12_TROOP[unitType].label+' in the garrison.');
+ const strength=amount*V12_TROOP[unitType].power+(s.heroLevels[s.activeHero]||1)*15+(s.commanderTalents[s.activeHero]||0)*12;
+ if(type==='attack'&&strength<v12CampStrength(target))return note('This camp requires '+v12CampStrength(target)+' march strength. Train more troops or improve your commander.');
+ if(type==='scout'&&!canAfford({food:12}))return note('Need 12 food to scout.');
+ if(type==='attack'&&!canAfford({food:18}))return note('Need 18 food to start the expedition.');
+ if(type==='gather'&&!canAfford({food:12}))return note('Need 12 food to gather.');
+ pay({food:type==='attack'?18:12});s.army[unitType]-=amount;
+ const speed=V12_TROOP[unitType].speed*(s.activeHero==='tamsin'?1.3:1),distance=Math.hypot(x-CENTER.x,y-CENTER.y);
+ const seconds=clamp(Math.ceil((5+distance*1.8)/speed),7,95);
+ const commander=HEROES[s.activeHero]?.name||'Ranger';
+ s.marches.push({id:Date.now()+'-'+Math.floor(Math.random()*100000),type,x,y,units:{[unitType]:amount},commander,hero:s.activeHero,start:Date.now(),end:Date.now()+seconds*1000,losses:0});
+ note(`🐎 ${commander} dispatched ${amount} ${V12_TROOP[unitType].label} to ${x+1},${y+1}.`);
+ save();renderInspector();drawHUD();refreshPanelIfOpen();drawingDirty=true;
+}
+function v12CityInfo(id){const b=CITY[id];if(!b)return;
+ const lv=s.buildings[id]||0, cost=coinCost(b.base,lv),possible=lv<12&&(id==='keep'||lv<s.buildings.keep+2);
+ el('inspector').innerHTML=`<small>YOUR CITY / ${(s.cityName||'Kingdom').toUpperCase()}</small><div class="inspecticon">${b.emoji}</div><h2>${safe(b.label)}</h2><div class="info">🏛️ Building level <b>${lv}</b><br>⭐ City contribution <b>${9*lv}</b><br>${safe(b.description)}</div><div class="v12-scene-badge">${lv?'Upgrade this building to improve your kingdom.':'Unlock this building and add it to your city.'}</div><small>Next improvement: ${costText(cost)}</small>${mkButton(possible?'⬆ Upgrade building':'🔒 Upgrade your Great Hall','build',id,!possible||!canAfford(cost),'gold')}${mkButton('↔ Relocate within city','v12Relocate',id,false,'alt')}${mkButton('📋 All city buildings','v12CityList')}`;
+}
+function v12CityCoord(id){return s.citySites[id]||V12_CITY_SITES[id]||[9,5]}
+let v12CitySelected='keep';
+function v12CityDraw(){
+ const w=screen.w,h=screen.h,unit=Math.min(w/18.5,h/12.5)*Math.min(1.15,Math.max(.83,camera.zoom)), offX=(w-unit*19)/2+v12CityPan.x, offY=(h-unit*12)/2+v12CityPan.y;
+ ctx.fillStyle='#618564';ctx.fillRect(0,0,w,h);
+ const p=(x,y)=>[offX+(x+.5)*unit,offY+(y+.5)*unit];
+ for(let y=0;y<12;y++)for(let x=0;x<19;x++){
+  const [px,py]=p(x,y),n=hash2(x+30,y+21);ctx.fillStyle=n>.35?'#739b70':'#6c9368';ctx.fillRect(px-unit/2,py-unit/2,unit+1,unit+1);
+  if(n>.84){ctx.fillStyle='#9ec680';ctx.beginPath();ctx.arc(px,py,unit*.09,0,7);ctx.fill()}
+ }
+ // winding stone paths, central square, garden and village palisades
+ ctx.strokeStyle='#cdbb8a';ctx.lineCap='round';ctx.lineWidth=unit*.67;
+ const line=(coords)=>{ctx.beginPath();coords.forEach(([x,y],i)=>{const [a,b]=p(x,y);i?ctx.lineTo(a,b):ctx.moveTo(a,b)});ctx.stroke()};
+ line([[1,5],[5,5],[9,5],[13,5],[17,5]]);line([[9,1],[9,5],[9,10]]);line([[3,9],[6,8],[9,7],[13,8],[17,9]]);
+ ctx.fillStyle='#d5c69a';let [cx,cy]=p(9,5);ctx.beginPath();ctx.ellipse(cx,cy,unit*1.1,unit*.7,0,0,Math.PI*2);ctx.fill();
+ for(let i=0;i<19;i++){let [px,py]=p(i,0);ctx.fillStyle=i%2?'#a99b6d':'#887d52';ctx.fillRect(px-unit*.48,py-unit*.47,unit*.96,unit*.25)}
+ for(let i=0;i<19;i++){let [px,py]=p(i,11);ctx.fillStyle=i%2?'#a99b6d':'#887d52';ctx.fillRect(px-unit*.48,py+unit*.22,unit*.96,unit*.22)}
+ for(const [id,b] of Object.entries(CITY)){
+  const [x,y]=v12CityCoord(id),[px,py]=p(x,y),lv=s.buildings[id]||0;
+  if(lv===0&&id!=='garden')continue;
+  const active=id===v12CitySelected;
+  const size=id==='keep'?unit*.65:unit*.43,baseY=py+unit*.15;
+  ctx.fillStyle='#10251c70';ctx.beginPath();ctx.ellipse(px+3,baseY+size*.6,size*1.5,size*.48,0,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle=active?'#f1d59a':'#cdbb90';ctx.fillRect(px-size*.74,baseY-size*.46,size*1.48,size*.82);
+  ctx.fillStyle=active?'#ab753e':'#725c45';ctx.beginPath();ctx.moveTo(px-size*.95,baseY-size*.42);ctx.lineTo(px,baseY-size*1.18);ctx.lineTo(px+size*.95,baseY-size*.42);ctx.closePath();ctx.fill();
+  ctx.font=`${Math.max(14,unit*(id==='keep'?.73:.57))}px system-ui,'Apple Color Emoji'`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(b.emoji,px,baseY-size*.65);
+  ctx.font=`bold ${Math.max(8,unit*.22)}px system-ui`;ctx.fillStyle='#182b1f';ctx.fillText('Lv '+lv,px,baseY+size*.23);
+  if(active){ctx.strokeStyle='#fce9ac';ctx.lineWidth=3;ctx.strokeRect(px-unit*.54,py-unit*.66,unit*1.08,unit*1.18)}
+  if(unit>21){ctx.font=`700 ${Math.max(9,unit*.23)}px system-ui`;ctx.fillStyle='#fff4da';ctx.shadowColor='#10241f';ctx.shadowBlur=5;ctx.fillText(b.label,px,baseY+size*.92);ctx.shadowBlur=0;}
+ }
+ // pond and scenic border forest
+ for(let i=0;i<5;i++){const [px,py]=p(.5+i*.52,10.5);ctx.fillStyle=i%2?'#386e67':'#4b988f';ctx.beginPath();ctx.arc(px,py,unit*.25,0,7);ctx.fill();}
+ ctx.fillStyle='#09251aaf';ctx.fillRect(0,0,w,5);ctx.fillRect(0,h-5,w,5);
+ window.__v12CityCanvas={unit,offX,offY};
+}
+const v12OldMapDraw=mapDraw;
+mapDraw=function(){if(v12Mode==='city'){v12CityDraw()}else{v12OldMapDraw();v12WorldOverlay()}};
+function v12WorldOverlay(){
+ const sz=44*camera.zoom;
+ // Barbarian forts and peaceful troop marches: deterministic world-map markers.
+ for(const camp of V12_CAMP){if(s.clearedCamps.includes(key(camp.x,camp.y)))continue;
+  if(!visible(camp.x,camp.y))continue;
+  const {x,y}=xyToScreen(camp.x,camp.y);if(x<0||x>screen.w||y<0||y>screen.h)continue;
+  iconText(camp.icon,x,y,Math.max(16,sz*.45));ctx.textAlign='center';ctx.font=`bold ${Math.max(9,sz*.18)}px system-ui`;ctx.fillStyle='#fff4d6';ctx.shadowColor='#061b16';ctx.shadowBlur=5;ctx.fillText('LV '+camp.lv,x,y+sz*.35);ctx.shadowBlur=0;
+ }
+ for(const m of s.marches){const t=Math.max(0,Math.min(1,(Date.now()-m.start)/(m.end-m.start))),x=CENTER.x+(m.x-CENTER.x)*t,y=CENTER.y+(m.y-CENTER.y)*t,pt=xyToScreen(x,y);iconText(m.type==='scout'?'🧭':m.type==='gather'?'🛒':'🐎',pt.x,pt.y,Math.max(13,sz*.34));}
+}
+const v12OldNodeAt=nodeAt;
+nodeAt=function(x,y){return v12OldNodeAt(x,y)||null};
+const v12OldDrawHUD=drawHUD;
+drawHUD=function(){v12OldDrawHUD();el('worldHeadline').textContent=v12Mode==='city'?'🏰 '+s.cityName:'🌍 Verdant Frontier';el('worldSubhead').textContent=v12Mode==='city'?`🏛️ Keep level ${s.buildings.keep} · ${Object.keys(s.buildings).length} building types · ⭐ ${s.level}`:`🏰 Power ${fmt(power())} · 🐎 ${s.marches.length} marches · 🏳️ ${s.claimed.length} territories`;el('worldFooter').textContent=`💾 Saved on this device · 🐎 ${s.marches.length} active marches · 📜 ${s.tasks.length+s.armyTraining.length} tasks`;};
+function v12DrawRail(){const node=el('v12MarchRail');node.innerHTML=s.marches.slice(0,3).map(m=>`<div class="v12-march-chip">${m.type==='scout'?'🧭':m.type==='gather'?'🛒':'🐎'} ${safe(m.commander.split(' ')[0])}<br><b>${v12FormatTime(m.end-Date.now())}</b> · ${m.x+1},${m.y+1}</div>`).join('');node.style.display=v12Mode==='city'?'none':'';}
+function v12Minimap(){const mini=el('v12MiniMap');if(v12Mode==='city'){mini.style.display='none';return}mini.style.display='block';const g=mini.getContext('2d');mini.width=126;mini.height=90;const cw=126/W,ch=90/H;
+ for(let y=0;y<H;y++)for(let x=0;x<W;x++){const ty=terrain(x,y),ex=visible(x,y);g.fillStyle=!ex?'#102c25':ty==='water'?'#528c9c':ty==='forest'?'#315c3c':ty==='hill'?'#b0aa88':'#6a9567';g.fillRect(x*cw,y*ch,cw+1,ch+1)}
+ g.fillStyle='#ffdb84';g.fillRect(CENTER.x*cw,CENTER.y*ch,Math.max(3,cw),Math.max(3,ch));g.strokeStyle='#ffee9e';g.strokeRect((camera.x-2)*cw,(camera.y-2)*ch,cw*4,ch*4);
+}
+function v12WorldPanel(){return heading('🌍 Kingdom World','Pan the frontier, send timed marches, gather resources, defeat barbarian camps and expand your alliance.')+`<div class="metricgrid">${metric('Visible tiles',s.explored.length+'/'+(W*H))}${metric('Marches out',s.marches.length)}${metric('Camps cleared',s.clearedCamps.length)}${metric('Army power',fmt(v12CampaignPower()))}</div><p class="notice">🔭 Unexplored areas are covered by fog. Tap a resource point or barbarian camp on the world map, choose troops, then send a march. Every march has a travel timer and a commander.</p>${mkButton('🐎 Army & troop marches','v12MarchTab')}${mkButton('🏰 Return to city','v12SwitchCity')}`;}
+RENDER.world=v12WorldPanel;
+RENDER.marches=function(){return heading('🐎 March Command','Send a commander with troops to gather, scout, or clear camps. Troops return after the march finishes.')+`<div class="metricgrid">${metric('March slots',s.marches.length+'/2+')}${metric('Available troops',v12Available())}${metric('Army power',fmt(v12CampaignPower()))}${metric('Camps cleared',s.clearedCamps.length)}</div><div class="section">Marches in progress</div>${s.marches.length?`<div class="queue">${s.marches.map(m=>`<div class="queueitem"><div><b>${m.type==='attack'?'⚔️ Camp patrol':m.type==='gather'?'🧺 Resource caravan':'🧭 Scout team'}</b><br><small>${safe(m.commander)} · ${Object.entries(m.units).map(([k,n])=>n+' '+V12_TROOP[k].label).join(' · ')} · Tile ${m.x+1},${m.y+1}</small></div><span class="badge" data-remaining="${m.end}">${v12FormatTime(m.end-Date.now())}</span></div>`).join('')}</div>`:'<div class="notice">No marches in progress. Select an area on the map, then send a march.</div>'}<div class="section">Garrison troops</div><div class="cardgrid">${Object.entries(V12_TROOP).map(([id,t])=>card(t.label,t.icon,`In garrison: ${s.army[id]} soldiers`,`${costText(t.cost)} · +${t.count} units`,mkButton('Train '+t.count,'v12Train',id,!canAfford(t.cost)))).join('')}</div><div class="section">Training queue</div>${s.armyTraining.length?s.armyTraining.map(t=>`<p class="notice">${V12_TROOP[t.id].icon} ${t.count} ${V12_TROOP[t.id].label} · ${v12FormatTime(t.end-Date.now())}</p>`).join(''):'<small>No active training.</small>'}`;};
+RENDER.buildings=renderCity;
+function v12CityPanel(){return heading('🏰 '+safe(s.cityName),'Your living settlement is now visible on the main game screen. Tap a building to upgrade or relocate it.')+`<div class="metricgrid">${metric('City power',fmt(power()))}${metric('Great Hall','Lv '+s.buildings.keep)}${metric('Builders',s.tasks.filter(t=>t.kind==='build').length)}${metric('Troops',fmt(v12Available()))}</div>${mkButton('🏰 Return to City View','v12SwitchCity')}${mkButton('📋 Open Construction Manager','v12CityList')}${mkButton('🐎 Manage Military Marches','v12MarchTab')}<div class="section">Current jobs</div>${taskList()}`;}
+RENDER.city=v12CityPanel;
+function v12UpgradeAlliance(){const old=renderAlliance();if(!s.alliance)return old;return old+`<div class="section">🏰 Alliance frontier projects (NPC/local)</div><div class="cardgrid">${[['outpost','Frontier Outposts','🏕️','Stronger rally preparation'],['unity','Unity Training','🤝','More member honor'],['gathering','Gathering Network','🌾','More resources from local gathering']].map(([id,label,ic,desc])=>card(label,ic,desc,'Level '+(s.allianceProjects[id]||0)+' · '+costText({wood:75,stone:65,gold:40}),mkButton('Contribute resources','v12AllianceProject',id,!canAfford({wood:75,stone:65,gold:40})))).join('')}</div><p class="mini-note">This is a simulated local alliance. It does not connect to real alliances, other players, or a persistent multiplayer world.</p>`;}
+RENDER.alliance=v12UpgradeAlliance;
+const v12OldRenderArmy=RENDER.army;
+RENDER.army=function(){return v12OldRenderArmy()+`<div class="section">🐎 V12 Military Academy</div><div class="cardgrid">${Object.entries(V12_TROOP).map(([id,t])=>card(t.label,t.icon,`Garrison: ${s.army[id]} · Strength per unit ${t.power}`,`Train +${t.count} · ${costText(t.cost)}`,mkButton('Train troops','v12Train',id,!canAfford(t.cost)))).join('')}</div>${mkButton('📍 Open world marches','v12MarchTab')}`;};
+const v12OldHero=RENDER.heroes;
+RENDER.heroes=function(){return v12OldHero()+`<div class="section">Commander talents</div><p class="notice">🧭 Invest in your active hero to improve the strength of their world-map marches.</p>${metric('March talent level',s.commanderTalents[s.activeHero]||0)}${mkButton('🌟 Train commander talent · 💎 16 🪙 95','v12Talent',null,!canAfford({crystal:16,gold:95}))}`;};
+const v12OldInspector=renderInspector;
+renderInspector=function(){if(v12Mode==='city'){v12CityInfo(v12CitySelected);return}v12OldInspector();
+ const [x,y]=selected,box=el('inspector'),camp=v12CampAt(x,y),node=nodeAt(x,y),ex=visible(x,y);
+ let kind='';if(camp&&ex){kind='attack';box.innerHTML=`<small>WORLD MAP / CAMP ${x+1},${y+1}</small><div class="inspecticon">${camp.icon}</div><h2>${safe(camp.name)}</h2><div class="info">Barbarian camp · Level <b>${camp.lv}</b><br>Needed march strength: <b>${v12CampStrength(camp)}</b><br>Camp loot: gold, stone, crystals & XP</div><div class="mini-note">Send enough troops and a commander to clear this camp. Troops return after the timed mission.</div>`;}
+ else if(!ex)kind='scout';else if(node&&['wood','food','stone','gold','crystal'].includes(node.type))kind='gather';
+ if(kind){let form=`<div class="v12-march-form"><label>Unit type <select id="v12TroopType">${Object.entries(V12_TROOP).map(([id,t])=>`<option value="${id}">${t.icon} ${t.label} (${s.army[id]})</option>`).join('')}</select></label><label>Troops <input type="number" id="v12TroopAmount" value="${kind==='attack'?35:12}" min="1" max="120" inputmode="numeric" /></label></div>`;
+ box.innerHTML+=form+mkButton(kind==='attack'?'⚔️ Send camp march':kind==='gather'?'🧺 Send gathering march':'🧭 Send scout march','v12March',kind,false,'gold');}
+ if(s.marches.some(m=>m.x===x&&m.y===y))box.innerHTML+='<span class="v12-chip">🐎 March en route to this tile</span>';
+};
+const v12OldOpenTab=openTab;
+openTab=function(id){if(id==='city'){v12SetMode('city');return}if(id==='world'){v12SetMode('world');return}return v12OldOpenTab(id)};
+function v12SetMode(mode){v12Mode=mode==='city'?'city':'world';if(drawerVisible){drawerVisible=false;el('drawer').classList.remove('show');tab='world'}
+ document.querySelectorAll('.navbutton').forEach(n=>n.classList.toggle('active',n.dataset.tab===v12Mode));
+ el('v12ViewWorld').classList.toggle('active',v12Mode==='world');el('v12ViewCity').classList.toggle('active',v12Mode==='city');
+ el('zoomIn').style.display=v12Mode==='city'?'none':'';el('zoomOut').style.display=v12Mode==='city'?'none':'';
+ el('centerMap').title=v12Mode==='city'?'City center':'World capital';
+ renderInspector();drawHUD();v12Minimap();v12DrawRail();drawingDirty=true;
+}
+const v12OldRunAction=runAction;
+runAction=function(action,data={}){
+ if(action==='v12SwitchCity'){v12SetMode('city');return}
+ if(action==='v12MarchTab'){v12SetMode('world');v12OldOpenTab('marches');return}
+ if(action==='v12CityList'){v12OldOpenTab('buildings');return}
+ if(action==='v12March'){v12SendMarch(data.id);return}
+ if(action==='v12Train'){
+  const t=V12_TROOP[data.id];if(!t||s.armyTraining.length>=3)return note('Training is unavailable or all three training queues are busy.');if(!pay(t.cost))return;
+  s.armyTraining.push({id:data.id,count:t.count,end:Date.now()+12000+Math.max(0,5-s.buildings.barracks)*1000});note('🛡️ '+t.label+' training started');save();drawHUD();refreshPanelIfOpen();return;
+ }
+ if(action==='v12Relocate'){
+  if(!CITY[data.id])return;v12MoveBuilding=data.id;note('↔ Tap an empty plot in the city to relocate '+CITY[data.id].label+'.');return;
+ }
+ if(action==='v12Talent'){
+  if(!pay({crystal:16,gold:95}))return;const id=s.activeHero;s.commanderTalents[id]=(s.commanderTalents[id]||0)+1;gainXP(14);note('🌟 Commander march strength improved!');save();drawHUD();refreshPanelIfOpen();return;
+ }
+ if(action==='v12AllianceProject'){
+  if(!s.alliance||!Object.hasOwn(s.allianceProjects,data.id))return;if(!pay({wood:75,stone:65,gold:40}))return;
+  s.allianceProjects[data.id]++;s.alliance.score+=55;gainXP(18);note('🏰 Alliance frontier project improved.');save();drawHUD();refreshPanelIfOpen();return;
+ }
+ return v12OldRunAction(action,data);
+};
+const v12OldTick=tick;
+tick=function(){v12OldTick();v12FinishDue();v12Minimap();};
+// Use a compact map/city switch, preserving world canvas pan and zoom handlers.
+el('v12ViewWorld').addEventListener('click',()=>v12SetMode('world'));
+el('v12ViewCity').addEventListener('click',()=>v12SetMode('city'));
+el('v12MiniMap').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect();camera.x=clamp(Math.floor((e.clientX-r.left)/r.width*W),0,W-1);camera.y=clamp(Math.floor((e.clientY-r.top)/r.height*H),0,H-1);drawingDirty=true;renderInspector();});
+canvas.addEventListener('pointerdown',e=>{if(v12Mode!=='city')return;e.stopImmediatePropagation();v12Drag={id:e.pointerId,x:e.clientX,y:e.clientY,ox:v12CityPan.x,oy:v12CityPan.y,moved:false};canvas.setPointerCapture(e.pointerId);},{capture:true});
+canvas.addEventListener('pointermove',e=>{if(v12Mode!=='city')return;e.stopImmediatePropagation();if(!v12Drag||v12Drag.id!==e.pointerId)return;const dx=e.clientX-v12Drag.x,dy=e.clientY-v12Drag.y;
+ if(Math.hypot(dx,dy)>8){v12Drag.moved=true;v12CityPan.x=clamp(v12Drag.ox+dx,-screen.w*.3,screen.w*.3);v12CityPan.y=clamp(v12Drag.oy+dy,-screen.h*.3,screen.h*.3);drawingDirty=true}
+},{capture:true});
+canvas.addEventListener('pointerup',e=>{if(v12Mode!=='city')return;e.stopImmediatePropagation();if(!v12Drag||v12Drag.id!==e.pointerId)return;const didMove=v12Drag.moved;v12Drag=null;if(didMove)return;
+ const rect=canvas.getBoundingClientRect(),co=window.__v12CityCanvas;if(!co)return;const x=Math.round((e.clientX-rect.left-co.offX)/co.unit-.5),y=Math.round((e.clientY-rect.top-co.offY)/co.unit-.5);
+ const building=v12CityAt(x,y);
+ if(v12MoveBuilding){const targetSite=V12_SITE_CHOICES.find(pt=>Math.hypot(pt[0]-x,pt[1]-y)<1.3);if(!targetSite){note('Choose a marked building plot to relocate.');return}const swap=v12CityAt(targetSite[0],targetSite[1]);if(swap&&swap!==v12MoveBuilding){note('Choose an empty city plot.');return}s.citySites[v12MoveBuilding]=targetSite.slice();v12CitySelected=v12MoveBuilding;v12MoveBuilding='';note('🏰 Building relocated in your city!');save();renderInspector();drawingDirty=true;return;}
+ if(building){v12CitySelected=building;renderInspector();drawingDirty=true}else{note('Tap a city building to inspect and upgrade it.')}
+},{capture:true});
+canvas.addEventListener('pointercancel',e=>{if(v12Mode==='city'){v12Drag=null;e.stopImmediatePropagation()}},{capture:true});
+// City/World navigation is now a scene switch; all existing menus remain available.
+const v12OldDrawerClose=drawerClose;
+drawerClose=function(){v12OldDrawerClose();document.querySelectorAll('.navbutton').forEach(n=>n.classList.toggle('active',n.dataset.tab===v12Mode));};
+// Press-center in City mode resets city pan instead of changing world selection.
+el('centerMap').addEventListener('click',e=>{if(v12Mode!=='city')return;e.stopImmediatePropagation();v12CityPan={x:0,y:0};drawingDirty=true;},{capture:true});
+// Demo/test helpers for deterministic QA (not network or online accounts).
+window.FieldkeepV12={version:12,getState:()=>JSON.parse(JSON.stringify(s)),switchMode:v12SetMode,selectCamp:(x,y)=>{v12SetMode('world');selectTile(x,y)},sendMarch:(type,k,n)=>{const select=document.getElementById('v12TroopType'),field=document.getElementById('v12TroopAmount');if(select)select.value=k;if(field)field.value=n;v12SendMarch(type)},finishMarches:()=>{for(const m of s.marches)m.end=Date.now()-1;v12FinishDue()},finishTraining:()=>{for(const m of s.armyTraining)m.end=Date.now()-1;v12FinishDue()},renderCity:()=>{v12SetMode('city');v12CityDraw()}};
+
 hydrate();
+v12Minimap();v12SetMode('city');
 window.FieldkeepKingdomsTest={getState:()=>JSON.parse(JSON.stringify(s)),act:(action,p)=>runAction(action,p),select:(x,y)=>selectTile(x,y),openTab,completeJobs:()=>{for(const t of s.tasks)t.end=Date.now()-1;s.lastTick=Date.now()-1000;tickAt=0;tick()},view:()=>({tab,selected,camera})};
 </script>
 </body>

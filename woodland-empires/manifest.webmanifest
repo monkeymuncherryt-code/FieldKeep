@@ -1,0 +1,19 @@
+{
+  "name": "Fieldkeep V11: Woodland Empires",
+  "short_name": "Fieldkeep",
+  "description": "Original landscape mobile kingdom defense and conquest strategy game",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#142d23",
+  "theme_color": "#142d23",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

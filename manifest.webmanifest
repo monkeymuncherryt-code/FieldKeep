@@ -1,0 +1,19 @@
+{
+  "name": "Fieldkeep: Zombie Defense",
+  "short_name": "Fieldkeep",
+  "description": "31 maps, turret upgrades, scrolls and zombie defense.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#e7ebda",
+  "theme_color": "#35583b",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
